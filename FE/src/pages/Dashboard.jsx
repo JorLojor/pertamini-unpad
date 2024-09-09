@@ -8,21 +8,30 @@ const Dashboard = () => {
      const [buka, setBuka] = useState(false);
      const [dataCard, setDataCard] = useState({});
 
-     const fetchDataCard = async () => {
-          try {
-               const response = await fetch(
-                    "https://backend-agustrisa.as1.pitunnel.net/api/random-data"
-               );
-               const data = await response.json();
-               setDataCard(data);
-          } catch (error) {
-               console.error("Error fetching data:", error);
-          }
+     const generateRandomValue = () => {
+          const value = (Math.random() * (100.5 - 99.0) + 99.0).toFixed(2);
+          return value;
+     };
+
+     const updateRandomData = () => {
+          const drynessValue = generateRandomValue();
+          const suhuValue = generateRandomValue();
+          const tekananValue = generateRandomValue();
+          const flowValue = generateRandomValue();
+          const dayaValue = generateRandomValue();
+
+          setDataCard({
+               dryness_steam: drynessValue,
+               suhu: suhuValue,
+               tekanan: tekananValue,
+               flow: flowValue,
+               energi: dayaValue,
+          });
      };
 
      useEffect(() => {
-          fetchDataCard();
-          const intervalId = setInterval(fetchDataCard, 2000);
+          updateRandomData();
+          const intervalId = setInterval(updateRandomData, 2000);
 
           return () => clearInterval(intervalId);
      }, []);
@@ -49,16 +58,27 @@ const Dashboard = () => {
                     <CardDashboard
                          titleCard="dryness"
                          dataCard={dataCard.dryness_steam}
+                         trendData={generateRandomValue()}
                     />
-                    <CardDashboard titleCard="suhu" dataCard={dataCard.suhu} />
+                    <CardDashboard
+                         titleCard="suhu"
+                         dataCard={dataCard.suhu}
+                         trendData={generateRandomValue()}
+                    />
                     <CardDashboard
                          titleCard="tekanan"
                          dataCard={dataCard.tekanan}
+                         trendData={generateRandomValue()}
                     />
-                    <CardDashboard titleCard="flow" dataCard={dataCard.flow} />
+                    <CardDashboard
+                         titleCard="flow"
+                         dataCard={dataCard.flow}
+                         trendData={generateRandomValue()}
+                    />
                     <CardDashboard
                          titleCard="daya"
                          dataCard={dataCard.energi}
+                         trendData={generateRandomValue()}
                     />
                </div>
                <div className="mt-10">
