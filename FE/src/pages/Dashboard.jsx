@@ -18,9 +18,7 @@ const Dashboard = () => {
                </div>
 
                <div
-                    className={`bg-gray-100 flex flex-col mt-16 ${
-                         buka ? "ms-24" : "ms-0"
-                    }`}>
+                    className={`bg-gray-100 flex flex-col mt-16 ms-[4.5rem]`}>
                     <div className="main-content">isi dashboard</div>
                </div>
           </>
