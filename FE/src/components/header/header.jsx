@@ -14,14 +14,14 @@ const Header = ({ buka, toggleSidebar }) => {
                          <button
                               onClick={toggleSidebar}
                               className="toggle-btn ml-20">
-                              {buka ? (
+                              {/* {buka ? (
                                    <FiChevronRight
                                         size={30}
                                         className="text-blue-500"
-                                   />
-                              ) : (
+                                   /> */}
+                              {/*  ) : ( */}
                                    <SlMenu size={30} className="text-white" />
-                              )}
+                              {/*  )} */}
                          </button>
                          <div className="text-xl font-bold ps-3">Dashboard</div>
                     </div>

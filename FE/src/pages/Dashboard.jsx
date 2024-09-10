@@ -8,20 +8,19 @@ const Dashboard = () => {
      const toggleSidebar = () => {
           setBuka(!buka);
      };
-     console.log(buka);
 
      return (
-          <>
+          <div className="w-full">
                <Header buka={buka}  toggleSidebar={toggleSidebar} />
-               <div className="fixed h-full">
+               <div className="h-full">
                     <Sidebar buka={buka} />
                </div>
 
                <div
-                    className={`bg-gray-100 flex flex-col mt-16 ms-[4.5rem]`}>
+                    className={`bg-black flex flex-col mt-16 ms-[4.5rem] w-full`}>
                     <div className="main-content">isi dashboard</div>
                </div>
-          </>
+          </div>
      );
 };
 
