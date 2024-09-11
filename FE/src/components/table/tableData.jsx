@@ -13,7 +13,7 @@ const TableData = () => {
           new Date().toISOString().split("T")[0]
      );
      const [sortField, setSortField] = useState(null);
-     const [sortOrder, setSortOrder] = useState(true); // true for ascending, false for descending
+     const [sortOrder, setSortOrder] = useState(true); 
 
      const rowsPerPage = 10;
 
@@ -52,7 +52,7 @@ const TableData = () => {
           });
           setData(sortedData);
           setSortField(field);
-          setSortOrder(!sortOrder); // Toggle sort order
+          setSortOrder(!sortOrder); 
      };
 
      const indexOfLastRow = currentPage * rowsPerPage;
