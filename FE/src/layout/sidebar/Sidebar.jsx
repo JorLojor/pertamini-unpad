@@ -39,7 +39,7 @@ const Sidebar = ({ buka, toggleSidebar, setCurrentPage }) => {
       </div>
 
       <div className="button-sidebar flex flex-row space-x-4 items-center p-4 mt-8 w-full hover:bg-gray-700 active:bg-gray-600 cursor-pointer"
-        onClick={() => setCurrentPage('dashboard')}
+        onClick={buka ? () => setCurrentPage('Dashboard') : toggleSidebar}
       >
         <img className={`${buka ? 'm-x-0' : 'mx-auto'}`} src={Dashboard} alt="Dashboard Icon" />
         {buka && (
@@ -55,7 +55,7 @@ const Sidebar = ({ buka, toggleSidebar, setCurrentPage }) => {
       </div>
 
       <div className="button-sidebar flex flex-row space-x-4 items-center p-4 mt-4 w-full hover:bg-gray-700 active:bg-gray-600 cursor-pointer"
-        onClick={() => setCurrentPage('analytic')}
+        onClick={buka ? () => setCurrentPage('Analytic') : toggleSidebar}
       >
         <img className={`${buka ? 'm-x-0' : 'mx-auto'}`} src={Analytic} alt="Analytic Icon" />
         {buka && (
@@ -71,7 +71,7 @@ const Sidebar = ({ buka, toggleSidebar, setCurrentPage }) => {
       </div>
 
       <div className="button-sidebar flex flex-row space-x-4 items-center p-4 mt-4 w-full hover:bg-gray-700 active:bg-gray-600 cursor-pointer"
-        onClick={() => setCurrentPage('kalibrasi')}
+        onClick={buka ? () => setCurrentPage('Kalibrasi') : toggleSidebar}
       >
         <img className={`${buka ? 'm-x-0' : 'mx-auto'}`} src={Kalibrasi} alt="Kalibrasi Icon" />
         {buka && (

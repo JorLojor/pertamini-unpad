@@ -8,7 +8,7 @@ import Kalibrasi from './pages/kalibrasi';
 
 function App() {
   const [buka, setBuka] = useState(false);
-  const [currentPage, setCurrentPage] = useState('dashboard'); // Set default page to 'dashboard'
+  const [currentPage, setCurrentPage] = useState('dashboard');
 
   const toggleSidebar = () => {
     setBuka(!buka);
@@ -16,11 +16,11 @@ function App() {
 
   const renderPage = () => {
     switch (currentPage) {
-      case 'dashboard':
+      case 'Dashboard':
         return <Dashboard />;
-      case 'analytic':
+      case 'Analytic':
         return <Analytic />;
-      case 'kalibrasi':
+      case 'Kalibrasi':
         return <Kalibrasi />;
       default:
         return <Dashboard />; 
@@ -29,7 +29,7 @@ function App() {
 
   return (
     <>
-      <Header buka={buka} toggleSidebar={toggleSidebar} />
+      <Header buka={buka} toggleSidebar={toggleSidebar} title ={ currentPage} />
       <div
         className="fixed h-full"
         style={{

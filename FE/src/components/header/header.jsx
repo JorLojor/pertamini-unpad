@@ -4,7 +4,7 @@ import { IoClose } from "react-icons/io5";
 import propTypes from "prop-types";
 import { motion } from "framer-motion";
 
-const Header = ({ buka, toggleSidebar }) => {
+const Header = ({ buka, toggleSidebar, title }) => {
      return (
           <header
                className={`bg-white fixed top-0 left-0 text-white p-4 flex justify-between items-center w-full border-b border-b-zinc-200`}>
@@ -35,7 +35,7 @@ const Header = ({ buka, toggleSidebar }) => {
                                    </motion.div>
                               )}
                          </motion.button>
-                         <div className="text-[28px] font-bold ps-3 text-black">Dashboard</div>
+                         <div className="text-[28px] font-bold ps-3 text-black">{title}</div>
                     </div>
                </motion.div>
           </header>
@@ -45,6 +45,7 @@ const Header = ({ buka, toggleSidebar }) => {
 Header.propTypes = {
      buka: propTypes.bool.isRequired,
      toggleSidebar: propTypes.func.isRequired,
+     title: propTypes.string.isRequired,
 };
 
 export default Header;
