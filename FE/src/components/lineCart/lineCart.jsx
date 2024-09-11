@@ -1,7 +1,7 @@
 import ReactApexChart from "react-apexcharts";
 import PropTypes from "prop-types";
 
-const LineChart = ({ chartData }) => {
+const LineChart = ({ chartData, title }) => {
      const chartOptions = {
           chart: {
                height: 350,
@@ -10,7 +10,10 @@ const LineChart = ({ chartData }) => {
           },
           dataLabels: { enabled: false },
           stroke: { curve: "straight" },
-          title: { text: "Chart Data", align: "left" },
+          title: {
+               text: title || "Chart Data",
+               align: "left",
+          },
           grid: {
                row: {
                     colors: ["#f3f3f3", "transparent"],
@@ -21,10 +24,22 @@ const LineChart = ({ chartData }) => {
                type: "category",
                categories: chartData.map((data) => data.x),
           },
+          tooltip: {
+               enabled: true,
+               x: {
+                    format: "HH:mm:ss",
+               },
+          },
      };
 
      return (
           <div className="bg-white p-6  rounded-lg">
+               {chartData.length === 0 && (
+                    <p className="text-center">No data available</p>
+               )}
+               {chartData[0] === "kosong" && (
+                    <p className="text-center">Data is empty</p>
+               )}
                <ReactApexChart
                     options={chartOptions}
                     series={[
@@ -42,6 +57,7 @@ const LineChart = ({ chartData }) => {
 
 LineChart.propTypes = {
      chartData: PropTypes.array,
+     title: PropTypes.string,
 };
 
 export default LineChart;

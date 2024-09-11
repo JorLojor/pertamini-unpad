@@ -10,6 +10,7 @@ const Dashboard = () => {
      const [startDate, setStartDate] = useState("");
      const [endDate, setEndDate] = useState("");
      const [selectedType, setSelectedType] = useState("dryness");
+     const [selectedTitle, setSelectedTitle] = useState("Chart Data");
 
      const fetchChartData = async (type) => {
           try {
@@ -22,6 +23,12 @@ const Dashboard = () => {
                     `https://backend-agustrisa.as1.pitunnel.net/api/dataGrafik/${type}?${params.toString()}`
                );
                const data = await response.json();
+               // jika data kosong
+               if (data.length === 0) {
+                    setChartData(["kosong"]);
+                    setLoading(false);
+                    return;
+               }
 
                const formattedData = data.map((item) => ({
                     x: new Date(item.timestamp).toLocaleDateString(),
@@ -64,9 +71,10 @@ const Dashboard = () => {
           return value;
      };
 
-     const handleClick = (idx, type) => {
+     const handleClick = (idx, type, title) => {
           setActiveIdx((prevIdx) => (prevIdx === idx ? null : idx));
           setSelectedType(type);
+          setSelectedTitle(title);
           fetchChartData(type);
      };
 
@@ -83,7 +91,7 @@ const Dashboard = () => {
                          trendData={generateRandomValue()}
                          idx={0}
                          activeIdx={activeIdx}
-                         onClick={() => handleClick(0, "dryness")}
+                         onClick={() => handleClick(0, "dryness", "Dryness")}
                     />
                     <CardDashboard
                          titleCard="Suhu"
@@ -91,7 +99,7 @@ const Dashboard = () => {
                          trendData={generateRandomValue()}
                          idx={1}
                          activeIdx={activeIdx}
-                         onClick={() => handleClick(1, "suhu")}
+                         onClick={() => handleClick(1, "suhu", "Suhu")}
                     />
                     <CardDashboard
                          titleCard="Tekanan"
@@ -99,7 +107,7 @@ const Dashboard = () => {
                          trendData={generateRandomValue()}
                          idx={2}
                          activeIdx={activeIdx}
-                         onClick={() => handleClick(2, "tekanan")}
+                         onClick={() => handleClick(2, "tekanan", "Tekanan")}
                     />
                     <CardDashboard
                          titleCard="Flow"
@@ -107,7 +115,7 @@ const Dashboard = () => {
                          trendData={generateRandomValue()}
                          idx={3}
                          activeIdx={activeIdx}
-                         onClick={() => handleClick(3, "flow")}
+                         onClick={() => handleClick(3, "flow", "Flow")}
                     />
                     <CardDashboard
                          titleCard="Daya"
@@ -115,7 +123,7 @@ const Dashboard = () => {
                          trendData={generateRandomValue()}
                          idx={4}
                          activeIdx={activeIdx}
-                         onClick={() => handleClick(4, "daya")}
+                         onClick={() => handleClick(4, "daya", "Daya")}
                     />
                </div>
                <div className="pt-10 flex-col">
@@ -134,10 +142,13 @@ const Dashboard = () => {
                               <input
                                    type="date"
                                    className="border-2 border-gray-300 rounded-lg p-1 ml-2"
-                                   value={endDate}
+                                   //  default nya hari ini atau tanggal sekarang
+                                   value={
+                                        endDate ||
+                                        new Date().toISOString().split("T")[0]
+                                   }
                                    onChange={(e) => setEndDate(e.target.value)}
                               />
-                              {/* tombol konfirmasi */}
                               <button
                                    className="bg-blue-500 text-white rounded-lg p-2 ml-2"
                                    onClick={handleConfirmSorting}>
@@ -149,7 +160,10 @@ const Dashboard = () => {
                     {loading ? (
                          <p>Loading...</p>
                     ) : (
-                         <LineChart chartData={chartData} />
+                         <LineChart
+                              chartData={chartData}
+                              title={selectedTitle}
+                         />
                     )}
                </div>
           </>
