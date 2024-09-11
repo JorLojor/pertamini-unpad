@@ -15,14 +15,22 @@ const Sidebar = ({ buka, toggleSidebar, setCurrentPage }) => {
     setLogoutModal(false);
   };
 
+  const handleClickMenu = (menu) => {
+    if (buka) {
+      setCurrentPage(menu);
+    }
+    toggleSidebar();
+  };
+
   return (
     <motion.div
       animate={{ width: buka ? '21.5rem' : '6.25rem' }}
       transition={{ duration: 0.5 }}
       className={`sidebar bg-gray-800 h-full flex flex-col fixed top-0 left-0`}
-      onClick={buka ? null : toggleSidebar}
+      onClick={!buka ? toggleSidebar : null}
     >
-      <div className="button-sidebar flex flex-row space-x-4 items-center p-4 w-full hover:bg-gray-700 active:bg-gray-600 cursor-pointer border-b border-b-zinc-600"
+      <div 
+        className="button-sidebar flex flex-row space-x-4 items-center p-4 w-full hover:bg-gray-700 active:bg-gray-600 cursor-pointer border-b border-b-zinc-600"
         onClick={() => setCurrentPage('dashboard')}
       >
         <FaCircle size={60} className="text-white" />
@@ -38,10 +46,11 @@ const Sidebar = ({ buka, toggleSidebar, setCurrentPage }) => {
         )}
       </div>
 
-      <div className="button-sidebar flex flex-row space-x-4 items-center p-4 mt-8 w-full hover:bg-gray-700 active:bg-gray-600 cursor-pointer"
-        onClick={buka ? () => setCurrentPage('Dashboard') : toggleSidebar}
+      <div 
+        className="button-sidebar flex flex-row space-x-4 items-center p-4 mt-8 w-full hover:bg-gray-700 active:bg-gray-600 cursor-pointer"
+        onClick={() => handleClickMenu('Dashboard')}
       >
-        <img className={`${buka ? 'm-x-0' : 'mx-auto'}`} src={Dashboard} alt="Dashboard Icon" />
+        <img className={`${buka ? 'mx-0' : 'mx-auto'}`} src={Dashboard} alt="Dashboard Icon" />
         {buka && (
           <motion.p
             initial={{ x: -20, opacity: 0 }}
@@ -54,10 +63,11 @@ const Sidebar = ({ buka, toggleSidebar, setCurrentPage }) => {
         )}
       </div>
 
-      <div className="button-sidebar flex flex-row space-x-4 items-center p-4 mt-4 w-full hover:bg-gray-700 active:bg-gray-600 cursor-pointer"
-        onClick={buka ? () => setCurrentPage('Analytic') : toggleSidebar}
+      <div 
+        className="button-sidebar flex flex-row space-x-4 items-center p-4 mt-4 w-full hover:bg-gray-700 active:bg-gray-600 cursor-pointer"
+        onClick={() => handleClickMenu('Analytic')}
       >
-        <img className={`${buka ? 'm-x-0' : 'mx-auto'}`} src={Analytic} alt="Analytic Icon" />
+        <img className={`${buka ? 'mx-0' : 'mx-auto'}`} src={Analytic} alt="Analytic Icon" />
         {buka && (
           <motion.p
             initial={{ x: -20, opacity: 0 }}
@@ -70,10 +80,11 @@ const Sidebar = ({ buka, toggleSidebar, setCurrentPage }) => {
         )}
       </div>
 
-      <div className="button-sidebar flex flex-row space-x-4 items-center p-4 mt-4 w-full hover:bg-gray-700 active:bg-gray-600 cursor-pointer"
-        onClick={buka ? () => setCurrentPage('Kalibrasi') : toggleSidebar}
+      <div 
+        className="button-sidebar flex flex-row space-x-4 items-center p-4 mt-4 w-full hover:bg-gray-700 active:bg-gray-600 cursor-pointer"
+        onClick={() => handleClickMenu('Kalibrasi')}
       >
-        <img className={`${buka ? 'm-x-0' : 'mx-auto'}`} src={Kalibrasi} alt="Kalibrasi Icon" />
+        <img className={`${buka ? 'mx-0' : 'mx-auto'}`} src={Kalibrasi} alt="Kalibrasi Icon" />
         {buka && (
           <motion.p
             initial={{ x: -20, opacity: 0 }}
@@ -86,10 +97,11 @@ const Sidebar = ({ buka, toggleSidebar, setCurrentPage }) => {
         )}
       </div>
 
-      <div className="button-sidebar flex flex-row space-x-4 items-center p-4 mt-4 w-full hover:bg-gray-700 active:bg-gray-600 cursor-pointer"
+      <div 
+        className="button-sidebar flex flex-row space-x-4 items-center p-4 mt-4 w-full hover:bg-gray-700 active:bg-gray-600 cursor-pointer"
         onClick={() => setLogoutModal(true)}
       >
-        <img className={`${buka ? 'm-x-0' : 'mx-auto'}`} src={Logout} alt="Logout Icon" />
+        <img className={`${buka ? 'mx-0' : 'mx-auto'}`} src={Logout} alt="Logout Icon" />
         {buka && (
           <motion.p
             initial={{ x: -20, opacity: 0 }}
@@ -102,7 +114,7 @@ const Sidebar = ({ buka, toggleSidebar, setCurrentPage }) => {
         )}
       </div>
 
-      {logoutModal && <Modal type={2} close={handleCloseModal} />}
+      {logoutModal && <Modal type={1} close={handleCloseModal} />}
     </motion.div>
   );
 };
@@ -110,7 +122,7 @@ const Sidebar = ({ buka, toggleSidebar, setCurrentPage }) => {
 Sidebar.propTypes = {
   buka: propTypes.bool.isRequired,
   toggleSidebar: propTypes.func.isRequired,
-  setCurrentPage: propTypes.func.isRequired, 
+  setCurrentPage: propTypes.func.isRequired,
 };
 
 export default Sidebar;

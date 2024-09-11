@@ -31,18 +31,17 @@ function App() {
     <>
       <Header buka={buka} toggleSidebar={toggleSidebar} title ={ currentPage} />
       <div
-        className="fixed h-full"
+        className="fixed h-full z-10"
         style={{
           position: "absolute",
           top: "0",
           left: "0",
-          zIndex: "10000000",
         }}
       >
         <Sidebar buka={buka} toggleSidebar={toggleSidebar} setCurrentPage={setCurrentPage} />
       </div>
 
-      <div className="main-content ml-[6.25rem] w-auto px-8 bg-[#F4F6F6]">
+      <div className="main-content ml-[6.25rem] w-auto px-8 bg-[#F4F6F6] min-h-[100vh]">
         {renderPage()}
       </div>
     </>
