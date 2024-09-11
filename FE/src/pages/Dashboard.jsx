@@ -5,6 +5,36 @@ import LineChart from "../components/lineCart/lineCart";
 const Dashboard = () => {
      const [dataCard, setDataCard] = useState({});
      const [activeIdx, setActiveIdx] = useState(null);
+     const [chartData, setChartData] = useState([]);
+     const [loading, setLoading] = useState(false);
+     const [startDate, setStartDate] = useState("");
+     const [endDate, setEndDate] = useState("");
+     const [selectedType, setSelectedType] = useState("dryness");
+
+     const fetchChartData = async (type) => {
+          try {
+               setLoading(true);
+               const params = new URLSearchParams({
+                    startDate: startDate || "",
+                    endDate: endDate || "",
+               });
+               const response = await fetch(
+                    `https://backend-agustrisa.as1.pitunnel.net/api/dataGrafik/${type}?${params.toString()}`
+               );
+               const data = await response.json();
+
+               const formattedData = data.map((item) => ({
+                    x: new Date(item.timestamp).toLocaleDateString(),
+                    y: item.value,
+               }));
+
+               setChartData(formattedData);
+               setLoading(false);
+          } catch (error) {
+               console.error("Error fetching chart data:", error);
+               setLoading(false);
+          }
+     };
 
      const updateRandomData = () => {
           const drynessValue = generateRandomValue();
@@ -34,8 +64,14 @@ const Dashboard = () => {
           return value;
      };
 
-     const handleClick = (idx) => {
+     const handleClick = (idx, type) => {
           setActiveIdx((prevIdx) => (prevIdx === idx ? null : idx));
+          setSelectedType(type);
+          fetchChartData(type);
+     };
+
+     const handleConfirmSorting = () => {
+          fetchChartData(selectedType);
      };
 
      return (
@@ -47,7 +83,7 @@ const Dashboard = () => {
                          trendData={generateRandomValue()}
                          idx={0}
                          activeIdx={activeIdx}
-                         onClick={handleClick}
+                         onClick={() => handleClick(0, "dryness")}
                     />
                     <CardDashboard
                          titleCard="Suhu"
@@ -55,7 +91,7 @@ const Dashboard = () => {
                          trendData={generateRandomValue()}
                          idx={1}
                          activeIdx={activeIdx}
-                         onClick={handleClick}
+                         onClick={() => handleClick(1, "suhu")}
                     />
                     <CardDashboard
                          titleCard="Tekanan"
@@ -63,7 +99,7 @@ const Dashboard = () => {
                          trendData={generateRandomValue()}
                          idx={2}
                          activeIdx={activeIdx}
-                         onClick={handleClick}
+                         onClick={() => handleClick(2, "tekanan")}
                     />
                     <CardDashboard
                          titleCard="Flow"
@@ -71,7 +107,7 @@ const Dashboard = () => {
                          trendData={generateRandomValue()}
                          idx={3}
                          activeIdx={activeIdx}
-                         onClick={handleClick}
+                         onClick={() => handleClick(3, "flow")}
                     />
                     <CardDashboard
                          titleCard="Daya"
@@ -79,11 +115,42 @@ const Dashboard = () => {
                          trendData={generateRandomValue()}
                          idx={4}
                          activeIdx={activeIdx}
-                         onClick={handleClick}
+                         onClick={() => handleClick(4, "daya")}
                     />
                </div>
-               <div className="pt-10">
-                    <LineChart />
+               <div className="pt-10 flex-col">
+                    <div className="bg-white rounded-lg p-4 mb-5 flex items-center justify-between">
+                         <p>Grafik</p>
+                         <div className="flex items-center">
+                              <p>Sorting by date</p>
+                              <input
+                                   type="date"
+                                   className="border-2 border-gray-300 rounded-lg p-1 ml-2"
+                                   value={startDate}
+                                   onChange={(e) =>
+                                        setStartDate(e.target.value)
+                                   }
+                              />
+                              <input
+                                   type="date"
+                                   className="border-2 border-gray-300 rounded-lg p-1 ml-2"
+                                   value={endDate}
+                                   onChange={(e) => setEndDate(e.target.value)}
+                              />
+                              {/* tombol konfirmasi */}
+                              <button
+                                   className="bg-blue-500 text-white rounded-lg p-2 ml-2"
+                                   onClick={handleConfirmSorting}>
+                                   Konfirmasi Sorting
+                              </button>
+                         </div>
+                    </div>
+
+                    {loading ? (
+                         <p>Loading...</p>
+                    ) : (
+                         <LineChart chartData={chartData} />
+                    )}
                </div>
           </>
      );
