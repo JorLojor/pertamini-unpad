@@ -27,7 +27,6 @@ const LineChart = () => {
                     height: 350,
                     type: line,
                     zoom: { enabled: false },
-                    background: "#f4f4f4",
                },
                dataLabels: { enabled: false },
                stroke: { curve: "straight" },
@@ -55,8 +54,8 @@ const LineChart = () => {
      });
 
      return (
-          <div>
-               <div>
+          <div className="bg-white p-6">
+               <div >
                     <ReactApexChart
                          options={chartData.options}
                          series={chartData.series}
