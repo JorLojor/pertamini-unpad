@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import CardDashboard from "../components/cardDashboard/cardDashboard";
 import LineChart from "../components/lineCart/lineCart";
+import TableData from "../components/table/tableData";
 
 const Dashboard = () => {
      const [dataCard, setDataCard] = useState({});
@@ -166,8 +167,17 @@ const Dashboard = () => {
                          />
                     )}
                </div>
+               <div className="pt-10 flex-col">
+                    <TableData />
+               </div>
           </>
      );
 };
 
 export default Dashboard;
+
+
+
+
+
+

@@ -26,7 +26,7 @@ const LineChart = ({ chartData, title }) => {
           },
           tooltip: {
                enabled: true,
-               x: {
+               y: {
                     format: "HH:mm:ss",
                },
           },
