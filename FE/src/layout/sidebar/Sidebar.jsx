@@ -1,6 +1,7 @@
 import propTypes from "prop-types";
 import { motion } from "framer-motion";
 import { useState } from "react";
+import {FaCircle} from "react-icons/fa"
 import Dashboard from "../../assets/dashboard.svg";
 import Analytic from "../../assets/analytic.svg";
 import Kalibrasi from "../../assets/kalibrasi.svg";
@@ -33,17 +34,7 @@ const Sidebar = ({ buka, toggleSidebar, setCurrentPage }) => {
         className="button-sidebar flex flex-row space-x-4 items-center p-4 w-full hover:bg-gray-700 active:bg-gray-600 cursor-pointer border-b border-b-zinc-600"
         onClick={() => setCurrentPage('dashboard')}
       >
-        <FaCircle size={60} className="text-white" />
-        {buka && (
-          <motion.p
-            initial={{ x: -20, opacity: 0 }}
-            animate={{ x: 0, opacity: 1 }}
-            transition={{ duration: 0.5 }}
-            className="text-white text-2xl"
-          >
-            SMS Tech
-          </motion.p>
-        )}
+        {buka ? <img src={Logo} alt="logo"/> : <img src={logoTutup} className="w-fit" alt="logo"/>}
       </div>
 
       <div 
