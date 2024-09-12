@@ -1,5 +1,4 @@
-import { FaCircle } from "react-icons/fa";
-import propTypes from 'prop-types';
+import propTypes from "prop-types";
 import { motion } from "framer-motion";
 import { useState } from "react";
 import Dashboard from "../../assets/dashboard.svg";
@@ -7,9 +6,10 @@ import Analytic from "../../assets/analytic.svg";
 import Kalibrasi from "../../assets/kalibrasi.svg";
 import Logout from "../../assets/Logout.svg";
 import Modal from "../../components/modal/modal";
-
+import Logo from "../../assets/Panjang-Putih.svg";
+import logoTutup from "../../assets/SMS-Putih.svg";
 const Sidebar = ({ buka, toggleSidebar, setCurrentPage }) => {
-  const [logoutModal, setLogoutModal] = useState(false);
+     const [logoutModal, setLogoutModal] = useState(false);
 
   const handleCloseModal = () => {
     setLogoutModal(false);
@@ -122,7 +122,7 @@ const Sidebar = ({ buka, toggleSidebar, setCurrentPage }) => {
 Sidebar.propTypes = {
   buka: propTypes.bool.isRequired,
   toggleSidebar: propTypes.func.isRequired,
-  setCurrentPage: propTypes.func.isRequired,
+  setCurrentPage: propTypes.func.isRequired, 
 };
 
 export default Sidebar;
