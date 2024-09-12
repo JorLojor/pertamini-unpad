@@ -5,7 +5,7 @@ import Dashboard from "../../assets/dashboard.svg";
 import Analytic from "../../assets/analytic.svg";
 import Kalibrasi from "../../assets/kalibrasi.svg";
 import Logout from "../../assets/Logout.svg";
-import Modal from "../../components/modal/modal";
+import Modal from "../../components/modal/Modal";
 import Logo from "../../assets/Panjang-Putih.svg";
 import logoTutup from "../../assets/SMS-Putih.svg";
 const Sidebar = ({ buka, toggleSidebar, setCurrentPage }) => {

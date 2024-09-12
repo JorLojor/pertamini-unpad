@@ -2,7 +2,7 @@ import { useState } from 'react';
 import Suhu from '../assets/SuhuIcon.svg';
 import Flow from '../assets/FlowIcon.svg';
 import Tekanan from '../assets/TekananIcon.svg';
-import Modal from '../components/modal/modal';
+import Modal from '../components/modal/Modal';
 
 const Kalibrasi = () => {
   const [suhu, setSuhu] = useState({ min: 0, max: 400 });
