@@ -4,11 +4,17 @@
   padding: 2rem; */
   text-align: center;
 }
+<<<<<<< HEAD
 
 body {
   background: #F4F6F6;
 }
 
+=======
+body{
+  background-color:#F4F6F6;
+}
+>>>>>>> ab501c20f7dadf191b80f3aae20e96969e280f47
 .logo {
   height: 6em;
   padding: 1.5em;
