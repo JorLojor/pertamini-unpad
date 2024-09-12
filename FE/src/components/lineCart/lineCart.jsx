@@ -55,7 +55,7 @@ const LineChart = () => {
 
      return (
           <div className="bg-white p-6">
-               <div >
+               <div>
                     <ReactApexChart
                          options={chartData.options}
                          series={chartData.series}
