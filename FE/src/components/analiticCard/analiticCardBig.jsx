@@ -12,7 +12,7 @@ import FlowIconWhite from "../../assets/FlowIconWhite.svg";
 import DayaIcon from "../../assets/DayaIcon.svg";
 import DayaIconWhite from "../../assets/DayaIconWhite.svg";
 
-const CardDashboard = ({
+const AnaliticCardBig = ({
      titleCard,
      dataCard,
      trendData,
@@ -125,7 +125,7 @@ const CardDashboard = ({
      );
 };
 
-CardDashboard.propTypes = {
+AnaliticCardBig.propTypes = {
      titleCard: PropTypes.string,
      dataCard: PropTypes.string,
      trendData: PropTypes.string,
@@ -134,4 +134,4 @@ CardDashboard.propTypes = {
      onClick: PropTypes.func,
 };
 
-export default CardDashboard;
+export default AnaliticCardBig;
