@@ -1,15 +1,26 @@
-import React, { Fragment, useState } from 'react';
+import React, { useState } from 'react';
 import Success from '../../assets/success.svg';
 import Warning from '../../assets/warning.svg';
 import { motion } from 'framer-motion';
+import { useDispatch } from 'react-redux';
+import { logout } from '../../slice/userSlice'; // Import logout action
+import { useNavigate } from 'react-router-dom'; // Import navigate for redirection
 
 const Modal = ({ type, close, data }) => {
     const [loading, setLoading] = useState(false);
     const [success, setSuccess] = useState(false);
+    const dispatch = useDispatch(); // Use dispatch for Redux actions
+    const navigate = useNavigate(); // Use navigate for redirection
 
     const animationVariants = {
         hidden: { opacity: 0, scale: 0.5 },
         visible: { opacity: 1, scale: 1, transition: { duration: 0.5 } },
+    };
+
+    const handleLogout = () => {
+        dispatch(logout()); // Dispatch the logout action to clear user data
+        navigate('/login'); // Redirect to the login page after logout
+        close(); // Close the modal
     };
 
     const handleKalibrasi = () => {
@@ -32,7 +43,7 @@ const Modal = ({ type, close, data }) => {
                     <h6 className="text-lg font-semibold">Apakah Anda Yakin Ingin Keluar?</h6>
                     <div className="mt-4 flex justify-center space-x-4">
                         <button className="btn w-96 h-14 border-2 bg-white text-[#002E1A] px-4 py-2 rounded" onClick={close}>Kembali</button>
-                        <button className="btn w-96 h-14 bg-[#262937] text-white px-4 py-2 rounded">Log Out</button>
+                        <button className="btn w-96 h-14 bg-[#262937] text-white px-4 py-2 rounded" onClick={handleLogout}>Log Out</button>
                     </div>
                 </div>
             </>
@@ -99,7 +110,7 @@ const Modal = ({ type, close, data }) => {
                     <h6 className="text-lg font-semibold">Sensor Suhu dikalibrasi ke {data?.value?.min} - {data?.value?.max}</h6>
                     <div className="mt-4 flex justify-center space-x-4">
                         <button className="btn w-96 h-14 border-2 bg-white text-[#002E1A] px-4 py-2 rounded" onClick={close}>Tutup</button>
-                        <button className="btn w-96 h-14 bg-[#262937] text-white px-4 py-2 rounded">Kembali ke Dashboard</button>
+                        <button className="btn w-96 h-14 bg-[#262937] text-white px-4 py-2 rounded" onClick={close}>Kembali ke Dashboard</button>
                     </div>
                 </div>
             </>

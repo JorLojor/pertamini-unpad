@@ -7,7 +7,7 @@ import { motion } from "framer-motion";
 const Header = ({ buka, toggleSidebar, title }) => {
      return (
           <header
-               className={`bg-white fixed top-0 left-0 text-white p-4 flex justify-between items-center w-full border-b border-b-zinc-200`}>
+               className={`bg-white fixed top-0 left-0 text-white p-4 flex justify-between items-center w-full border-b border-b-zinc-200 z-10`}>
                <motion.div
                     animate={{ marginLeft: buka ? '17.5rem' : '2.25rem' }}
                     transition={{ duration: 0.5 }}>

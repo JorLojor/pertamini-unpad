@@ -2,7 +2,7 @@ import AnaliticCardBig from "../components/analiticCard/analiticCardBig";
 import { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 
-const Analytic = ({ title }) => {
+const Analytic = ({ sensor }) => {
      // endpoint untuk dryness : https://backend-agustrisa.as1.pitunnel.net/api/trend/dryness?period=now
      // endpint untuk suhu : https://backend-agustrisa.as1.pitunnel.net/api/trend/suhu?period=now
      // endpoint untuk tekanan : https://backend-agustrisa.as1.pitunnel.net/api/trend/tekanan?period=now
@@ -113,7 +113,7 @@ const Analytic = ({ title }) => {
 };
 
 Analytic.propTypes = {
-     title: PropTypes.string,
+     sensor: PropTypes.string,
 };
 
 export default Analytic;
