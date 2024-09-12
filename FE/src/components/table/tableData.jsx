@@ -13,7 +13,7 @@ const TableData = () => {
           new Date().toISOString().split("T")[0]
      );
      const [sortField, setSortField] = useState(null);
-     const [sortOrder, setSortOrder] = useState(true); 
+     const [sortOrder, setSortOrder] = useState(true);
 
      const rowsPerPage = 10;
 
@@ -23,10 +23,15 @@ const TableData = () => {
                const url = `https://backend-agustrisa.as1.pitunnel.net/api/history?startDate=${startDate}&endDate=${endDate}`;
                const response = await fetch(url);
                const result = await response.json();
-               setData(result);
+               if (Array.isArray(result)) {
+                    setData(result);
+               } else {
+                    setData([]);
+               }
                setLoading(false);
           } catch (error) {
                console.error("Error fetching data:", error);
+               setData([]);
                setLoading(false);
           }
      };
@@ -52,13 +57,61 @@ const TableData = () => {
           });
           setData(sortedData);
           setSortField(field);
-          setSortOrder(!sortOrder); 
+          setSortOrder(!sortOrder);
      };
 
      const indexOfLastRow = currentPage * rowsPerPage;
      const indexOfFirstRow = indexOfLastRow - rowsPerPage;
-     const currentRows = data.slice(indexOfFirstRow, indexOfLastRow);
+     const currentRows = Array.isArray(data)
+          ? data.slice(indexOfFirstRow, indexOfLastRow)
+          : [];
      const totalPages = Math.ceil(data.length / rowsPerPage);
+
+     const renderPagination = () => {
+          const pageNumbers = [];
+
+          if (totalPages <= 4) {
+               for (let i = 1; i <= totalPages; i++) {
+                    pageNumbers.push(i);
+               }
+          } else {
+               pageNumbers.push(1);
+
+               if (currentPage > 2) {
+                    pageNumbers.push("...");
+               }
+
+               if (currentPage !== 1 && currentPage !== totalPages) {
+                    pageNumbers.push(currentPage);
+               }
+
+               if (currentPage < totalPages - 1) {
+                    pageNumbers.push("...");
+               }
+
+               pageNumbers.push(totalPages);
+          }
+
+          return (
+               <div className="flex bg-gray-100 flex-row border-black border rounded-xl">
+                    {pageNumbers.map((page, index) => (
+                         <button
+                              key={index}
+                              onClick={() => {
+                                   if (page !== "...") handlePageChange(page);
+                              }}
+                              className={`px-4 py-2 rounded-xl ${
+                                   page === currentPage
+                                        ? "bg-black text-white"
+                                        : ""
+                              }`}
+                              disabled={page === "..."}>
+                              {page}
+                         </button>
+                    ))}
+               </div>
+          );
+     };
 
      return (
           <div className="bg-white p-6 rounded-lg">
@@ -238,28 +291,7 @@ const TableData = () => {
                                         <p>Previous</p>
                                    </button>
 
-                                   <div className="flex bg-gray-100 flex-row border-black border rounded-xl">
-                                        {Array.from(
-                                             { length: totalPages },
-                                             (_, i) => (
-                                                  <button
-                                                       key={i + 1}
-                                                       onClick={() =>
-                                                            handlePageChange(
-                                                                 i + 1
-                                                            )
-                                                       }
-                                                       className={`px-4 py-2 rounded-xl ${
-                                                            i + 1 ===
-                                                            currentPage
-                                                                 ? "bg-black text-white rounded-lg"
-                                                                 : "bg-none"
-                                                       }`}>
-                                                       {i + 1}
-                                                  </button>
-                                             )
-                                        )}
-                                   </div>
+                                   {renderPagination()}
 
                                    <button
                                         disabled={currentPage === totalPages}
