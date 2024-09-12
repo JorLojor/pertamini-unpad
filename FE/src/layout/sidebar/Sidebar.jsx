@@ -33,7 +33,7 @@ const Sidebar = ({ buka, toggleSidebar, setCurrentPage }) => {
         className="button-sidebar flex flex-row space-x-4 items-center p-4 w-full hover:bg-gray-700 active:bg-gray-600 cursor-pointer border-b border-b-zinc-600"
         onClick={() => setCurrentPage('dashboard')}
       >
-        {buka ? <img src={Logo} alt="logo"/> : <img src={logoTutup} className="w-fit" alt="logo"/>}
+        {buka ? <img src={Logo} className="w-max h-[60px]" alt="logo"/> : <img src={logoTutup} className="w-max h-[60px]" alt="logo"/>}
       </div>
 
       <div 
