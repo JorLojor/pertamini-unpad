@@ -1,7 +1,6 @@
 import propTypes from "prop-types";
 import { motion } from "framer-motion";
 import { useState } from "react";
-import {FaCircle} from "react-icons/fa"
 import Dashboard from "../../assets/dashboard.svg";
 import Analytic from "../../assets/analytic.svg";
 import Kalibrasi from "../../assets/kalibrasi.svg";
