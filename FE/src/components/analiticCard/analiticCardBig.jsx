@@ -65,16 +65,18 @@ const AnaliticCardBig = ({
      };
 
      const aturUkuran = (dataCard) => {
+          console.log(typeof dataCard); //number
           if (!dataCard) {
                return "text-5xl";
           }
           const dataString = dataCard.toString();
+          console.log(typeof dataString); //string
+
+          //   potong string jadi 5 karakter pertama 1.139293929323 jadi 1.139
           if (dataString.length > 5) {
-               return "text-4xl";
-          } else if (dataString.length > 7) {
-               return "text-2xl";
-          } else {
-               return "text-5xl";
+               //   potong string jadi 5 karakter pertama 1.139293929323 jadi 1.139
+               const potongAjg = dataString.slice(0, 5);
+               return potongAjg;
           }
      };
 
@@ -104,11 +106,8 @@ const AnaliticCardBig = ({
                     </p>
                </div>
                <div className="flex flex-row justify-between items-center p-4 w-full">
-                    <p
-                         className={`flex-row font-bold ${aturUkuran(
-                              dataCard
-                         )} text-5xl`}>
-                         {dataCard}
+                    <p className="flex-row font-bold  text-5xl">
+                         {aturUkuran(dataCard)}
                          <small className="text-3xl">{symbolDesicion()}</small>
                     </p>
                     <img
@@ -127,7 +126,7 @@ const AnaliticCardBig = ({
 
 AnaliticCardBig.propTypes = {
      titleCard: PropTypes.string,
-     dataCard: PropTypes.string,
+     dataCard: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
      trendData: PropTypes.string,
      idx: PropTypes.number,
      activeIdx: PropTypes.number,
