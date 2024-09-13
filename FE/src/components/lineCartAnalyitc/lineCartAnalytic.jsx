@@ -1,7 +1,7 @@
 import ReactApexChart from "react-apexcharts";
 import PropTypes from "prop-types";
 
-const LineChart = ({ chartData, title }) => {
+const LineChartAnalytic = ({ chartData, title }) => {
      const chartOptions = {
           chart: {
                height: 350,
@@ -21,31 +21,28 @@ const LineChart = ({ chartData, title }) => {
                },
           },
           xaxis: {
-               type: "category",
-               categories: chartData.map((data) => data.x),
+               type: "datetime",
+               categories: chartData.map((data) => data.timestamp),
           },
           tooltip: {
                enabled: true,
-               y: {
-                    format: "HH:mm:ss",
+               x: {
+                    format: "dd MMM HH:mm:ss",
                },
           },
      };
 
      return (
-          <div className="bg-white p-6  rounded-lg">
+          <div className="bg-white p-6 rounded-lg">
                {chartData.length === 0 && (
                     <p className="text-center">No data available</p>
-               )}
-               {chartData[0] === "kosong" && (
-                    <p className="text-center">Data is empty</p>
                )}
                <ReactApexChart
                     options={chartOptions}
                     series={[
                          {
                               name: "Value",
-                              data: chartData.map((data) => data.y),
+                              data: chartData.map((data) => data.value),
                          },
                     ]}
                     type="line"
@@ -55,9 +52,9 @@ const LineChart = ({ chartData, title }) => {
      );
 };
 
-LineChart.propTypes = {
-     chartData: PropTypes.array,
-     title: PropTypes.string,
+LineChartAnalytic.propTypes = {
+     chartData: PropTypes.array.isRequired,
+     title: PropTypes.string.isRequired,
 };
 
-export default LineChart;
+export default LineChartAnalytic;

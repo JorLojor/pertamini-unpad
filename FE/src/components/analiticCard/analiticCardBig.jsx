@@ -17,7 +17,6 @@ const AnaliticCardBig = ({
      dataCard,
      trendData,
      idx,
-     activeIdx,
      onClick,
      dataStatus,
 }) => {
@@ -35,7 +34,7 @@ const AnaliticCardBig = ({
                Flow: [FlowIcon, FlowIconWhite],
                Daya: [DayaIcon, DayaIconWhite],
           };
-          return titles[titleCard] || [FlowIcon, FlowIconWhite]; // Default to Flow icons
+          return titles[titleCard] || [FlowIcon, FlowIconWhite];
      };
 
      const symbolDesicion = () => {
@@ -49,19 +48,16 @@ const AnaliticCardBig = ({
           return symbols[titleCard] || "";
      };
 
-     console.log(dataCard.data);
-     // const formatData = (dataCard) => {
-     //      return dataCard.length > 5 ? dataCard.slice(0, 5) : dataCard;
-     // };
+     const formatData = (dataCard) => {
+          const data =
+               typeof dataCard === "number" ? dataCard.toFixed(2) : dataCard;
+          return data && data.length > 5 ? data.slice(0, 5) : data;
+     };
 
      return (
           <div
                onClick={() => onClick(idx)}
-               className={`mt-3 w-72 col-span-1 shadow-md rounded-lg cursor-pointer transition-colors duration-300 ${
-                    activeIdx === idx
-                         ? "bg-blue-950 text-white"
-                         : "bg-white text-green-950"
-               }`}>
+               className={`w-72 h-80 col-span-1 shadow-md rounded-lg cursor-pointer bg-white text-green-950`}>
                <div className="flex flex-row justify-between items-center p-4 w-full">
                     <p className="text-2xl font-bold">{titleCard}</p>
                     <p
@@ -78,15 +74,11 @@ const AnaliticCardBig = ({
                </div>
                <div className="flex flex-row justify-between items-center p-4 w-full">
                     <p className="text-5xl font-bold">
-                         {formatData(dataCard)}
+                         {formatData(dataCard) || "N/A"}{" "}
                          <small className="text-3xl">{symbolDesicion()}</small>
                     </p>
                     <img
-                         src={
-                              activeIdx === idx
-                                   ? titleDesicion()[1]
-                                   : titleDesicion()[0]
-                         }
+                         src={titleDesicion()[0]}
                          alt="Icon"
                          className="w-9 h-9 ml-2"
                     />
@@ -112,7 +104,6 @@ AnaliticCardBig.propTypes = {
           .isRequired,
      trendData: PropTypes.string.isRequired,
      idx: PropTypes.number.isRequired,
-     activeIdx: PropTypes.number.isRequired,
      onClick: PropTypes.func.isRequired,
      dataStatus: PropTypes.number.isRequired,
 };
