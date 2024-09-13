@@ -42,8 +42,8 @@ const Modal = ({ type, close, data }) => {
                     <img src={Warning} alt="Warning Logo" className="mx-auto mb-4" />
                     <h6 className="text-lg font-semibold">Apakah Anda Yakin Ingin Keluar?</h6>
                     <div className="mt-4 flex justify-center space-x-4">
-                        <button className="btn w-96 h-14 border-2 bg-white text-[#002E1A] px-4 py-2 rounded" onClick={close}>Kembali</button>
-                        <button className="btn w-96 h-14 bg-[#262937] text-white px-4 py-2 rounded" onClick={handleLogout}>Log Out</button>
+                        <button className="btn w-96 h-14 border-2 bg-white text-[#002E1A] px-4 py-2 rounded hover:bg-[#262937] hover:text-[#ffff]" onClick={close}>Kembali</button>
+                        <button className="btn w-96 h-14 border-2 bg-[#262937] text-white px-4 py-2 rounded hover:bg-[#ffff] hover:text-[#002E1A]" onClick={handleLogout}>Log Out</button>
                     </div>
                 </div>
             </>
@@ -75,8 +75,8 @@ const Modal = ({ type, close, data }) => {
                         />
                     </div>
                     <div className="mt-4 flex justify-center space-x-4">
-                        <button className="btn w-96 h-14 border-2 bg-white text-[#002E1A] px-4 py-2 rounded" onClick={close}>Kembali</button>
-                        <button className="btn w-96 h-14 bg-[#262937] text-white px-4 py-2 rounded" onClick={handleKalibrasi}>Ya Kalibrasi</button>
+                        <button className="btn w-96 h-14 border-2 bg-white text-[#002E1A] px-4 py-2 rounded  hover:bg-[#262937] hover:text-[#ffff]" onClick={close}>Kembali</button>
+                        <button className="btn w-96 h-14 border-2 bg-[#262937] text-white px-4 py-2 rounded hover:bg-[#ffff] hover:text-[#002E1A]" onClick={handleKalibrasi}>Ya Kalibrasi</button>
                     </div>
                 </div>
             </>
@@ -106,7 +106,14 @@ const Modal = ({ type, close, data }) => {
                     <p className="pr-4 cursor-pointer" onClick={close}>x</p>
                 </div>
                 <div className="p-6">
-                    <img src={Success} alt="Success Logo" className="mx-auto mb-4" />
+                    <motion.img
+                        src={Success}
+                        alt="Success Logo"
+                        className="mx-auto mb-4"
+                        initial={{ scale: 0 }}
+                        animate={{ scale: 1 }}
+                        transition={{ duration: 0.5 }}
+                    />
                     <h6 className="text-lg font-semibold">Sensor Suhu dikalibrasi ke {data?.value?.min} - {data?.value?.max}</h6>
                     <div className="mt-4 flex justify-center space-x-4">
                         <button className="btn w-96 h-14 border-2 bg-white text-[#002E1A] px-4 py-2 rounded" onClick={close}>Tutup</button>

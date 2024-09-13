@@ -81,7 +81,7 @@ const CardDashboard = ({
      return (
           <div
                onClick={() => onClick(idx)}
-               className={`mt-3 w-72 col-span-1 shadow-md rounded-lg cursor-pointer transition-colors duration-300 
+               className={`mt-3 w-[325px] col-span-1 shadow-md rounded-lg cursor-pointer transition-colors duration-300 
             ${
                  activeIdx === idx
                       ? "bg-blue-950 text-white"

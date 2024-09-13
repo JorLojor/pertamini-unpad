@@ -9,34 +9,32 @@ import Analytic from "./pages/analytic";
 import Kalibrasi from "./pages/kalibrasi";
 
 function App() {
-  const [buka, setBuka] = useState(false);
-  const [currentPage, setCurrentPage] = useState("dashboard");
-  const [selectedAnalytic, setSelectedAnalytic] = useState(null); // New state for selected analytic
-  const user = useSelector((state) => state.user.user);
-  const navigate = useNavigate();
+     const [buka, setBuka] = useState(false);
+     const [currentPage, setCurrentPage] = useState("dashboard");
+     const user = useSelector((state) => state.user.user);
+     const navigate = useNavigate(); 
+     useEffect(() => {
+          if (!user) {
+               navigate("/login");
+          }
+     }, [user, navigate]);
 
-  useEffect(() => {
-    if (!user) {
-      navigate("/login");
-    }
-  }, [user, navigate]);
+     const toggleSidebar = () => {
+          setBuka(!buka);
+     };
 
-  const toggleSidebar = () => {
-    setBuka(!buka);
-  };
-
-  const renderPage = () => {
-    switch (currentPage) {
-      case "Dashboard":
-        return <Dashboard />;
-      case "Analytic":
-        return <Analytic sensor={selectedAnalytic} />; // Pass selectedAnalytic to Analytic component
-      case "Kalibrasi":
-        return <Kalibrasi />;
-      default:
-        return <Dashboard />;
-    }
-  };
+     const renderPage = () => {
+          switch (currentPage) {
+               case "Dashboard":
+                    return <Dashboard />;
+               case "Analytic":
+                    return <Analytic />;
+               case "Kalibrasi":
+                    return <Kalibrasi />;
+               default:
+                    return <Dashboard />;
+          }
+     };
 
   return (
     <>
@@ -49,12 +47,7 @@ function App() {
           left: "0",
         }}
       >
-        <Sidebar
-          buka={buka}
-          toggleSidebar={toggleSidebar}
-          setCurrentPage={setCurrentPage}
-          setSelectedAnalytic={setSelectedAnalytic} // Pass the setter for selected analytic
-        />
+        <Sidebar buka={buka} toggleSidebar={toggleSidebar} setCurrentPage={setCurrentPage} currentPage={currentPage} />
       </div>
 
       <div className="main-content ml-[6.25rem] w-auto px-8 bg-[#F4F6F6] min-h-[100vh]">

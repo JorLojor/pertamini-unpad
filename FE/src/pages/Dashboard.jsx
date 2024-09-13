@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
-import CardDashboard from "../components/cardDashboard/cardDashboard";
-import LineChart from "../components/lineCart/lineCart";
-import TableData from "../components/table/tableData";
+import CardDashboard from "../components/cardDashboard/CardDashboard";
+import LineChart from "../components/lineCart/LineCart";
+import TableData from "../components/table/TableData";
 
 const Dashboard = () => {
      const [dataCard, setDataCard] = useState({});
@@ -24,7 +24,6 @@ const Dashboard = () => {
                     `https://backend-agustrisa.as1.pitunnel.net/api/dataGrafik/${type}?${params.toString()}`
                );
                const data = await response.json();
-               // jika data kosong
                if (data.length === 0) {
                     setChartData(["kosong"]);
                     setLoading(false);
