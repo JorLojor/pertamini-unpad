@@ -1,7 +1,7 @@
 import propTypes from "prop-types";
 import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
-import { FaChevronRight, FaChevronDown } from "react-icons/fa";
+import { FaChevronRight, FaChevronDown, FaChevronUp } from "react-icons/fa";
 import DashboardActive from "../../assets/dashboardActive.svg";
 import Dashboard from "../../assets/dashboard.svg";
 import AnalyticActive from "../../assets/analyticActive.svg";
@@ -131,7 +131,7 @@ const Sidebar = ({
                                    {analyticOpen ? (
                                         <FaChevronDown className="ml-auto" />
                                    ) : (
-                                        <FaChevronRight className="ml-auto" />
+                                        <FaChevronUp className="ml-auto" />
                                    )}
                               </motion.p>
                          </>
@@ -163,7 +163,6 @@ const Sidebar = ({
                                         onClick={() =>
                                              handleClickMenuAnalytic(menu)
                                         }>
-                                        {/* Chevron on the left */}
                                         <FaChevronRight className="mr-2" />
                                         <motion.p className="text-left">
                                              {menu}
