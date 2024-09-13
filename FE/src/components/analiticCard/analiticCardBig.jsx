@@ -19,80 +19,51 @@ const AnaliticCardBig = ({
      idx,
      activeIdx,
      onClick,
+     dataStatus,
 }) => {
      const colorSymbolDesicion = (trendData) => {
-          if (trendData < 99.5 || trendData > 100.0) {
-               return ["text-red-500", ArrowDown, trendData];
-          } else {
-               return ["text-green-500", ArrowUp, trendData];
-          }
+          return trendData < 99.5 || trendData > 100.0
+               ? ["text-red-500", ArrowDown, trendData]
+               : ["text-green-500", ArrowUp, trendData];
      };
 
      const titleDesicion = () => {
-          if (titleCard === "Dryness") {
-               return [DrynessIcon, DrynessIconWhite];
-          }
-          if (titleCard === "Suhu") {
-               return [SuhuIcon, SuhuIconWhite];
-          }
-          if (titleCard === "Tekanan") {
-               return [TekananIcon, TekananIconWhite];
-          }
-          if (titleCard === "Flow") {
-               return [FlowIcon, FlowIconWhite];
-          }
-          if (titleCard === "Daya") {
-               return [DayaIcon, DayaIconWhite];
-          }
+          const titles = {
+               Dryness: [DrynessIcon, DrynessIconWhite],
+               Suhu: [SuhuIcon, SuhuIconWhite],
+               Tekanan: [TekananIcon, TekananIconWhite],
+               Flow: [FlowIcon, FlowIconWhite],
+               Daya: [DayaIcon, DayaIconWhite],
+          };
+          return titles[titleCard] || [FlowIcon, FlowIconWhite]; // Default to Flow icons
      };
 
      const symbolDesicion = () => {
-          if (titleCard === "Dryness") {
-               return "%";
-          }
-          if (titleCard === "Suhu") {
-               return "°C";
-          }
-          if (titleCard === "Tekanan") {
-               return "BarG";
-          }
-          if (titleCard === "Flow") {
-               return "Ton/h";
-          }
-          if (titleCard === "Daya") {
-               return "Mh";
-          }
+          const symbols = {
+               Dryness: "%",
+               Suhu: "°C",
+               Tekanan: "BarG",
+               Flow: "Ton/h",
+               Daya: "Mh",
+          };
+          return symbols[titleCard] || "";
      };
 
-     const aturUkuran = (dataCard) => {
-          console.log(typeof dataCard); //number
-          if (!dataCard) {
-               return "text-5xl";
-          }
-          const dataString = dataCard.toString();
-          console.log(typeof dataString); //string
-
-          //   potong string jadi 5 karakter pertama 1.139293929323 jadi 1.139
-          if (dataString.length > 5) {
-               //   potong string jadi 5 karakter pertama 1.139293929323 jadi 1.139
-               const potongAjg = dataString.slice(0, 5);
-               return potongAjg;
-          }
-     };
+     console.log(dataCard.data);
+     // const formatData = (dataCard) => {
+     //      return dataCard.length > 5 ? dataCard.slice(0, 5) : dataCard;
+     // };
 
      return (
           <div
                onClick={() => onClick(idx)}
-               className={`mt-3 w-72 col-span-1 shadow-md rounded-lg cursor-pointer transition-colors duration-300 
-            ${
-                 activeIdx === idx
-                      ? "bg-blue-950 text-white"
-                      : "bg-white text-green-950"
-            }`}>
+               className={`mt-3 w-72 col-span-1 shadow-md rounded-lg cursor-pointer transition-colors duration-300 ${
+                    activeIdx === idx
+                         ? "bg-blue-950 text-white"
+                         : "bg-white text-green-950"
+               }`}>
                <div className="flex flex-row justify-between items-center p-4 w-full">
-                    <p className="text-2xl font-bold text-[22px]">
-                         {titleCard}
-                    </p>
+                    <p className="text-2xl font-bold">{titleCard}</p>
                     <p
                          className={`text-xl font-bold flex items-center ${
                               colorSymbolDesicion(trendData)[0]
@@ -101,13 +72,13 @@ const AnaliticCardBig = ({
                          <img
                               src={colorSymbolDesicion(trendData)[1]}
                               alt="Trend Icon"
-                              className="w-6 h-6x ml-2"
+                              className="w-6 h-6 ml-2"
                          />
                     </p>
                </div>
                <div className="flex flex-row justify-between items-center p-4 w-full">
-                    <p className="flex-row font-bold  text-5xl">
-                         {aturUkuran(dataCard)}
+                    <p className="text-5xl font-bold">
+                         {formatData(dataCard)}
                          <small className="text-3xl">{symbolDesicion()}</small>
                     </p>
                     <img
@@ -120,17 +91,30 @@ const AnaliticCardBig = ({
                          className="w-9 h-9 ml-2"
                     />
                </div>
+               <div className="flex flex-row justify-between items-center p-4 w-full">
+                    <p>Status Sensor</p>
+                    <p
+                         className={
+                              dataStatus === 1
+                                   ? "text-green-500"
+                                   : "text-red-500"
+                         }>
+                         {dataStatus === 1 ? "ON" : "OFF"}
+                    </p>
+               </div>
           </div>
      );
 };
 
 AnaliticCardBig.propTypes = {
-     titleCard: PropTypes.string,
-     dataCard: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-     trendData: PropTypes.string,
-     idx: PropTypes.number,
-     activeIdx: PropTypes.number,
-     onClick: PropTypes.func,
+     titleCard: PropTypes.string.isRequired,
+     dataCard: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
+          .isRequired,
+     trendData: PropTypes.string.isRequired,
+     idx: PropTypes.number.isRequired,
+     activeIdx: PropTypes.number.isRequired,
+     onClick: PropTypes.func.isRequired,
+     dataStatus: PropTypes.number.isRequired,
 };
 
 export default AnaliticCardBig;

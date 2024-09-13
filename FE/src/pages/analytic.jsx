@@ -3,117 +3,79 @@ import { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 
 const Analytic = ({ sensor }) => {
-     // endpoint untuk dryness : https://backend-agustrisa.as1.pitunnel.net/api/trend/dryness?period=now
-     // endpint untuk suhu : https://backend-agustrisa.as1.pitunnel.net/api/trend/suhu?period=now
-     // endpoint untuk tekanan : https://backend-agustrisa.as1.pitunnel.net/api/trend/tekanan?period=now
-     // endpoint untuk flow : https://backend-agustrisa.as1.pitunnel.net/api/trend/flow?period=now
-     // endpoint untuk daya : https://backend-agustrisa.as1.pitunnel.net/api/trend/daya?period=now
-
-     // https://backend-agustrisa.as1.pitunnel.net/api/statisticsGraph/suhu?period=daily
-     // https://backend-agustrisa.as1.pitunnel.net/api/statisticsGraph/tekanan?period=daily
-     // https://backend-agustrisa.as1.pitunnel.net/api/statisticsGraph/flow?period=daily
-     // https://backend-agustrisa.as1.pitunnel.net/api/statisticsGraph/daya?period=daily
-     // https://backend-agustrisa.as1.pitunnel.net/api/statisticsGraph/dryness?period=daily
-
-     // data realtime
-     // https://backend-agustrisa.as1.pitunnel.net/api/dataRealtime
-
-     const [data, setData] = useState([]);
-     const [dataStaitstic, setDataStatistic] = useState([]);
-     const [dataCard, setDataCard] = useState({}); // dummy
-     const [period, setPeriod] = useState();
+     console.log(sensor);
      const [dataRealtime, setDataRealtime] = useState({});
+     const [period, setPeriod] = useState("now");
+     const [trendData, setTrendData] = useState("");
 
-     // dummy
-
-     // dummy
-     const fetchData = async (trend, period) => {
-          console.log("fetching data");
-          // narasi trend
-          const resNarasi = await fetch(
-               `https://backend-agustrisa.as1.pitunnel.net/api/trend/${trend}?period=${period}`
-          );
-          const data = await resNarasi.json();
-          console.log(data);
-          setPeriod(period);
-          setData(data);
-
-          const resStatistic = await fetch(
-               `https://backend-agustrisa.as1.pitunnel.net/api/statisticsGraph/${trend}?period=${period}`
-          );
-          const dataStatistic = await resStatistic.json();
-          setPeriod(period);
-          setDataStatistic(dataStatistic);
-          console.log(dataStatistic);
-
-          return null;
+     const fetchData = async (sensor, period) => {
+          try {
+               const resNarasi = await fetch(
+                    `https://backend-agustrisa.as1.pitunnel.net/api/trend/${sensor}?period=${period}`
+               );
+               const data = await resNarasi.json();
+               setTrendData((Math.random() * (100.5 - 99.0) + 99.0).toFixed(2));
+          } catch (error) {
+               console.error("Error fetching data:", error);
+          }
      };
 
      const getDataRealTime = async () => {
-          const res = await fetch(
-               `https://backend-agustrisa.as1.pitunnel.net/api/dataRealtime`
-          );
-          const data = await res.json();
-          setDataRealtime(data);
-          console.log(data);
-     };
-
-     const setTrendData = () => {
-          const value = (Math.random() * (100.5 - 99.0) + 99.0).toFixed(2);
-          return value;
+          try {
+               const res = await fetch(
+                    `https://backend-agustrisa.as1.pitunnel.net/api/dataRealtime`
+               );
+               const data = await res.json();
+               setDataRealtime(data[sensor.toLowerCase()]);
+               console.log(dataRealtime);
+          } catch (error) {
+               console.error("Error fetching real-time data:", error);
+          }
      };
 
      useEffect(() => {
           getDataRealTime();
-     }, []);
+     }, [sensor]);
 
      return (
           <>
-               <div className="flex flex-wrap justify-around pt-24 w-full ">
-                    contoh untuk drness
-                    {/* 3 tombol 
-                    daily, monthly, yearly, now(deafult)
-                    */}
+               <div className="flex flex-wrap justify-around pt-24 w-full">
                     <div className="flex flex-row justify-around w-full">
                          <button
-                              onClick={() => {
-                                   console.log("click");
-                                   fetchData("dryness", "daily");
-                              }}
+                              onClick={() => fetchData(sensor, "daily")}
                               className="bg-blue-950 text-white p-2 rounded-lg">
                               Daily
                          </button>
                          <button
-                              onClick={() => fetchData("dryness", "monthly")}
+                              onClick={() => fetchData(sensor, "monthly")}
                               className="bg-blue-950 text-white p-2 rounded-lg">
                               Monthly
                          </button>
                          <button
-                              onClick={() => fetchData("dryness", "yearly")}
+                              onClick={() => fetchData(sensor, "yearly")}
                               className="bg-blue-950 text-white p-2 rounded-lg">
                               Yearly
                          </button>
                     </div>
                </div>
 
-               <AnaliticCardBig
-                    titleCard="Dryness"
+               {/* <AnaliticCardBig
+                    titleCard={sensor}
                     dataCard={
-                         dataRealtime.dryness
-                              ? dataRealtime.dryness.toString()
-                              : "N/A"
-                    } // Check if dryness exists
-                    trendData={setTrendData()}
+                         dataRealtime ? dataRealtime.data?.toFixed(2) : "N/A"
+                    } // Handling missing data
+                    trendData={trendData}
                     idx={0}
                     activeIdx={0}
                     onClick={() => console.log("click")}
-               />
+                    dataStatus={dataRealtime?.status ?? 0} // Default status to 0 if undefined
+               /> */}
           </>
      );
 };
 
 Analytic.propTypes = {
-     sensor: PropTypes.string,
+     sensor: PropTypes.string.isRequired, // Ensure sensor is provided as a string
 };
 
 export default Analytic;
