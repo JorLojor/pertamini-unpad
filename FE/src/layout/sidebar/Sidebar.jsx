@@ -1,7 +1,7 @@
 import propTypes from "prop-types";
 import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
-import { FaChevronRight, FaChevronDown } from "react-icons/fa";
+import { FaChevronRight, FaChevronDown, FaChevronUp } from "react-icons/fa";
 import DashboardActive from "../../assets/dashboardActive.svg";
 import Dashboard from "../../assets/dashboard.svg";
 import AnalyticActive from "../../assets/analyticActive.svg";
@@ -94,7 +94,7 @@ const Sidebar = ({ buka, toggleSidebar, setCurrentPage, setSelectedAnalytic, cur
               className="flex items-center"
             >
               <p className="mr-4">Analytic</p>
-              {analyticOpen ? <FaChevronDown className="ml-auto" /> : <FaChevronRight className="ml-auto" />}
+              {analyticOpen ? <FaChevronDown className="ml-auto" /> : <FaChevronUp className="ml-auto" />}
             </motion.p>
           </>
         )}
@@ -117,7 +117,6 @@ const Sidebar = ({ buka, toggleSidebar, setCurrentPage, setSelectedAnalytic, cur
           }`}
           onClick={() => handleClickMenuAnalytic(menu)}
         >
-          {/* Chevron on the left */}
           <FaChevronRight className="mr-2" /> 
           <motion.p className="text-left">{menu}</motion.p>
         </div>
