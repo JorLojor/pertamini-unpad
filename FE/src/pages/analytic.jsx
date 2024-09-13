@@ -165,9 +165,8 @@ const Analytic = ({ sensor }) => {
      }, [sensor]);
 
      useEffect(() => {
-          // Trigger chart update when period is changed
           if (selectedData) {
-               handleCardClick({ sensor, rule: "min" }); // Example: You can customize which rule to update when period changes.
+               handleCardClick({ sensor, rule: "min" });
           }
      }, [selectedPeriod]);
 
@@ -191,13 +190,13 @@ const Analytic = ({ sensor }) => {
                          daily={minMaxAvg}
                          monthly={minMaxAvg}
                          yearly={minMaxAvg}
-                         onClick={handleCardClick} // Handle click event
+                         onClick={handleCardClick}
                     />
                </div>
                <div className="pt-10 flex-col">
                     <div className="bg-white rounded-lg p-4 mb-5 flex items-center justify-between">
                          <p className="text-2xl"> Sort By Period </p>
-                         {/* dropdown daily, monthly, yearly */}
+
                          <select
                               className="border-2 border-black rounded-lg p-2"
                               onChange={handlePeriodChange}

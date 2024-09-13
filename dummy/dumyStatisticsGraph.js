@@ -12,7 +12,7 @@ const generateRandomData = (timestamp) => ({
 // Generate daily data (360 entries, different values every 2 seconds)
 const generateDailyData = () => {
     let data = [];
-    for (let i = 0; i < 7; i++) { // nanti ubah jadi 360
+    for (let i = 0; i < 360; i++) { // nanti ubah jadi 360
         let timestamp = new Date();
         timestamp.setSeconds(timestamp.getSeconds() - i * 2); // Set 2 seconds apart
         data.push(generateRandomData(timestamp.toISOString()));

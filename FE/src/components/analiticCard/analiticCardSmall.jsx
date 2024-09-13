@@ -32,7 +32,7 @@ const AnaliticCardSmall = ({
                {/* Min Values */}
                <div
                     className={`flex flex-col items-center shadow rounded-md ${
-                         activeIdx === 0 ? "bg-blue-900 text-white" : ""
+                         activeIdx === 0 ? "bg-blue-900 text-white" : "bg-white"
                     }`}
                     onClick={() =>
                          handleCardClick(0, {
@@ -78,8 +78,8 @@ const AnaliticCardSmall = ({
 
                {/* Max Values */}
                <div
-                    className={`flex flex-col items-center bg-white shadow rounded-md ${
-                         activeIdx === 1 ? "bg-blue-900 text-white" : ""
+                    className={`flex flex-col items-center shadow rounded-md ${
+                         activeIdx === 1 ? "bg-blue-900 text-white" : "bg-white"
                     }`}
                     onClick={() =>
                          handleCardClick(1, {
@@ -125,8 +125,8 @@ const AnaliticCardSmall = ({
 
                {/* Avg Values */}
                <div
-                    className={`flex flex-col items-center bg-white shadow rounded-md ${
-                         activeIdx === 2 ? "bg-blue-900 text-white" : ""
+                    className={`flex flex-col items-center shadow rounded-md ${
+                         activeIdx === 2 ? "bg-blue-900 text-white" : "bg-white"
                     }`}
                     onClick={() =>
                          handleCardClick(2, {
@@ -172,8 +172,8 @@ const AnaliticCardSmall = ({
 
                {/* StdDev Values */}
                <div
-                    className={`flex flex-col items-center bg-white shadow rounded-md ${
-                         activeIdx === 3 ? "bg-blue-900 text-white" : ""
+                    className={`flex flex-col items-center shadow rounded-md ${
+                         activeIdx === 3 ? "bg-blue-900 text-white" : "bg-white"
                     }`}
                     onClick={() =>
                          handleCardClick(3, {
