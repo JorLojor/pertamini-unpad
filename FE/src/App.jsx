@@ -10,9 +10,11 @@ import Kalibrasi from "./pages/kalibrasi";
 
 function App() {
      const [buka, setBuka] = useState(false);
-     const [currentPage, setCurrentPage] = useState("dashboard");
+     const [currentPage, setCurrentPage] = useState("Dashboard");
+     const [selectedAnalytic, setSelectedAnalytic] = useState("");
      const user = useSelector((state) => state.user.user);
-     const navigate = useNavigate(); 
+     const navigate = useNavigate();
+
      useEffect(() => {
           if (!user) {
                navigate("/login");
@@ -28,7 +30,7 @@ function App() {
                case "Dashboard":
                     return <Dashboard />;
                case "Analytic":
-                    return <Analytic />;
+                    return <Analytic sensor={selectedAnalytic} />; // Pass the selected analytic sensor here
                case "Kalibrasi":
                     return <Kalibrasi />;
                default:
@@ -36,25 +38,30 @@ function App() {
           }
      };
 
-  return (
-    <>
-      <Header buka={buka} toggleSidebar={toggleSidebar} title={currentPage} />
-      <div
-        className="fixed h-full z-10"
-        style={{
-          position: "absolute",
-          top: "0",
-          left: "0",
-        }}
-      >
-        <Sidebar buka={buka} toggleSidebar={toggleSidebar} setCurrentPage={setCurrentPage} currentPage={currentPage} />
-      </div>
-
-      <div className="main-content ml-[6.25rem] w-auto px-8 bg-[#F4F6F6] min-h-[100vh]">
-        {renderPage()}
-      </div>
-    </>
-  );
+     return (
+          <>
+               <Header
+                    buka={buka}
+                    toggleSidebar={toggleSidebar}
+                    title={currentPage}
+               />
+               <div
+                    className="fixed h-full z-10"
+                    style={{ position: "absolute", top: "0", left: "0" }}>
+                    <Sidebar
+                         buka={buka}
+                         toggleSidebar={toggleSidebar}
+                         setCurrentPage={setCurrentPage}
+                         setSelectedAnalytic={setSelectedAnalytic} // Pass setSelectedAnalytic
+                         currentPage={currentPage}
+                         selectedAnalytic={selectedAnalytic} // Pass selectedAnalytic
+                    />
+               </div>
+               <div className="main-content ml-[6.25rem] w-auto px-8 bg-[#F4F6F6] min-h-[100vh]">
+                    {renderPage()}
+               </div>
+          </>
+     );
 }
 
 export default App;

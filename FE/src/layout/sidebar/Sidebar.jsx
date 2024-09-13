@@ -39,7 +39,7 @@ const Sidebar = ({
 
      const handleClickMenuAnalytic = (menu) => {
           setCurrentPage("Analytic");
-          setSelectedAnalytic = menu;
+          setSelectedAnalytic(menu);
           toggleSidebar();
      };
 
@@ -57,7 +57,7 @@ const Sidebar = ({
                onClick={!buka ? toggleSidebar : null}>
                <div
                     className="button-sidebar flex flex-row space-x-4 items-center p-4 w-full hover:bg-gray-700 active:bg-gray-600 cursor-pointer border-b border-b-zinc-600"
-                    onClick={() => setCurrentPage("Dashboard")}>
+                    onClick={() => handleClickMenu("Dashboard")}>
                     {buka ? (
                          <img
                               src={Logo}
