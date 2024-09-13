@@ -29,20 +29,20 @@ const Kalibrasi = () => {
         </div>
         <div className="card-body flex flex-wrap justify-around items-center px-8 py-4 pt-6">
           <input
-            className='border-black border-2 text-center text-[48px] font-medium w-full sm:w-[30%] h-[90px] mb-4 sm:mb-0'
+            className='border-[#E5E5E5] border-2 text-center text-[48px] font-medium w-full sm:w-[30%] h-[90px] mb-4 sm:mb-0'
             type="number"
             value={suhu.min}
             onChange={(e) => setSuhu({ ...suhu, min: e.target.value })}
           />
           <p className='text-[48px] w-full sm:w-auto text-center sm:text-left'>-</p>
           <input
-            className='border-black border-2 text-center text-[48px] font-medium w-full sm:w-[30%] h-[90px] mb-4 sm:mb-0'
+            className='border-[#E5E5E5] border-2 text-center text-[48px] font-medium w-full sm:w-[30%] h-[90px] mb-4 sm:mb-0'
             type="number"
             value={suhu.max}
             onChange={(e) => setSuhu({ ...suhu, max: e.target.value })}
           />
           <button
-            className='bg-[#616161] text-white w-full sm:w-[30%] h-[90px] text-[24px]'
+            className='bg-[#616161] hover:bg-[#383B4C] text-white w-full sm:w-[30%] h-[90px] text-[24px]'
             onClick={() => handleKalibrasi('suhu')}
           >
             Kalibrasi
@@ -57,20 +57,20 @@ const Kalibrasi = () => {
         </div>
         <div className="card-body flex flex-wrap justify-around items-center px-8 py-4 pt-6">
           <input
-            className='border-black border-2 text-center text-[48px] font-medium w-full sm:w-[30%] h-[90px] mb-4 sm:mb-0'
+            className='border-[#E5E5E5] border-2 text-center text-[48px] font-medium w-full sm:w-[30%] h-[90px] mb-4 sm:mb-0'
             type="number"
             value={flow.min}
             onChange={(e) => setFlow({ ...flow, min: e.target.value })}
           />
           <p className='text-[48px] w-full sm:w-auto text-center sm:text-left'>-</p>
           <input
-            className='border-black border-2 text-center text-[48px] font-medium w-full sm:w-[30%] h-[90px] mb-4 sm:mb-0'
+            className='border-[#E5E5E5] border-2 text-center text-[48px] font-medium w-full sm:w-[30%] h-[90px] mb-4 sm:mb-0'
             type="number"
             value={flow.max}
             onChange={(e) => setFlow({ ...flow, max: e.target.value })}
           />
           <button
-            className='bg-[#616161] text-white w-full sm:w-[30%] h-[90px] text-[24px]'
+            className='bg-[#616161] hover:bg-[#383B4C] text-white w-full sm:w-[30%] h-[90px] text-[24px]'
             onClick={() => handleKalibrasi('flow')}
           >
             Kalibrasi
@@ -85,20 +85,20 @@ const Kalibrasi = () => {
         </div>
         <div className="card-body flex flex-wrap justify-around items-center px-8 py-4 pt-6">
           <input
-            className='border-black border-2 text-center text-[48px] font-medium w-full sm:w-[30%] h-[90px] mb-4 sm:mb-0'
+            className='border-[#E5E5E5] border-2 text-center text-[48px] font-medium w-full sm:w-[30%] h-[90px] mb-4 sm:mb-0'
             type="number"
             value={tekanan.min}
             onChange={(e) => setTekanan({ ...tekanan, min: e.target.value })}
           />
           <p className='text-[48px] w-full sm:w-auto text-center sm:text-left'>-</p>
           <input
-            className='border-black border-2 text-center text-[48px] font-medium w-full sm:w-[30%] h-[90px] mb-4 sm:mb-0'
+            className='border-[#E5E5E5] border-2 text-center text-[48px] font-medium w-full sm:w-[30%] h-[90px] mb-4 sm:mb-0'
             type="number"
             value={tekanan.max}
             onChange={(e) => setTekanan({ ...tekanan, max: e.target.value })}
           />
           <button
-            className='bg-[#616161] text-white w-full sm:w-[30%] h-[90px] text-[24px]'
+            className={`bg-[#616161] hover:bg-[#383B4C] text-white w-full sm:w-[30%] h-[90px] text-[24px]`}
             onClick={() => handleKalibrasi('tekanan')}
           >
             Kalibrasi
