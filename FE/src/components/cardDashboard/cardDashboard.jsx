@@ -65,17 +65,23 @@ const CardDashboard = ({
      };
 
      const aturUkuran = (dataCard) => {
-          if (!dataCard) {
-               return "text-5xl";
+          if (dataCard === undefined || dataCard === null) {
+               return {
+                    value: "-",
+                    fontSize: "text-xl",
+               };
           }
-          const dataString = dataCard.toString();
-          if (dataString.length > 5) {
-               return "text-4xl";
-          } else if (dataString.length > 7) {
-               return "text-2xl";
-          } else {
-               return "text-5xl";
+
+          if (dataCard.toString().length > 5) {
+               return {
+                    value: Number(dataCard).toFixed(3),
+                    fontSize: "text-lg",
+               };
           }
+          return {
+               value: dataCard.toString(),
+               fontSize: "text-xl",
+          };
      };
 
      return (
@@ -105,10 +111,10 @@ const CardDashboard = ({
                </div>
                <div className="flex flex-row justify-between items-center p-4 w-full">
                     <p
-                         className={`flex-row font-bold ${aturUkuran(
-                              dataCard
-                         )} text-5xl`}>
-                         {dataCard}
+                         className={`flex-row font-bold ${
+                              aturUkuran(dataCard).fontSize
+                         } text-lg`}>
+                         {aturUkuran(dataCard).value}
                          <small className="text-3xl">{symbolDesicion()}</small>
                     </p>
                     <img
@@ -127,7 +133,7 @@ const CardDashboard = ({
 
 CardDashboard.propTypes = {
      titleCard: PropTypes.string,
-     dataCard: PropTypes.string,
+     dataCard: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
      trendData: PropTypes.string,
      idx: PropTypes.number,
      activeIdx: PropTypes.number,

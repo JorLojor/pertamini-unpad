@@ -59,9 +59,32 @@ const Dashboard = () => {
           });
      };
 
+     const GetdataRealTime = async () => {
+          try {
+               const response = await fetch(
+                    `https://backend-agustrisa.as1.pitunnel.net/api/dataRealtime`
+               );
+               const data = await response.json();
+               if (data.length === 0) {
+                    return;
+               }
+
+               setDataCard({
+                    dryness_steam: data.dryness.data,
+                    suhu: data.temperature.data,
+                    tekanan: data.pressure.data,
+                    flow: data.flow.data,
+                    energi: data.power_prediction.data,
+               });
+          } catch (error) {
+               console.error("Error fetching chart data:", error);
+          }
+     };
+
      useEffect(() => {
           updateRandomData();
-          const intervalId = setInterval(updateRandomData, 2000);
+          GetdataRealTime();
+          const intervalId = setInterval(GetdataRealTime, 2000); // Menggunakan fungsi tanpa tanda kurung
 
           return () => clearInterval(intervalId);
      }, []);
@@ -75,7 +98,7 @@ const Dashboard = () => {
           setActiveIdx((prevIdx) => (prevIdx === idx ? null : idx));
           setSelectedType(type);
           setSelectedTitle(title);
-          fetchChartData(type);
+          fetchChartData(type); // Hanya panggil fetchChartData ketika pengguna mengklik
      };
 
      const handleConfirmSorting = () => {
@@ -87,7 +110,7 @@ const Dashboard = () => {
                <div className="flex flex-wrap justify-around pt-24 w-full ">
                     <CardDashboard
                          titleCard="Dryness"
-                         dataCard={dataCard.dryness_steam}
+                         dataCard={dataCard.dryness_steam || "-"}
                          trendData={generateRandomValue()}
                          idx={0}
                          activeIdx={activeIdx}
@@ -95,7 +118,7 @@ const Dashboard = () => {
                     />
                     <CardDashboard
                          titleCard="Suhu"
-                         dataCard={dataCard.suhu}
+                         dataCard={dataCard.suhu || "-"}
                          trendData={generateRandomValue()}
                          idx={1}
                          activeIdx={activeIdx}
@@ -103,7 +126,7 @@ const Dashboard = () => {
                     />
                     <CardDashboard
                          titleCard="Tekanan"
-                         dataCard={dataCard.tekanan}
+                         dataCard={dataCard.tekanan || "-"}
                          trendData={generateRandomValue()}
                          idx={2}
                          activeIdx={activeIdx}
@@ -111,7 +134,7 @@ const Dashboard = () => {
                     />
                     <CardDashboard
                          titleCard="Flow"
-                         dataCard={dataCard.flow}
+                         dataCard={dataCard.flow || "-"}
                          trendData={generateRandomValue()}
                          idx={3}
                          activeIdx={activeIdx}
@@ -119,7 +142,7 @@ const Dashboard = () => {
                     />
                     <CardDashboard
                          titleCard="Daya"
-                         dataCard={dataCard.energi}
+                         dataCard={dataCard.energi || "-"}
                          trendData={generateRandomValue()}
                          idx={4}
                          activeIdx={activeIdx}
@@ -142,7 +165,6 @@ const Dashboard = () => {
                               <input
                                    type="date"
                                    className="border-2 border-gray-300 rounded-lg p-1 ml-2"
-                                   //  default nya hari ini atau tanggal sekarang
                                    value={
                                         endDate ||
                                         new Date().toISOString().split("T")[0]

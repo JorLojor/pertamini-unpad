@@ -1,8 +1,9 @@
-import AnaliticCardBig from "../components/analiticCard/analiticCardBig";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
+import AnaliticCardBig from "../components/analiticCard/analiticCardBig";
 import AnaliticCardSmall from "../components/analiticCard/analiticCardSmall";
 import LineChartAnalytic from "../components/lineCartAnalyitc/lineCartAnalytic";
+import DataTableAnalytic from "../components/tableAnalytic/analyticTable";
 
 const Analytic = ({ sensor }) => {
      const [dataRealtime, setDataRealtime] = useState({});
@@ -31,7 +32,9 @@ const Analytic = ({ sensor }) => {
      const [selectedData, setSelectedData] = useState(null);
      const [selectedTitle, setSelectedTitle] = useState("Chart Data");
      const [selectedPeriod, setSelectedPeriod] = useState("daily");
+     const [tableData, setTableData] = useState([]); // State for table data
 
+     // Fetch real-time data
      const getDataRealTime = async () => {
           try {
                const res = await fetch(
@@ -42,7 +45,7 @@ const Analytic = ({ sensor }) => {
                if (sensor === "Dryness") setDatayangbakaldioper(data.dryness);
                if (sensor === "Suhu") setDatayangbakaldioper(data.temperature);
                if (sensor === "Tekanan") setDatayangbakaldioper(data.pressure);
-               if (sensor === "flow") setDatayangbakaldioper(data.flow);
+               if (sensor === "Flow") setDatayangbakaldioper(data.flow);
                if (sensor === "Daya")
                     setDatayangbakaldioper(data.power_prediction);
           } catch (error) {
@@ -50,6 +53,7 @@ const Analytic = ({ sensor }) => {
           }
      };
 
+     // Fetch trend data
      const fetchData = async (sensor, period) => {
           try {
                const resNarasi = await fetch(
@@ -63,6 +67,7 @@ const Analytic = ({ sensor }) => {
           }
      };
 
+     // Fetch and compute statistics
      const fetchAndComputeStatistics = async () => {
           const dailyData = await fetchData(sensor, "daily");
           const monthlyData = await fetchData(sensor, "monthly");
@@ -132,6 +137,7 @@ const Analytic = ({ sensor }) => {
           });
      };
 
+     // Handle card click
      const handleCardClick = async (data) => {
           try {
                const res = await fetch(
@@ -180,6 +186,18 @@ const Analytic = ({ sensor }) => {
                          }))
                     );
                }
+
+               // Set table data
+               setTableData(
+                    dataResponse.map((item, index) => ({
+                         no: index + 1,
+                         tanggal: item.timestamp,
+                         min_value: item.min_value,
+                         max_value: item.max_value,
+                         avg_value: item.avg_value,
+                         stddev_value: item.stddev_value,
+                    }))
+               );
           } catch (error) {
                console.error("Error fetching trend data:", error);
           }
@@ -192,7 +210,6 @@ const Analytic = ({ sensor }) => {
      useEffect(() => {
           const interval = setInterval(() => {
                getDataRealTime();
-               // fetchDataStatisticNow();
           }, 2000);
           fetchAndComputeStatistics();
           return () => clearInterval(interval);
@@ -248,6 +265,10 @@ const Analytic = ({ sensor }) => {
                     )}
                     {!selectedData && (
                          <LineChartAnalytic chartData={[]} title="" />
+                    )}
+                    {/* Render the DataTable component */}
+                    {tableData.length > 0 && (
+                         <DataTableAnalytic data={tableData} />
                     )}
                </div>
           </>
