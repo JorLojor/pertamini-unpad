@@ -84,7 +84,7 @@ const Dashboard = () => {
      useEffect(() => {
           updateRandomData();
           GetdataRealTime();
-          const intervalId = setInterval(GetdataRealTime, 2000); // Menggunakan fungsi tanpa tanda kurung
+          const intervalId = setInterval(GetdataRealTime, 2000); 
 
           return () => clearInterval(intervalId);
      }, []);
@@ -98,7 +98,7 @@ const Dashboard = () => {
           setActiveIdx((prevIdx) => (prevIdx === idx ? null : idx));
           setSelectedType(type);
           setSelectedTitle(title);
-          fetchChartData(type); // Hanya panggil fetchChartData ketika pengguna mengklik
+          fetchChartData(type); 
      };
 
      const handleConfirmSorting = () => {

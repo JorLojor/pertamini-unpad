@@ -307,7 +307,7 @@ AnaliticCardSmall.propTypes = {
      monthly: PropTypes.object.isRequired,
      yearly: PropTypes.object.isRequired,
      titleCard: PropTypes.string.isRequired,
-     onClick: PropTypes.func.isRequired, //Pass click event handler
+     onClick: PropTypes.func.isRequired,
 };
 
 export default AnaliticCardSmall;

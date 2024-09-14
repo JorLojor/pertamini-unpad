@@ -5,10 +5,10 @@ import nextbtn from "../../assets/nextbtn.svg";
 
 const DataTableAnalytic = ({ data }) => {
      const [sortField, setSortField] = useState(null);
-     const [sortOrder, setSortOrder] = useState(true); // true for ascending, false for descending
+     const [sortOrder, setSortOrder] = useState(true);
      const [sortedData, setSortedData] = useState(data);
      const [currentPage, setCurrentPage] = useState(1);
-     const rowsPerPage = 5; // Number of rows per page
+     const rowsPerPage = 5;
 
      const sortData = (field) => {
           const sorted = [...sortedData].sort((a, b) => {

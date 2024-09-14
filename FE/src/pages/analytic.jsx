@@ -32,9 +32,8 @@ const Analytic = ({ sensor }) => {
      const [selectedData, setSelectedData] = useState(null);
      const [selectedTitle, setSelectedTitle] = useState("Chart Data");
      const [selectedPeriod, setSelectedPeriod] = useState("daily");
-     const [tableData, setTableData] = useState([]); // State for table data
+     const [tableData, setTableData] = useState([]);
 
-     // Fetch real-time data
      const getDataRealTime = async () => {
           try {
                const res = await fetch(
@@ -53,7 +52,6 @@ const Analytic = ({ sensor }) => {
           }
      };
 
-     // Fetch trend data
      const fetchData = async (sensor, period) => {
           try {
                const resNarasi = await fetch(
@@ -67,7 +65,6 @@ const Analytic = ({ sensor }) => {
           }
      };
 
-     // Fetch and compute statistics
      const fetchAndComputeStatistics = async () => {
           const dailyData = await fetchData(sensor, "daily");
           const monthlyData = await fetchData(sensor, "monthly");
@@ -137,7 +134,6 @@ const Analytic = ({ sensor }) => {
           });
      };
 
-     // Handle card click
      const handleCardClick = async (data) => {
           try {
                const res = await fetch(
@@ -187,7 +183,6 @@ const Analytic = ({ sensor }) => {
                     );
                }
 
-               // Set table data
                setTableData(
                     dataResponse.map((item, index) => ({
                          no: index + 1,
@@ -203,8 +198,15 @@ const Analytic = ({ sensor }) => {
           }
      };
 
-     const handlePeriodChange = (e) => {
+     const handlePeriodChange = async (e) => {
           setSelectedPeriod(e.target.value);
+          const data = await fetchData(sensor, e.target.value);
+          setSelectedData(
+               data.map((item) => ({
+                    timestamp: item.timestamp,
+                    value: item.max_value,
+               }))
+          );
      };
 
      useEffect(() => {
@@ -217,7 +219,7 @@ const Analytic = ({ sensor }) => {
 
      useEffect(() => {
           if (selectedData) {
-               handleCardClick({ sensor });
+               handleCardClick({ sensor, rule: "max" });
           }
      }, [selectedPeriod]);
 
@@ -266,10 +268,11 @@ const Analytic = ({ sensor }) => {
                     {!selectedData && (
                          <LineChartAnalytic chartData={[]} title="" />
                     )}
-                    {/* Render the DataTable component */}
+
                     {tableData.length > 0 && (
                          <DataTableAnalytic data={tableData} />
                     )}
+                    {!tableData.length && <DataTableAnalytic data={[]} />}
                </div>
           </>
      );
