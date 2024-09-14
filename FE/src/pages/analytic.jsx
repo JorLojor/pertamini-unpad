@@ -53,7 +53,7 @@ const Analytic = ({ sensor }) => {
      const fetchData = async (sensor, period) => {
           try {
                const resNarasi = await fetch(
-                    `http://localhost:3987/api/statisticsGraph?type=${sensor.toLowerCase()}&period=${period}`
+                    `https://backend-agustrisa.as1.pitunnel.net/api/statisticsGraph/${sensor.toLowerCase()}?period=${period}`
                );
                const data = await resNarasi.json();
                setTrendData((Math.random() * (100.5 - 99.0) + 99.0).toFixed(2));
@@ -63,45 +63,79 @@ const Analytic = ({ sensor }) => {
           }
      };
 
-     const calculateMinMaxAvg = (data) => {
-          const min = Math.min(...data.map((d) => d.min_value));
-          const max = Math.max(...data.map((d) => d.max_value));
-          const avg = (
-               data.reduce((sum, d) => sum + d.avg_value, 0) / data.length
-          ).toFixed(2);
-
-          const stddev = (
-               data.reduce((sum, d) => sum + d.stddev_value, 0) / data.length
-          ).toFixed(2);
-
-          return { min, max, avg, stddev };
-     };
-
      const fetchAndComputeStatistics = async () => {
           const dailyData = await fetchData(sensor, "daily");
           const monthlyData = await fetchData(sensor, "monthly");
           const yearlyData = await fetchData(sensor, "yearly");
-          setMinMaxAvg({
-               ...calculateMinMaxAvg(dailyData),
-               ...calculateMinMaxAvg(monthlyData),
-               ...calculateMinMaxAvg(yearlyData),
-          });
-     };
 
-     const fetchDataStatisticNow = async () => {
-          const nowData = await fetchData(sensor, "now");
-          setDataStatisticNow({
-               minNow: nowData.min_value,
-               maxNow: nowData.max_value,
-               avgNow: nowData.avg_value,
-               stddevNow: nowData.stddev_value,
+          const minDaily = Math.min(...dailyData.map((data) => data.min_value));
+          const minMonthly = Math.min(
+               ...monthlyData.map((data) => data.min_value)
+          );
+          const minYearly = Math.min(
+               ...yearlyData.map((data) => data.min_value)
+          );
+
+          const maxDaily = Math.max(...dailyData.map((data) => data.max_value));
+          const maxMonthly = Math.max(
+               ...monthlyData.map((data) => data.max_value)
+          );
+          const maxYearly = Math.max(
+               ...yearlyData.map((data) => data.max_value)
+          );
+
+          const avgDaily =
+               dailyData.reduce((acc, data) => acc + data.avg_value, 0) /
+               dailyData.length;
+          const avgMonthly =
+               monthlyData.reduce((acc, data) => acc + data.avg_value, 0) /
+               monthlyData.length;
+          const avgYearly =
+               yearlyData.reduce((acc, data) => acc + data.avg_value, 0) /
+               yearlyData.length;
+
+          const stddevDaily = Math.sqrt(
+               dailyData.reduce(
+                    (acc, data) =>
+                         acc + Math.pow(data.stddev_value - avgDaily, 2),
+                    0
+               ) / dailyData.length
+          );
+          const stddevMonthly = Math.sqrt(
+               monthlyData.reduce(
+                    (acc, data) =>
+                         acc + Math.pow(data.stddev_value - avgMonthly, 2),
+                    0
+               ) / monthlyData.length
+          );
+          const stddevYearly = Math.sqrt(
+               yearlyData.reduce(
+                    (acc, data) =>
+                         acc + Math.pow(data.stddev_value - avgYearly, 2),
+                    0
+               ) / yearlyData.length
+          );
+
+          setMinMaxAvg({
+               minDaily,
+               maxDaily,
+               avgDaily,
+               stddevDaily,
+               minMonthly,
+               maxMonthly,
+               avgMonthly,
+               stddevMonthly,
+               minYearly,
+               maxYearly,
+               avgYearly,
+               stddevYearly,
           });
      };
 
      const handleCardClick = async (data) => {
           try {
                const res = await fetch(
-                    `http://localhost:3987/api/statisticsGraph?type=${data.sensor.toLowerCase()}&period=${
+                    `https://backend-agustrisa.as1.pitunnel.net/api/statisticsGraph/${data.sensor.toLowerCase()}?period=${
                          selectedPeriod ?? "daily"
                     }`
                );
@@ -158,7 +192,7 @@ const Analytic = ({ sensor }) => {
      useEffect(() => {
           const interval = setInterval(() => {
                getDataRealTime();
-               fetchDataStatisticNow();
+               // fetchDataStatisticNow();
           }, 2000);
           fetchAndComputeStatistics();
           return () => clearInterval(interval);
@@ -166,7 +200,7 @@ const Analytic = ({ sensor }) => {
 
      useEffect(() => {
           if (selectedData) {
-               handleCardClick({ sensor, rule: "min" });
+               handleCardClick({ sensor });
           }
      }, [selectedPeriod]);
 

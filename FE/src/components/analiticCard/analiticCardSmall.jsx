@@ -9,7 +9,20 @@ const AnaliticCardSmall = ({
      yearly,
      onClick,
 }) => {
-     const [activeIdx, setActiveIdx] = useState(null); // Track active card
+     const [activeIdx, setActiveIdx] = useState(null);
+
+     const formatNumber = (number) => {
+          if (number.toString().length > 5) {
+               return {
+                    value: Number(number).toFixed(3),
+                    fontSize: "text-lg",
+               };
+          }
+          return {
+               value: number,
+               fontSize: "text-xl",
+          };
+     };
 
      const symbolDesicion = (titleCard) => {
           const symbols = {
@@ -23,13 +36,12 @@ const AnaliticCardSmall = ({
      };
 
      const handleCardClick = (index, data) => {
-          setActiveIdx(index); // Set active card index
-          onClick(data); // Pass selected data back to parent
+          setActiveIdx(index);
+          onClick(data);
      };
 
      return (
           <div className="flex gap-9 w-fit">
-               {/* Min Values */}
                <div
                     className={`flex flex-col items-center shadow rounded-md ${
                          activeIdx === 0 ? "bg-blue-900 text-white" : "bg-white"
@@ -50,27 +62,44 @@ const AnaliticCardSmall = ({
                               borderBottom: "1px solid #A6A6A6",
                          }}>
                          <p className="text-2xl font-bold">Min Now</p>
-                         <p className="text-2xl font-semibold">
-                              {now.minNow} {symbolDesicion(titleCard)}
+                         <p
+                              className={`text-2xl font-semibold ${
+                                   formatNumber(now.minNow).fontSize
+                              }`}>
+                              {formatNumber(now.minNow).value}{" "}
+                              {symbolDesicion(titleCard)}
                          </p>
                     </div>
                     <div className="flex justify-between w-full  px-6 pt-7 pb-2">
                          <div className="align-middle">
                               <p>Harian</p>
-                              <p className="text-xl font-bold pt-2">
-                                   {daily.min} {symbolDesicion(titleCard)}
+                              <p
+                                   className={`font-bold pt-2 ${
+                                        formatNumber(daily.minDaily).fontSize
+                                   }`}>
+                                   {formatNumber(daily.minDaily).value}{" "}
+                                   {symbolDesicion(titleCard)}
                               </p>
                          </div>
                          <div className="align-middle">
                               <p>Bulanan</p>
-                              <p className="text-xl font-bold pt-2">
-                                   {monthly.min} {symbolDesicion(titleCard)}
+                              <p
+                                   className={`font-bold pt-2 ${
+                                        formatNumber(monthly.minMonthly)
+                                             .fontSize
+                                   }`}>
+                                   {formatNumber(monthly.minMonthly).value}{" "}
+                                   {symbolDesicion(titleCard)}
                               </p>
                          </div>
                          <div className="align-middle">
                               <p>Tahunan</p>
-                              <p className="text-xl font-bold pt-2">
-                                   {yearly.min} {symbolDesicion(titleCard)}
+                              <p
+                                   className={`font-bold pt-2 ${
+                                        formatNumber(yearly.minYearly).fontSize
+                                   }`}>
+                                   {formatNumber(yearly.minYearly).value}{" "}
+                                   {symbolDesicion(titleCard)}
                               </p>
                          </div>
                     </div>
@@ -97,27 +126,44 @@ const AnaliticCardSmall = ({
                               borderBottom: "1px solid #A6A6A6",
                          }}>
                          <p className="text-2xl font-bold">Max Now</p>
-                         <p className="text-2xl font-semibold">
-                              {now.maxNow} {symbolDesicion(titleCard)}
+                         <p
+                              className={`text-2xl font-semibold ${
+                                   formatNumber(now.maxNow).fontSize
+                              }`}>
+                              {formatNumber(now.maxNow).value}{" "}
+                              {symbolDesicion(titleCard)}
                          </p>
                     </div>
                     <div className="flex justify-between w-full  px-6 pt-7 pb-2">
                          <div className="align-middle">
                               <p>Harian</p>
-                              <p className="text-xl font-bold pt-2">
-                                   {daily.max} {symbolDesicion(titleCard)}
+                              <p
+                                   className={`font-bold pt-2 ${
+                                        formatNumber(daily.maxDaily).fontSize
+                                   }`}>
+                                   {formatNumber(daily.maxDaily).value}{" "}
+                                   {symbolDesicion(titleCard)}
                               </p>
                          </div>
                          <div className="align-middl">
                               <p>Bulanan</p>
-                              <p className="text-xl font-bold pt-2">
-                                   {monthly.max} {symbolDesicion(titleCard)}
+                              <p
+                                   className={`font-bold pt-2 ${
+                                        formatNumber(monthly.maxMonthly)
+                                             .fontSize
+                                   }`}>
+                                   {formatNumber(monthly.maxMonthly).value}{" "}
+                                   {symbolDesicion(titleCard)}
                               </p>
                          </div>
                          <div className="align-middle">
                               <p>Tahunan</p>
-                              <p className="text-xl font-bold pt-2">
-                                   {yearly.max} {symbolDesicion(titleCard)}
+                              <p
+                                   className={`font-bold pt-2 ${
+                                        formatNumber(yearly.maxYearly).fontSize
+                                   }`}>
+                                   {formatNumber(yearly.maxYearly).value}{" "}
+                                   {symbolDesicion(titleCard)}
                               </p>
                          </div>
                     </div>
@@ -144,27 +190,44 @@ const AnaliticCardSmall = ({
                               borderBottom: "1px solid #A6A6A6",
                          }}>
                          <p className="text-2xl font-bold">Average Now</p>
-                         <p className="text-2xl font-semibold">
-                              {now.avgNow} {symbolDesicion(titleCard)}
+                         <p
+                              className={`text-2xl font-semibold ${
+                                   formatNumber(now.avgNow).fontSize
+                              }`}>
+                              {formatNumber(now.avgNow).value}{" "}
+                              {symbolDesicion(titleCard)}
                          </p>
                     </div>
                     <div className="flex justify-between w-full  px-6 pt-7 pb-2">
                          <div className="align-middle">
                               <p>Harian</p>
-                              <p className="text-xl font-bold pt-2">
-                                   {daily.avg} {symbolDesicion(titleCard)}
+                              <p
+                                   className={`font-bold pt-2 ${
+                                        formatNumber(daily.avgDaily).fontSize
+                                   }`}>
+                                   {formatNumber(daily.avgDaily).value}{" "}
+                                   {symbolDesicion(titleCard)}
                               </p>
                          </div>
                          <div className="align-middle">
                               <p>Bulanan</p>
-                              <p className="text-xl font-bold pt-2">
-                                   {monthly.avg} {symbolDesicion(titleCard)}
+                              <p
+                                   className={`font-bold pt-2 ${
+                                        formatNumber(monthly.avgMonthly)
+                                             .fontSize
+                                   }`}>
+                                   {formatNumber(monthly.avgMonthly).value}{" "}
+                                   {symbolDesicion(titleCard)}
                               </p>
                          </div>
                          <div className="align-middle">
                               <p>Tahunan</p>
-                              <p className="text-xl font-bold pt-2">
-                                   {yearly.avg} {symbolDesicion(titleCard)}
+                              <p
+                                   className={`font-bold pt-2 ${
+                                        formatNumber(yearly.avgYearly).fontSize
+                                   }`}>
+                                   {formatNumber(yearly.avgYearly).value}{" "}
+                                   {symbolDesicion(titleCard)}
                               </p>
                          </div>
                     </div>
@@ -191,27 +254,45 @@ const AnaliticCardSmall = ({
                               borderBottom: "1px solid #A6A6A6",
                          }}>
                          <p className="text-2xl font-bold">StdDev Now</p>
-                         <p className="text-2xl font-semibold">
-                              {now.stddevNow} {symbolDesicion(titleCard)}
+                         <p
+                              className={`text-2xl font-semibold ${
+                                   formatNumber(now.stddevNow).fontSize
+                              }`}>
+                              {formatNumber(now.stddevNow).value}{" "}
+                              {symbolDesicion(titleCard)}
                          </p>
                     </div>
                     <div className="flex justify-between w-full  px-6 pt-7 pb-2">
                          <div className="align-middle">
                               <p>Harian</p>
-                              <p className="text-xl font-bold pt-2">
-                                   {daily.stddev} {symbolDesicion(titleCard)}
+                              <p
+                                   className={`font-bold pt-2 ${
+                                        formatNumber(daily.stddevDaily).fontSize
+                                   }`}>
+                                   {formatNumber(daily.stddevDaily).value}{" "}
+                                   {symbolDesicion(titleCard)}
                               </p>
                          </div>
                          <div className="align-middle">
                               <p>Bulanan</p>
-                              <p className="text-xl font-bold pt-2">
-                                   {monthly.stddev} {symbolDesicion(titleCard)}
+                              <p
+                                   className={`font-bold pt-2 ${
+                                        formatNumber(monthly.stddevMonthly)
+                                             .fontSize
+                                   }`}>
+                                   {formatNumber(monthly.stddevMonthly).value}{" "}
+                                   {symbolDesicion(titleCard)}
                               </p>
                          </div>
                          <div className="align-middle">
                               <p>Tahunan</p>
-                              <p className="text-xl font-bold pt-2">
-                                   {yearly.stddev} {symbolDesicion(titleCard)}
+                              <p
+                                   className={`font-bold pt-2 ${
+                                        formatNumber(yearly.stddevYearly)
+                                             .fontSize
+                                   }`}>
+                                   {formatNumber(yearly.stddevYearly).value}{" "}
+                                   {symbolDesicion(titleCard)}
                               </p>
                          </div>
                     </div>
