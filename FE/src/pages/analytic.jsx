@@ -9,26 +9,28 @@ const Analytic = ({ sensor }) => {
      const [dataRealtime, setDataRealtime] = useState({});
      const [trendData, setTrendData] = useState("");
      const [datayangbakaldioper, setDatayangbakaldioper] = useState({});
-     const [minMaxAvg, setMinMaxAvg] = useState({
+     const [minMaxAvgNow, setMinMaxAvgNow] = useState({
+          minNow: 0,
+          maxNow: 0,
+          avgNow: 0,
+          stddevNow: 0,
+          //
           minDaily: 0,
           maxDaily: 0,
           avgDaily: 0,
           stddevDaily: 0,
+          //
           minMonthly: 0,
           maxMonthly: 0,
           avgMonthly: 0,
           stddevMonthly: 0,
+          //
           minYearly: 0,
           maxYearly: 0,
           avgYearly: 0,
           stddevYearly: 0,
      });
-     const [dataStatisticNow, setDataStatisticNow] = useState({
-          minNow: 0,
-          maxNow: 0,
-          avgNow: 0,
-          stddevNow: 0,
-     });
+
      const [selectedData, setSelectedData] = useState(null);
      const [selectedTitle, setSelectedTitle] = useState("Chart Data");
      const [selectedPeriod, setSelectedPeriod] = useState("daily");
@@ -37,7 +39,7 @@ const Analytic = ({ sensor }) => {
      const getDataRealTime = async () => {
           try {
                const res = await fetch(
-                    "http://localhost:3987/api/dataRealtime"
+                    "https://backend-agustrisa.as1.pitunnel.net/api/dataRealtime"
                );
                const data = await res.json();
                setDataRealtime(data[sensor.toLowerCase()]);
@@ -65,72 +67,42 @@ const Analytic = ({ sensor }) => {
           }
      };
 
-     const fetchAndComputeStatistics = async () => {
-          const dailyData = await fetchData(sensor, "daily");
-          const monthlyData = await fetchData(sensor, "monthly");
-          const yearlyData = await fetchData(sensor, "yearly");
+     const fetchCardData = async () => {
+          const responseDaily = await fetch(
+               `https://backend-agustrisa.as1.pitunnel.net/api/statistics/?period=daily`
+          );
+          const dataDaily = await responseDaily.json();
+          const responseMonthly = await fetch(
+               `https://backend-agustrisa.as1.pitunnel.net/api/statistics/?period=monthly`
+          );
+          const dataMonthly = await responseMonthly.json();
+          const responseYearly = await fetch(
+               `https://backend-agustrisa.as1.pitunnel.net/api/statistics/?period=yearly`
+          );
+          const dataYearly = await responseYearly.json();
 
-          const minDaily = Math.min(...dailyData.map((data) => data.min_value));
-          const minMonthly = Math.min(
-               ...monthlyData.map((data) => data.min_value)
+          const dataNow = await fetch(
+               `https://backend-agustrisa.as1.pitunnel.net/api/statistics/?period=now`
           );
-          const minYearly = Math.min(
-               ...yearlyData.map((data) => data.min_value)
-          );
+          const dataNowResponse = await dataNow.json();
 
-          const maxDaily = Math.max(...dailyData.map((data) => data.max_value));
-          const maxMonthly = Math.max(
-               ...monthlyData.map((data) => data.max_value)
-          );
-          const maxYearly = Math.max(
-               ...yearlyData.map((data) => data.max_value)
-          );
-
-          const avgDaily =
-               dailyData.reduce((acc, data) => acc + data.avg_value, 0) /
-               dailyData.length;
-          const avgMonthly =
-               monthlyData.reduce((acc, data) => acc + data.avg_value, 0) /
-               monthlyData.length;
-          const avgYearly =
-               yearlyData.reduce((acc, data) => acc + data.avg_value, 0) /
-               yearlyData.length;
-
-          const stddevDaily = Math.sqrt(
-               dailyData.reduce(
-                    (acc, data) =>
-                         acc + Math.pow(data.stddev_value - avgDaily, 2),
-                    0
-               ) / dailyData.length
-          );
-          const stddevMonthly = Math.sqrt(
-               monthlyData.reduce(
-                    (acc, data) =>
-                         acc + Math.pow(data.stddev_value - avgMonthly, 2),
-                    0
-               ) / monthlyData.length
-          );
-          const stddevYearly = Math.sqrt(
-               yearlyData.reduce(
-                    (acc, data) =>
-                         acc + Math.pow(data.stddev_value - avgYearly, 2),
-                    0
-               ) / yearlyData.length
-          );
-
-          setMinMaxAvg({
-               minDaily,
-               maxDaily,
-               avgDaily,
-               stddevDaily,
-               minMonthly,
-               maxMonthly,
-               avgMonthly,
-               stddevMonthly,
-               minYearly,
-               maxYearly,
-               avgYearly,
-               stddevYearly,
+          setMinMaxAvgNow({
+               minNow: dataNowResponse[0].min_flow,
+               maxNow: dataNowResponse[0].max_flow,
+               avgNow: dataNowResponse[0].avg_flow,
+               stddevNow: dataNowResponse[0].stddev_flow,
+               minDaily: dataDaily[0].min_flow,
+               maxDaily: dataDaily[0].max_flow,
+               avgDaily: dataDaily[0].avg_flow,
+               stddevDaily: dataDaily[0].stddev_flow,
+               minMonthly: dataMonthly[0].min_flow,
+               maxMonthly: dataMonthly[0].max_flow,
+               avgMonthly: dataMonthly[0].avg_flow,
+               stddevMonthly: dataMonthly[0].stddev_flow,
+               minYearly: dataYearly[0].min_flow,
+               maxYearly: dataYearly[0].max_flow,
+               avgYearly: dataYearly[0].avg_flow,
+               stddevYearly: dataYearly[0].stddev_flow,
           });
      };
 
@@ -213,7 +185,7 @@ const Analytic = ({ sensor }) => {
           const interval = setInterval(() => {
                getDataRealTime();
           }, 2000);
-          fetchAndComputeStatistics();
+          fetchCardData();
           return () => clearInterval(interval);
      }, [sensor]);
 
@@ -239,10 +211,10 @@ const Analytic = ({ sensor }) => {
 
                     <AnaliticCardSmall
                          titleCard={sensor}
-                         now={dataStatisticNow}
-                         daily={minMaxAvg}
-                         monthly={minMaxAvg}
-                         yearly={minMaxAvg}
+                         now={minMaxAvgNow}
+                         daily={minMaxAvgNow}
+                         monthly={minMaxAvgNow}
+                         yearly={minMaxAvgNow}
                          onClick={handleCardClick}
                     />
                </div>

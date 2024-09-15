@@ -26,6 +26,8 @@ const AnaliticCardBig = ({
                : ["text-green-500", ArrowUp, trendData];
      };
 
+     console.log(dataStatus);
+
      const titleDesicion = () => {
           const titles = {
                Dryness: [DrynessIcon, DrynessIconWhite],
