@@ -69,20 +69,19 @@ const Analytic = ({ sensor }) => {
 
      const fetchCardData = async () => {
           const responseDaily = await fetch(
-               `https://backend-agustrisa.as1.pitunnel.net/api/statistics/?period=daily`
+               `https://backend-agustrisa.as1.pitunnel.net/api/statistics?period=daily`
           );
           const dataDaily = await responseDaily.json();
           const responseMonthly = await fetch(
-               `https://backend-agustrisa.as1.pitunnel.net/api/statistics/?period=monthly`
+               `https://backend-agustrisa.as1.pitunnel.net/api/statistics?period=monthly`
           );
           const dataMonthly = await responseMonthly.json();
           const responseYearly = await fetch(
-               `https://backend-agustrisa.as1.pitunnel.net/api/statistics/?period=yearly`
+               `https://backend-agustrisa.as1.pitunnel.net/api/statistics?period=yearly`
           );
           const dataYearly = await responseYearly.json();
-
           const dataNow = await fetch(
-               `https://backend-agustrisa.as1.pitunnel.net/api/statistics/?period=now`
+               `https://backend-agustrisa.as1.pitunnel.net/api/statistics?period=now`
           );
           const dataNowResponse = await dataNow.json();
 

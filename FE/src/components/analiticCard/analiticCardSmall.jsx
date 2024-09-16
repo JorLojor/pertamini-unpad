@@ -35,9 +35,7 @@ const AnaliticCardSmall = ({
         return symbols[titleCard] || "";
     };
 
-    const handleCardClick = (index, data) => {
-     console.log(data);
-     
+    const handleCardClick = (index, data) => {     
         setActiveIdx(index);
         onClick(data);
     };
