@@ -12,6 +12,7 @@ const Dashboard = () => {
      const [endDate, setEndDate] = useState("");
      const [selectedType, setSelectedType] = useState("dryness");
      const [selectedTitle, setSelectedTitle] = useState("Chart Data");
+     const [sensorLimits, setSensorLimits] = useState({});
 
      const fetchChartData = async (type) => {
           try {
@@ -20,9 +21,9 @@ const Dashboard = () => {
                     startDate: startDate || "",
                     endDate: endDate || "",
                });
-               const response = await fetch(
-                    `https://backend-agustrisa.as1.pitunnel.net/api/dataGrafik/${type}?${params.toString()}`
-               );
+               const url = `https://backend-agustrisa.as1.pitunnel.net/api/dataGrafik/${type}?${params.toString()}`;
+               console.log(url);
+               const response = await fetch(url);
                const data = await response.json();
                if (data.length === 0) {
                     setChartData(["kosong"]);
@@ -85,6 +86,10 @@ const Dashboard = () => {
           updateRandomData();
           GetdataRealTime();
           const intervalId = setInterval(GetdataRealTime, 2000);
+          const storedLimits = localStorage.getItem("sensorLimits");
+          if (storedLimits) {
+               setSensorLimits(JSON.parse(storedLimits));
+          }
 
           return () => clearInterval(intervalId);
      }, []);
@@ -150,7 +155,6 @@ const Dashboard = () => {
                          activeIdx={activeIdx}
                          onClick={() => handleClick(3, "flow", "Flow")}
                     />
-
                </div>
                <div className="pt-10 flex-col">
                     <div className="bg-white rounded-lg p-4 mb-5 flex items-center justify-between">
@@ -186,13 +190,20 @@ const Dashboard = () => {
                          <p>Loading...</p>
                     ) : (
                          <>
-                              <div
-                                   className="mt-5 p-4 bg-white rounded-lg shadow-lg"
-                                   style={{}}>
-                                   <LineChart
-                                        chartData={chartData}
-                                        title={selectedTitle}
-                                   />
+                              <div className="pt-10 flex-col">
+                                   <div
+                                        className="mt-5 p-4 bg-white rounded-lg shadow-lg"
+                                        style={{}}>
+                                        <LineChart
+                                             chartData={chartData}
+                                             title={selectedTitle}
+                                             limits={
+                                                  sensorLimits[
+                                                       selectedType
+                                                  ] || { min: 0, max: 0 }
+                                             }
+                                        />
+                                   </div>
                               </div>
                          </>
                     )}
