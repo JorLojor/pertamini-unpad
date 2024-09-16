@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { login } from '../slice/userSlice'; 
 import { useNavigate } from 'react-router-dom';
-import { FaEye, FaEyeSlash } from 'react-icons/fa'; // Import eye icons
+import { FaEye, FaEyeSlash } from 'react-icons/fa'; 
 import Logo from "../assets/SMS-Hitam.svg";
 import Image from "../assets/LoginImage.svg";
 import ID from "../assets/ID.svg";
@@ -11,7 +11,7 @@ import Password from "../assets/Password.svg";
 const Login = () => {
     const [id, setId] = useState('');
     const [password, setPassword] = useState('');
-    const [showPassword, setShowPassword] = useState(false); // State to manage password visibility
+    const [showPassword, setShowPassword] = useState(false);
     const [error, setError] = useState('');
     const dispatch = useDispatch();
     const navigate = useNavigate();
