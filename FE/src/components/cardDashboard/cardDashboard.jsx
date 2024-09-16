@@ -91,7 +91,7 @@ const CardDashboard = ({ titleCard, dataCard, idx, activeIdx, onClick }) => {
                     <small className={`${titleCard === 'Dryness' || titleCard === 'Power' ? 'text-base md:text-3xl relative md:top-3' : 'text-base md:text-2xl relative md:top-1' }`}>{symbolDesicion()}</small>
                </div>
                <p className={` font-bold ${titleCard === 'Dryness' || titleCard === 'Power' ? 'text-lg md:text-[28px]' : 'text-lg md:text-[28px]'}`}>
-                    {titleCard}
+                    {titleCard  === 'Dryness' ? 'Dryness Fraction' : titleCard  === 'Power' ?  'Power Prediction' : titleCard}
                </p>
           </div>
      );

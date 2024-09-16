@@ -8,6 +8,7 @@ const AnaliticCardSmall = ({
     monthly,
     yearly,
     onClick,
+    selectedPeriod, // Accept the selected period as a prop
 }) => {
     const [activeIdx, setActiveIdx] = useState(null);
 
@@ -35,270 +36,116 @@ const AnaliticCardSmall = ({
         return symbols[titleCard] || "";
     };
 
-    const handleCardClick = (index, data) => {     
+    const handleCardClick = (index, data) => {
         setActiveIdx(index);
         onClick(data);
     };
 
     return (
-        <div className="flex flex-wrap justify-start">
-            <div className="flex flex-wrap gap-2 w-full">
-                {/* Min Values */}
-                <div
-                    className={`flex flex-col w-[325px] items-center shadow rounded-md m-2 ${
-                        activeIdx === 0 ? "bg-blue-900 text-white" : "bg-white"
-                    }`}
-                    onClick={() =>
-                        handleCardClick(0, {
-                            sensor: titleCard,
-                            rule: "min",
-                        })
-                    }
-                >
+        <div className="">
+            <div className="flex flex-col items-start">
+                <div className="flex flex-wrap w-full">
+                    {/* Min Values */}
                     <div
-                        className="flex flex-row items-end justify-between gap-4 w-full p-4"
-                        style={{
-                            borderBottom: "1px solid #A6A6A6",
-                        }}
+                        className={`flex flex-col w-[230px] items-center shadow rounded-md m-1 ${activeIdx === 0 ? "bg-[#262937] text-white" : "bg-white"}`}
+                        onClick={() =>
+                            handleCardClick(0, {
+                                sensor: titleCard,
+                                rule: "min",
+                            })
+                        }
                     >
-                        <p className="text-[22px]">Min Now</p>
-                        <p
-                            className={`text-2xl font-extrabold ${
-                                formatNumber(now.minNow).fontSize
-                            }`}
-                        >
+                        <p className="text-[22px] pt-6">Min Now</p>
+                        <p className={`text-2xl font-extrabold p-2 px-4 mt-2 mb-4 ${activeIdx === 0 ? 'bg-black bg-opacity-10 border-[#BFBFBF]' : 'bg-[#F7F7F7] border-[#BFBFBF]' }  border rounded-lg ${formatNumber(now.minNow).fontSize}`} >
                             {formatNumber(now.minNow).value}{" "}
                             {symbolDesicion(titleCard)}
                         </p>
-                    </div>
-                    <div className="flex justify-between w-full px-6 pt-7 pb-2">
-                        <div className="align-middle">
-                            <p>Harian</p>
-                            <p
-                                className={`font-bold pt-2 ${
-                                    formatNumber(daily.minDaily).fontSize
-                                }`}
-                            >
-                                {formatNumber(daily.minDaily).value}{" "}
-                                {symbolDesicion(titleCard)}
-                            </p>
-                        </div>
-                        <div className="align-middle">
-                            <p>Bulanan</p>
-                            <p
-                                className={`font-bold pt-2 ${
-                                    formatNumber(monthly.minMonthly).fontSize
-                                }`}
-                            >
-                                {formatNumber(monthly.minMonthly).value}{" "}
-                                {symbolDesicion(titleCard)}
-                            </p>
-                        </div>
-                        <div className="align-middle">
-                            <p>Tahunan</p>
-                            <p
-                                className={`font-bold pt-2 ${
-                                    formatNumber(yearly.minYearly).fontSize
-                                }`}
-                            >
-                                {formatNumber(yearly.minYearly).value}{" "}
-                                {symbolDesicion(titleCard)}
-                            </p>
+                        <div className="flex justify-center w-full px-6 pt-2 pb-2 border-t ">
+                            <div className="align-middle">
+                                <p>{selectedPeriod === 'harian' ? "Harian" : selectedPeriod === 'bulanan' ? "Bulanan" : "Tahunan"}</p>
+                                <p className={`font-bold p-2 px-4 mt-2 mb-6 ${activeIdx === 0 ? 'bg-black bg-opacity-10 border-[#BFBFBF]' : 'bg-[#F7F7F7] border-[#BFBFBF]' } border rounded-lg  ${formatNumber(selectedPeriod === 'harian' ? daily.minDaily : selectedPeriod === 'bulanan' ? monthly.minMonthly : yearly.minYearly).fontSize}`} >
+                                    {formatNumber(selectedPeriod === 'harian' ? daily.minDaily : selectedPeriod === 'bulanan' ? monthly.minMonthly : yearly.minYearly).value}{" "}
+                                    {symbolDesicion(titleCard)}
+                                </p>
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                {/* Max Values */}
-                <div
-                    className={`flex flex-col w-[325px] items-center shadow rounded-md m-2 ${
-                        activeIdx === 1 ? "bg-blue-900 text-white" : "bg-white"
-                    }`}
-                    onClick={() =>
-                        handleCardClick(1, {
-                            sensor: titleCard,
-                            rule: "max",
-                        })
-                    }
-                >
+                    {/* Max Values */}
                     <div
-                        className="flex flex-row items-end justify-between gap-4 w-full p-4"
-                        style={{
-                            borderBottom: "1px solid #A6A6A6",
-                        }}
+                        className={`flex flex-col w-[230px] items-center shadow rounded-md m-1 ${activeIdx === 1 ? "bg-[#262937] text-white" : "bg-white"}`}
+                        onClick={() =>
+                            handleCardClick(1, {
+                                sensor: titleCard,
+                                rule: "max",
+                            })
+                        }
                     >
-                        <p className="text-[22px]">Max Now</p>
-                        <p
-                            className={`text-2xl font-extrabold ${
-                                formatNumber(now.maxNow).fontSize
-                            }`}
-                        >
+                        <p className="text-[22px] pt-6">Max Now</p>
+                        <p className={`text-2xl font-extrabold p-2 px-4 mt-2 mb-4 ${activeIdx === 1 ? 'bg-black bg-opacity-10 border-[#BFBFBF]' : 'bg-[#F7F7F7] border-[#BFBFBF]' } border rounded-lg ${formatNumber(now.maxNow).fontSize}`} >
                             {formatNumber(now.maxNow).value}{" "}
                             {symbolDesicion(titleCard)}
                         </p>
-                    </div>
-                    <div className="flex justify-between w-full px-6 pt-7 pb-2">
-                        <div className="align-middle">
-                            <p>Harian</p>
-                            <p
-                                className={`font-bold pt-2 ${
-                                    formatNumber(daily.maxDaily).fontSize
-                                }`}
-                            >
-                                {formatNumber(daily.maxDaily).value}{" "}
-                                {symbolDesicion(titleCard)}
-                            </p>
-                        </div>
-                        <div className="align-middle">
-                            <p>Bulanan</p>
-                            <p
-                                className={`font-bold pt-2 ${
-                                    formatNumber(monthly.maxMonthly).fontSize
-                                }`}
-                            >
-                                {formatNumber(monthly.maxMonthly).value}{" "}
-                                {symbolDesicion(titleCard)}
-                            </p>
-                        </div>
-                        <div className="align-middle">
-                            <p>Tahunan</p>
-                            <p
-                                className={`font-bold pt-2 ${
-                                    formatNumber(yearly.maxYearly).fontSize
-                                }`}
-                            >
-                                {formatNumber(yearly.maxYearly).value}{" "}
-                                {symbolDesicion(titleCard)}
-                            </p>
+                        <div className="flex justify-center w-full px-6 pt-2 pb-2 border-t">
+                            <div className="align-middle">
+                                <p>{selectedPeriod === 'harian' ? "Harian" : selectedPeriod === 'bulanan' ? "Bulanan" : "Tahunan"}</p>
+                                <p className={`font-bold p-2 px-4 mt-2 mb-6 ${activeIdx === 1 ? 'bg-black bg-opacity-10 border-[#BFBFBF]' : 'bg-[#F7F7F7] border-[#BFBFBF]' } border rounded-lg ${formatNumber(selectedPeriod === 'harian' ? daily.maxDaily : selectedPeriod === 'bulanan' ? monthly.maxMonthly : yearly.maxYearly).fontSize}`} >
+                                    {formatNumber(selectedPeriod === 'harian' ? daily.maxDaily : selectedPeriod === 'bulanan' ? monthly.maxMonthly : yearly.maxYearly).value}{" "}
+                                    {symbolDesicion(titleCard)}
+                                </p>
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                {/* Avg Values */}
-                <div
-                    className={`flex flex-col w-[325px] items-center shadow rounded-md m-2 ${
-                        activeIdx === 2 ? "bg-blue-900 text-white" : "bg-white"
-                    }`}
-                    onClick={() =>
-                        handleCardClick(2, {
-                            sensor: titleCard,
-                            rule: "avg",
-                        })
-                    }
-                >
+                    {/* Avg Values */}
                     <div
-                        className="flex flex-row items-end justify-between gap-4 w-full p-4"
-                        style={{
-                            borderBottom: "1px solid #A6A6A6",
-                        }}
+                        className={`flex flex-col w-[230px] items-center shadow rounded-md m-1 ${activeIdx === 2 ? "bg-[#262937] text-white" : "bg-white"}`}
+                        onClick={() =>
+                            handleCardClick(2, {
+                                sensor: titleCard,
+                                rule: "avg",
+                            })
+                        }
                     >
-                        <p className="text-[22px]">Average Now</p>
-                        <p
-                            className={`text-2xl font-extrabold ${
-                                formatNumber(now.avgNow).fontSize
-                            }`}
-                        >
+                        <p className="text-[22px] pt-6">Average Now</p>
+                        <p className={`text-2xl font-extrabold p-2 px-4 mt-2 mb-4 ${activeIdx === 2 ? 'bg-black bg-opacity-10 border-[#BFBFBF]' : 'bg-[#F7F7F7] border-[#BFBFBF]' } border rounded-lg ${formatNumber(now.avgNow).fontSize}`}>
                             {formatNumber(now.avgNow).value}{" "}
                             {symbolDesicion(titleCard)}
                         </p>
-                    </div>
-                    <div className="flex justify-between w-full px-6 pt-7 pb-2">
-                        <div className="align-middle">
-                            <p>Harian</p>
-                            <p
-                                className={`font-bold pt-2 ${
-                                    formatNumber(daily.avgDaily).fontSize
-                                }`}
-                            >
-                                {formatNumber(daily.avgDaily).value}{" "}
-                                {symbolDesicion(titleCard)}
-                            </p>
-                        </div>
-                        <div className="align-middle">
-                            <p>Bulanan</p>
-                            <p
-                                className={`font-bold pt-2 ${
-                                    formatNumber(monthly.avgMonthly).fontSize
-                                }`}
-                            >
-                                {formatNumber(monthly.avgMonthly).value}{" "}
-                                {symbolDesicion(titleCard)}
-                            </p>
-                        </div>
-                        <div className="align-middle">
-                            <p>Tahunan</p>
-                            <p
-                                className={`font-bold pt-2 ${
-                                    formatNumber(yearly.avgYearly).fontSize
-                                }`}
-                            >
-                                {formatNumber(yearly.avgYearly).value}{" "}
-                                {symbolDesicion(titleCard)}
-                            </p>
+                        <div className="flex justify-center w-full px-6 pt-2 pb-2 border-t">
+                            <div className="align-middle">
+                                <p>{selectedPeriod === 'harian' ? "Harian" : selectedPeriod === 'bulanan' ? "Bulanan" : "Tahunan"}</p>
+                                <p className={`font-bold p-2 px-4 mt-2 mb-6 ${activeIdx === 2 ? 'bg-black bg-opacity-10 border-[#BFBFBF]' : 'bg-[#F7F7F7] border-[#BFBFBF]' } border rounded-lg ${formatNumber(selectedPeriod === 'harian' ? daily.avgDaily : selectedPeriod === 'bulanan' ? monthly.avgMonthly : yearly.avgYearly).fontSize}`}>
+                                    {formatNumber(selectedPeriod === 'harian' ? daily.avgDaily : selectedPeriod === 'bulanan' ? monthly.avgMonthly : yearly.avgYearly).value}{" "}
+                                    {symbolDesicion(titleCard)}
+                                </p>
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                {/* StdDev Values */}
-                <div
-                    className={`flex flex-col w-[325px] items-center shadow rounded-md m-2 ${
-                        activeIdx === 3 ? "bg-blue-900 text-white" : "bg-white"
-                    }`}
-                    onClick={() =>
-                        handleCardClick(3, {
-                            sensor: titleCard,
-                            rule: "stddev",
-                        })
-                    }
-                >
+                    {/* StdDev Values */}
                     <div
-                        className="flex flex-row items-end justify-between gap-4 w-full p-4"
-                        style={{
-                            borderBottom: "1px solid #A6A6A6",
-                        }}
+                        className={`flex flex-col w-[230px] items-center shadow rounded-md m-1 ${activeIdx === 3 ? "bg-[#262937] text-white" : "bg-white"}`}
+                        onClick={() =>
+                            handleCardClick(3, {
+                                sensor: titleCard,
+                                rule: "stddev",
+                            })
+                        }
                     >
-                        <p className="text-[22px]">StdDev Now</p>
-                        <p
-                            className={`text-2xl font-extrabold ${
-                                formatNumber(now.stddevNow).fontSize
-                            }`}
-                        >
+                        <p className="text-[22px] pt-6">Standar Deviasi</p>
+                        <p className={`text-2xl font-extrabold p-2 px-4 mt-2 mb-4 ${activeIdx === 3 ? 'bg-black bg-opacity-10 border-[#BFBFBF]' : 'bg-[#F7F7F7] border-[#BFBFBF]' } border rounded-lg ${formatNumber(now.stddevNow).fontSize}`} >
                             {formatNumber(now.stddevNow).value}{" "}
                             {symbolDesicion(titleCard)}
                         </p>
-                    </div>
-                    <div className="flex justify-between w-full px-6 pt-7 pb-2">
-                        <div className="align-middle">
-                            <p>Harian</p>
-                            <p
-                                className={`font-bold pt-2 ${
-                                    formatNumber(daily.stddevDaily).fontSize
-                                }`}
-                            >
-                                {formatNumber(daily.stddevDaily).value}{" "}
-                                {symbolDesicion(titleCard)}
-                            </p>
-                        </div>
-                        <div className="align-middle">
-                            <p>Bulanan</p>
-                            <p
-                                className={`font-bold pt-2 ${
-                                    formatNumber(monthly.stddevMonthly).fontSize
-                                }`}
-                            >
-                                {formatNumber(monthly.stddevMonthly).value}{" "}
-                                {symbolDesicion(titleCard)}
-                            </p>
-                        </div>
-                        <div className="align-middle">
-                            <p>Tahunan</p>
-                            <p
-                                className={`font-bold pt-2 ${
-                                    formatNumber(yearly.stddevYearly).fontSize
-                                }`}
-                            >
-                                {formatNumber(yearly.stddevYearly).value}{" "}
-                                {symbolDesicion(titleCard)}
-                            </p>
+                        <div className="flex justify-center w-full px-6 pt-2 pb-2 border-t">
+                            <div className="align-middle">
+                                <p>{selectedPeriod === 'harian' ? "Harian" : selectedPeriod === 'bulanan' ? "Bulanan" : "Tahunan"}</p>
+                                <p className={`font-bold p-2 px-4 mt-2 mb-6 ${activeIdx === 3 ? 'bg-black bg-opacity-10 border-[#BFBFBF]' : 'bg-[#F7F7F7] border-[#BFBFBF]' } border rounded-lg ${formatNumber(selectedPeriod === 'harian' ? daily.stddevDaily : selectedPeriod === 'bulanan' ? monthly.stddevMonthly : yearly.stddevYearly).fontSize}`} >
+                                    {formatNumber(selectedPeriod === 'harian' ? daily.stddevDaily : selectedPeriod === 'bulanan' ? monthly.stddevMonthly : yearly.stddevYearly).value}{" "}
+                                    {symbolDesicion(titleCard)}
+                                </p>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -314,6 +161,7 @@ AnaliticCardSmall.propTypes = {
     yearly: PropTypes.object.isRequired,
     titleCard: PropTypes.string.isRequired,
     onClick: PropTypes.func.isRequired,
+    selectedPeriod: PropTypes.string.isRequired, // Add prop type for selectedPeriod
 };
 
 export default AnaliticCardSmall;
