@@ -46,7 +46,7 @@ const Sidebar = ({
           setSelectedAnalytic(menu);
           toggleSidebar();
      };
-     
+
      const toggleAnalyticDropdown = () => {
           if (buka) {
                setAnalyticOpen(!analyticOpen);
@@ -55,14 +55,14 @@ const Sidebar = ({
 
      const handleClickMenuSetting = (menu) => {
           if (menu === "Kalibrasi") {
-              setCurrentPage("Kalibrasi");
+               setCurrentPage("Kalibrasi");
           } else if (menu === "Batas") {
-              setCurrentPage("Batas");
+               setCurrentPage("Batas");
           }
           setSelectedSetting(menu);
           toggleSidebar();
-      };
-      
+     };
+
 
      const toggleSettingDropdown = () => {
           if (buka) {
@@ -95,13 +95,11 @@ const Sidebar = ({
                </div>
 
                <div
-                    className={`button-sidebar flex flex-row space-x-4 items-center p-4 mt-8 w-[80%] ${
-                         buka ? "ml-6" : "mx-auto"
-                    } hover:bg-gray-700 active:bg-gray-600 cursor-pointer ${
-                         currentPage === "Dashboard"
+                    className={`button-sidebar flex flex-row space-x-4 items-center p-4 mt-8 w-[80%] ${buka ? "ml-6" : "mx-auto"
+                         } hover:bg-gray-700 active:bg-gray-600 cursor-pointer ${currentPage === "Dashboard"
                               ? "bg-gray-700 text-white"
                               : "text-[#BFBFBF]"
-                    }`}
+                         }`}
                     onClick={() => handleClickMenu("Dashboard")}>
                     <img
                          className={`${buka ? "mx-0" : "mx-auto"}`}
@@ -124,13 +122,11 @@ const Sidebar = ({
                </div>
 
                <div
-                    className={`button-sidebar flex flex-row space-x-4 items-center p-4 mt-4 w-[80%] ${
-                         buka ? "ml-6" : "mx-auto"
-                    } hover:bg-gray-700 active:bg-gray-600 cursor-pointer ${
-                         currentPage === "Analytic"
+                    className={`button-sidebar flex flex-row space-x-4 items-center p-4 mt-4 w-[80%] ${buka ? "ml-6" : "mx-auto"
+                         } hover:bg-gray-700 active:bg-gray-600 cursor-pointer ${currentPage === "Analytic"
                               ? "bg-gray-700 text-white"
                               : "text-[#BFBFBF]"
-                    }`}
+                         }`}
                     onClick={toggleAnalyticDropdown}>
                     <img
                          className={`${buka ? "mx-0" : "mx-auto"}`}
@@ -176,11 +172,10 @@ const Sidebar = ({
                               ].map((menu) => (
                                    <div
                                         key={menu}
-                                        className={`sub-menu ml-12 p-2 w-[70%] flex items-center justify-start hover:bg-gray-700 active:bg-gray-600 cursor-pointer ${
-                                             selectedAnalytic === menu
+                                        className={`sub-menu ml-12 p-2 w-[70%] flex items-center justify-start hover:bg-gray-700 active:bg-gray-600 cursor-pointer ${selectedAnalytic === menu
                                                   ? "bg-gray-700 text-white"
                                                   : "text-[#BFBFBF]"
-                                        }`}
+                                             }`}
                                         onClick={() =>
                                              handleClickMenuAnalytic(menu)
                                         }>
@@ -195,24 +190,13 @@ const Sidebar = ({
                </AnimatePresence>
 
                <div
-                    className={`button-sidebar flex flex-row space-x-4 items-center p-4 mt-4 w-[80%] ${
-                         buka ? "ml-6" : "mx-auto"
-                    } hover:bg-gray-700 active:bg-gray-600 cursor-pointer ${
-                         currentPage === "Setting"
+                    className={`button-sidebar flex flex-row space-x-4 items-center p-4 mt-4 w-[80%] ${buka ? "ml-6" : "mx-auto"
+                         } hover:bg-gray-700 active:bg-gray-600 cursor-pointer ${currentPage === "Setting"
                               ? "bg-gray-700 text-white"
                               : "text-[#BFBFBF]"
-                    }`}
+                         }`}
                     onClick={toggleSettingDropdown}>
-                    <IoMdSettings />
-                    {/* <img
-                         className={`${buka ? "mx-0" : "mx-auto"}`}
-                         src={
-                              currentPage === "Setting"
-                                   ? <IoMdSettings />
-                                   : <IoMdSettings />
-                         }
-                         alt="Setting Icon"
-                    /> */}
+                    <IoMdSettings className={` text-3xl ${buka ? "mx-0" : "mx-auto"} `}/>
                     {buka && (
                          <>
                               <motion.p
@@ -232,74 +216,42 @@ const Sidebar = ({
                </div>
 
                <AnimatePresence>
-    {buka && settingOpen && (
-        <motion.div
-            initial={{ height: 0 }}
-            animate={{ height: "auto" }}
-            exit={{ height: 0 }}
-            transition={{ duration: 0.5 }}
-            className="z-0 overflow-hidden">
-            {[
-                "Kalibrasi",
-                "Batas",
-            ].map((menu) => (
-                <div
-                    key={menu}
-                    className={`sub-menu ml-12 p-2 w-[70%] flex items-center justify-start hover:bg-gray-700 active:bg-gray-600 cursor-pointer ${
-                        selectedSetting === menu
-                            ? "bg-gray-700 text-white"
-                            : "text-[#BFBFBF]"
-                    }`}
-                    onClick={() =>
-                        handleClickMenuSetting(menu)
-                    }>
-                    <FaChevronRight className="mr-2" />
-                    <motion.p className="text-left">
-                        {menu}
-                    </motion.p>
-                </div>
-            ))}
-        </motion.div>
-    )}
-</AnimatePresence>
-
-               {/* <div
-                    className={`z-10 button-sidebar flex flex-row space-x-4 items-center p-4 mt-4 w-[80%] ${
-                         buka ? "ml-6" : "mx-auto"
-                    } hover:bg-gray-700 active:bg-gray-600 cursor-pointer ${
-                         currentPage === "Kalibrasi"
-                              ? "bg-gray-700 text-white"
-                              : "text-[#BFBFBF]"
-                    }`}
-                    onClick={() => handleClickMenu("Kalibrasi")}>
-                    <img
-                         className={`${buka ? "mx-0" : "mx-auto"}`}
-                         src={
-                              currentPage === "Kalibrasi"
-                                   ? KalibrasiActive
-                                   : Kalibrasi
-                         }
-                         alt="Kalibrasi Icon"
-                    />
-                    {buka && (
-                         <motion.p
-                              initial={{ x: -20, opacity: 0 }}
-                              animate={{ x: 0, opacity: 1 }}
+                    {buka && settingOpen && (
+                         <motion.div
+                              initial={{ height: 0 }}
+                              animate={{ height: "auto" }}
+                              exit={{ height: 0 }}
                               transition={{ duration: 0.5 }}
-                              s>
-                              Kalibrasi
-                         </motion.p>
+                              className="z-0 overflow-hidden">
+                              {[
+                                   "Kalibrasi",
+                                   "Batas",
+                              ].map((menu) => (
+                                   <div
+                                        key={menu}
+                                        className={`sub-menu ml-12 p-2 w-[70%] flex items-center justify-start hover:bg-gray-700 active:bg-gray-600 cursor-pointer ${selectedSetting === menu
+                                                  ? "bg-gray-700 text-white"
+                                                  : "text-[#BFBFBF]"
+                                             }`}
+                                        onClick={() =>
+                                             handleClickMenuSetting(menu)
+                                        }>
+                                        <FaChevronRight className="mr-2" />
+                                        <motion.p className="text-left">
+                                             {menu}
+                                        </motion.p>
+                                   </div>
+                              ))}
+                         </motion.div>
                     )}
-               </div> */}
+               </AnimatePresence>
 
                <div
-                    className={`z-10 button-sidebar flex flex-row space-x-4 items-center p-4 mt-4 w-[80%] ${
-                         buka ? "ml-6" : "mx-auto"
-                    } hover:bg-gray-700 active:bg-gray-600 cursor-pointer ${
-                         currentPage === "Keluar"
+                    className={`z-10 button-sidebar flex flex-row space-x-4 items-center p-4 mt-4 w-[80%] ${buka ? "ml-6" : "mx-auto"
+                         } hover:bg-gray-700 active:bg-gray-600 cursor-pointer ${currentPage === "Keluar"
                               ? "bg-gray-700 text-white"
                               : "text-[#BFBFBF]"
-                    }`}
+                         }`}
                     onClick={
                          buka
                               ? () => setLogoutModal(true)
