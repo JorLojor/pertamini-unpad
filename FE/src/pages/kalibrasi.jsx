@@ -7,12 +7,12 @@ import Modal from '../components/modal/Modal';
 const Kalibrasi = () => {
   const [suhu, setSuhu] = useState({ min: 0, max: 400 });
   const [flow, setFlow] = useState({ min: 0, max: 400 });
-  const [tekanan, setTekanan] = useState({ min: 0, max: 400 });
+  const [pressure, setPressure] = useState({ min: 0, max: 400 });
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedData, setSelectedData] = useState({ name: '', value: '' });
 
   const handleKalibrasi = (sensor) => {
-    setSelectedData({ name: sensor, value: sensor === 'suhu' ? suhu : sensor === 'flow' ? flow : tekanan });
+    setSelectedData({ name: sensor, value: sensor === 'suhu' ? suhu : sensor === 'flow' ? flow : pressure });
     setModalOpen(true);
   };
 
@@ -87,19 +87,19 @@ const Kalibrasi = () => {
           <input
             className='border-[#E5E5E5] border-2 text-center text-[48px] font-medium w-full sm:w-[30%] h-[90px] mb-4 sm:mb-0'
             type="number"
-            value={tekanan.min}
-            onChange={(e) => setTekanan({ ...tekanan, min: e.target.value })}
+            value={pressure.min}
+            onChange={(e) => setPressure({ ...pressure, min: e.target.value })}
           />
           <p className='text-[48px] w-full sm:w-auto text-center sm:text-left'>-</p>
           <input
             className='border-[#E5E5E5] border-2 text-center text-[48px] font-medium w-full sm:w-[30%] h-[90px] mb-4 sm:mb-0'
             type="number"
-            value={tekanan.max}
-            onChange={(e) => setTekanan({ ...tekanan, max: e.target.value })}
+            value={pressure.max}
+            onChange={(e) => setPressure({ ...pressure, max: e.target.value })}
           />
           <button
             className={`bg-[#616161] hover:bg-[#383B4C] text-white w-full sm:w-[30%] h-[90px] text-[24px]`}
-            onClick={() => handleKalibrasi('tekanan')}
+            onClick={() => handleKalibrasi('pressure')}
           >
             Kalibrasi
           </button>

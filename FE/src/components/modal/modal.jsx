@@ -3,14 +3,15 @@ import Success from '../../assets/success.svg';
 import Warning from '../../assets/warning.svg';
 import { motion } from 'framer-motion';
 import { useDispatch } from 'react-redux';
-import { logout } from '../../slice/userSlice'; // Import logout action
-import { useNavigate } from 'react-router-dom'; // Import navigate for redirection
+import { logout } from '../../slice/userSlice';
+import { useNavigate } from 'react-router-dom'; 
+import axios from 'axios';
 
 const Modal = ({ type, close, data }) => {
     const [loading, setLoading] = useState(false);
     const [success, setSuccess] = useState(false);
-    const dispatch = useDispatch(); // Use dispatch for Redux actions
-    const navigate = useNavigate(); // Use navigate for redirection
+    const dispatch = useDispatch();
+    const navigate = useNavigate(); 
 
     const animationVariants = {
         hidden: { opacity: 0, scale: 0.5 },
@@ -18,17 +19,26 @@ const Modal = ({ type, close, data }) => {
     };
 
     const handleLogout = () => {
-        dispatch(logout()); // Dispatch the logout action to clear user data
-        navigate('/login'); // Redirect to the login page after logout
-        close(); // Close the modal
+        dispatch(logout()); 
+        navigate('/login'); 
+        close(); 
     };
 
-    const handleKalibrasi = () => {
+    const handleKalibrasi =async() => {
         setLoading(true);
-        setTimeout(() => {
+        const dataSend = {sensorType : data.name, minValue : data.value.min, maxValue : data.value.max}; 
+        console.log(dataSend);
+        
+        try{
+            const response = await axios.post('https://backend-agustrisa.as1.pitunnel.net/api/setCalibration', (dataSend))
+            if (response.status === 200) {
+                setSuccess(true);
+            }
+        }catch(error){
+            console.log(error);            
+        }finally{
             setLoading(false);
-            setSuccess(true);
-        }, 1000);
+        }
     };
 
     const contentLogout = () => {
