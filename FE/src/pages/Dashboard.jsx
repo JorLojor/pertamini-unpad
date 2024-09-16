@@ -107,7 +107,7 @@ const Dashboard = () => {
 
      return (
           <>
-               <div className="flex flex-wrap justify-center space-x-2 pt-24 w-full ">
+               <div className="flex flex-wrap justify-center pt-24 max-w-[1440px] mx-auto ">
                     <CardDashboard
                          titleCard="Dryness"
                          dataCard={dataCard.dryness_steam || "-"}
@@ -125,7 +125,7 @@ const Dashboard = () => {
                          onClick={() => handleClick(4, "daya", "Daya")}
                     />
                </div>
-               <div className="flex flex-wrap justify-center space-x-2 w-full ">
+               <div className="flex flex-wrap justify-center max-w-[1440px] mx-auto ">
                     <CardDashboard
                          titleCard="Suhu"
                          dataCard={dataCard.suhu || "-"}

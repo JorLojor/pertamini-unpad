@@ -87,7 +87,7 @@ const CardDashboard = ({
      return (
           <div
                onClick={() => onClick(idx)}
-               className={`mt-3 ${titleCard === 'Dryness' || titleCard === 'Daya' ?  'w-[450px] h-[200px]' : 'w-[325px]' } col-span-1 shadow-md rounded-lg cursor-pointer transition-colors duration-300 
+               className={`mt-3 ${titleCard === 'Dryness' || titleCard === 'Daya' ?  'w-[325px] md:w-[48%] h-[200px] mx-[1%]' : 'w-[325px] md:w-[31%] mx-[1%]' } col-span-1 shadow-md rounded-lg cursor-pointer transition-colors duration-300 
             ${
                  activeIdx === idx
                       ? "bg-blue-950 text-white"
