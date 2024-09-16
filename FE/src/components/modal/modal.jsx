@@ -10,6 +10,7 @@ import axios from 'axios';
 const Modal = ({ type, close, data }) => {
     const [loading, setLoading] = useState(false);
     const [success, setSuccess] = useState(false);
+    const [failed, setFailed] = useState(false); // State to manage failed calibration
     const dispatch = useDispatch();
     const navigate = useNavigate(); 
 
@@ -24,19 +25,20 @@ const Modal = ({ type, close, data }) => {
         close(); 
     };
 
-    const handleKalibrasi =async() => {
+    const handleKalibrasi = async () => {
         setLoading(true);
-        const dataSend = {sensorType : data.name === 'suhu' ? 'temperature' : data.name, minValue : data.value.min, maxValue : data.value.max}; 
-        console.log(dataSend);
+        setFailed(false); // Reset failed state
+        const dataSend = {sensorType : data.name === 'suhu' ? 'suhu' : data.name, minValue : data.value.min, maxValue : data.value.max}; 
         
-        try{
-            const response = await axios.post('https://backend-agustrisa.as1.pitunnel.net/api/setCalibration', (dataSend))
+        try {
+            const response = await axios.post('https://backend-agustrisa.as1.pitunnel.net/api/setCalibration', dataSend);
             if (response.status === 200) {
                 setSuccess(true);
             }
-        }catch(error){
-            console.log(error);            
-        }finally{
+        } catch (error) {
+            console.log(error); 
+            setFailed(true); // Set failed state
+        } finally {
             setLoading(false);
         }
     };
@@ -127,7 +129,24 @@ const Modal = ({ type, close, data }) => {
                     <h6 className="text-lg font-semibold">Sensor Suhu dikalibrasi ke {data?.value?.min} - {data?.value?.max}</h6>
                     <div className="mt-4 flex justify-center space-x-4">
                         <button className="btn w-96 h-14 border-2 bg-white text-[#002E1A] px-4 py-2 rounded" onClick={close}>Tutup</button>
-                        <button className="btn w-96 h-14 bg-[#262937] text-white px-4 py-2 rounded" onClick={close}>Kembali ke Dashboard</button>
+                        <button className="btn w-96 h-14 bg-[#262937] text-white px-4 py-2 rounded" onClick={()=>navigate('/')}>Kembali ke Dashboard</button>
+                    </div>
+                </div>
+            </>
+        );
+    };
+
+    const contentFailed = () => {
+        return (
+            <>
+                <div className="title text-white flex justify-between py-4 bg-[#262937] rounded-t-lg">
+                    <p className="pl-4">Kalibrasi Sensor {data.name} Gagal</p>
+                    <p className="pr-4 cursor-pointer" onClick={close}>x</p>
+                </div>
+                <div className="p-6">
+                    <h6 className="text-lg font-semibold text-center">Kalibrasi Sensor {data.name} Gagal Dilakukan. Silakan coba lagi.</h6>
+                    <div className="mt-4 flex justify-center">
+                        <button className="btn w-96 h-14 border-2 bg-white text-[#002E1A] px-4 py-2 rounded hover:bg-[#262937] hover:text-[#ffff]" onClick={close}>Tutup</button>
                     </div>
                 </div>
             </>
@@ -144,9 +163,10 @@ const Modal = ({ type, close, data }) => {
             >
                 <div className="bg-white rounded-lg shadow-lg max-w-[1100px] min-w-96 md:min-w-[500px]">
                     {type === 1 && contentLogout()}
-                    {type === 2 && !loading && !success && contentKalibrasi()}
+                    {type === 2 && !loading && !success && !failed && contentKalibrasi()}
                     {type === 2 && loading && contentLoading()}
                     {type === 2 && success && contentSuccess()}
+                    {type === 2 && failed && contentFailed()}
                 </div>
             </motion.div>
             <div className="fixed inset-0 bg-black bg-opacity-50 z-40" onClick={close}></div>

@@ -12,7 +12,7 @@ const AnaliticCardSmall = ({
     const [activeIdx, setActiveIdx] = useState(null);
 
     const formatNumber = (number) => {
-        if (number.toString().length > 5) {
+        if (number?.toString().length > 5) {
             return {
                 value: Number(number).toFixed(3),
                 fontSize: "text-lg",

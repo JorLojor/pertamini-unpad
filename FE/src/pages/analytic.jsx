@@ -205,7 +205,6 @@ const Analytic = ({ sensor }) => {
                          }
                          trendData={trendData}
                          idx={0}
-                         onClick={() => console.log("Clicked card")}
                          dataStatus={datayangbakaldioper.status ?? 0}
                     />
 

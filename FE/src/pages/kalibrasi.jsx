@@ -1,15 +1,31 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Suhu from '../assets/SuhuIcon.svg';
 import Flow from '../assets/FlowIcon.svg';
 import Tekanan from '../assets/TekananIcon.svg';
 import Modal from '../components/modal/Modal';
+import axios from 'axios';
 
 const Kalibrasi = () => {
-  const [suhu, setSuhu] = useState({ min: 0, max: 400 });
-  const [flow, setFlow] = useState({ min: 0, max: 400 });
-  const [pressure, setPressure] = useState({ min: 0, max: 400 });
+  const [suhu, setSuhu] = useState({ min: 0, max: 0 });
+  const [flow, setFlow] = useState({ min: 0, max: 0 });
+  const [pressure, setPressure] = useState({ min: 0, max: 0 });
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedData, setSelectedData] = useState({ name: '', value: '' });
+
+  const fetchData = async () => {
+    try {
+      const response = await axios.get('https://backend-agustrisa.as1.pitunnel.net/api/dataCalibration');
+      setSuhu({min:response.data[3].min_value, max:response.data[3].max_value});
+      setFlow({min:response.data[2].min_value, max:response.data[2].max_value});
+      setPressure({min:response.data[1].min_value, max:response.data[1].max_value});
+    } catch (error) {
+      console.log('Error fetching data:', error);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   const handleKalibrasi = (sensor) => {
     setSelectedData({ name: sensor, value: sensor === 'suhu' ? suhu : sensor === 'flow' ? flow : pressure });
@@ -19,7 +35,7 @@ const Kalibrasi = () => {
   const handleCloseModal = () => {
     setModalOpen(false);
   };
-
+  
   return (
     <div className="pt-24">
       <div className="card bg-white rounded-2xl px-0 py-3 my-6">
