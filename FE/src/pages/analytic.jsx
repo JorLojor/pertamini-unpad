@@ -197,7 +197,7 @@ const Analytic = ({ sensor }) => {
 
      return (
           <>
-               <div className="flex flex-row justify-center items-start space-x-4 mt-32">
+               <div className="flex-wrap md:flex-nowrap md:flex md:justify-center items-center mt-32 max-w-[1350px] mx-auto">
                     <AnaliticCardBig
                          titleCard={sensor}
                          dataCard={
@@ -205,7 +205,6 @@ const Analytic = ({ sensor }) => {
                          }
                          trendData={trendData}
                          idx={0}
-                         onClick={() => console.log("Clicked card")}
                          dataStatus={datayangbakaldioper.status ?? 0}
                     />
 

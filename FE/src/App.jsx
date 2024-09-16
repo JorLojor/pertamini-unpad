@@ -8,6 +8,7 @@ import Dashboard from "./pages/Dashboard";
 import Analytic from "./pages/analytic";
 import Kalibrasi from "./pages/kalibrasi";
 import Batas from "./pages/Batas";
+import { isMobile } from 'react-device-detect';
 
 function App() {
      const [buka, setBuka] = useState(false);
@@ -47,7 +48,7 @@ function App() {
                <Header
                     buka={buka}
                     toggleSidebar={toggleSidebar}
-                    title={currentPage}
+                    title={currentPage === "Analytic" ? `${currentPage} ${selectedAnalytic}` : currentPage}
                />
                <div
                     className="fixed h-full z-10"
@@ -62,7 +63,7 @@ function App() {
                          selectedSetting={selectedSetting} 
                     />
                </div>
-               <div className="main-content ml-[6.25rem] w-auto px-8 bg-[#F4F6F6] min-h-[100vh]">
+               <div className={`main-content ${isMobile ? 'ml-[4rem] px-2' : 'ml-[6.25rem] px-8' } w-auto bg-[#F4F6F6] min-h-[100vh]`}>
                     {renderPage()}
                </div>
           </>

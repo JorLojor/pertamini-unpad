@@ -63,11 +63,10 @@ const DataTableAnalytic = ({ data }) => {
                               onClick={() => {
                                    if (page !== "...") handlePageChange(page);
                               }}
-                              className={`px-4 py-2 rounded-xl ${
-                                   page === currentPage
-                                        ? "bg-black text-white"
-                                        : ""
-                              }`}
+                              className={`px-4 py-2 rounded-xl ${page === currentPage
+                                   ? "bg-black text-white"
+                                   : ""
+                                   }`}
                               disabled={page === "..."}>
                               {page}
                          </button>
@@ -81,115 +80,114 @@ const DataTableAnalytic = ({ data }) => {
                <h2 className="text-2xl mb-4 font-semibold text-gray-800">
                     Data Table
                </h2>
-               <table className="min-w-full bg-white">
-                    <thead>
-                         <tr>
-                              <th className="py-2 px-4 border-t border-b text-start">
-                                   No
-                              </th>
-                              <th className="py-2 px-4 border-t border-b text-start">
-                                   Tanggal
-                                   <button
-                                        className="ml-2"
-                                        onClick={() => sortData("tanggal")}>
-                                        {sortField === "tanggal" && sortOrder
-                                             ? "⬆"
-                                             : "⬇"}
-                                   </button>
-                              </th>
-                              <th className="py-2 px-4 border-t border-b text-start">
-                                   Min Value
-                                   <button
-                                        className="ml-2"
-                                        onClick={() => sortData("min_value")}>
-                                        {sortField === "min_value" && sortOrder
-                                             ? "⬆"
-                                             : "⬇"}
-                                   </button>
-                              </th>
-                              <th className="py-2 px-4 border-t border-b text-start">
-                                   Max Value
-                                   <button
-                                        className="ml-2"
-                                        onClick={() => sortData("max_value")}>
-                                        {sortField === "max_value" && sortOrder
-                                             ? "⬆"
-                                             : "⬇"}
-                                   </button>
-                              </th>
-                              <th className="py-2 px-4 border-t border-b text-start">
-                                   Avg Value
-                                   <button
-                                        className="ml-2"
-                                        onClick={() => sortData("avg_value")}>
-                                        {sortField === "avg_value" && sortOrder
-                                             ? "⬆"
-                                             : "⬇"}
-                                   </button>
-                              </th>
-                              <th className="py-2 px-4 border-t border-b text-start">
-                                   Std Dev
-                                   <button
-                                        className="ml-2"
-                                        onClick={() =>
-                                             sortData("stddev_value")
-                                        }>
-                                        {sortField === "stddev_value" &&
-                                        sortOrder
-                                             ? "⬆"
-                                             : "⬇"}
-                                   </button>
-                              </th>
-                         </tr>
-                    </thead>
-                    <tbody>
-                         {currentRows.map((row) => (
-                              <tr key={row.no} className="text-center">
-                                   <td className="py-2 px-4 border-t border-b text-start">
-                                        {row.no}
-                                   </td>
-                                   <td className="py-2 px-4 border-t border-b text-start">
-                                        {row.tanggal}
-                                   </td>
-                                   <td className="py-2 px-4 border-t border-b text-start">
-                                        {row.min_value}
-                                   </td>
-                                   <td className="py-2 px-4 border-t border-b text-start">
-                                        {row.max_value}
-                                   </td>
-                                   <td className="py-2 px-4 border-t border-b text-start">
-                                        {row.avg_value}
-                                   </td>
-                                   <td className="py-2 px-4 border-t border-b text-start">
-                                        {row.stddev_value}
-                                   </td>
+               <div className="overflow-x-auto">
+
+                    <table className="min-w-full bg-white">
+                         <thead>
+                              <tr>
+                                   <th className="py-2 px-4 border-t border-b text-start">
+                                        No
+                                   </th>
+                                   <th className="py-2 px-4 border-t border-b text-start">
+                                        Tanggal
+                                        <button
+                                             className="ml-2"
+                                             onClick={() => sortData("tanggal")}>
+                                             {sortField === "tanggal" && sortOrder
+                                                  ? "⬆"
+                                                  : "⬇"}
+                                        </button>
+                                   </th>
+                                   <th className="py-2 px-4 border-t border-b text-start">
+                                        Min Value
+                                        <button
+                                             className="ml-2"
+                                             onClick={() => sortData("min_value")}>
+                                             {sortField === "min_value" && sortOrder
+                                                  ? "⬆"
+                                                  : "⬇"}
+                                        </button>
+                                   </th>
+                                   <th className="py-2 px-4 border-t border-b text-start">
+                                        Max Value
+                                        <button
+                                             className="ml-2"
+                                             onClick={() => sortData("max_value")}>
+                                             {sortField === "max_value" && sortOrder
+                                                  ? "⬆"
+                                                  : "⬇"}
+                                        </button>
+                                   </th>
+                                   <th className="py-2 px-4 border-t border-b text-start">
+                                        Avg Value
+                                        <button
+                                             className="ml-2"
+                                             onClick={() => sortData("avg_value")}>
+                                             {sortField === "avg_value" && sortOrder
+                                                  ? "⬆"
+                                                  : "⬇"}
+                                        </button>
+                                   </th>
+                                   <th className="py-2 px-4 border-t border-b text-start">
+                                        Std Dev
+                                        <button
+                                             className="ml-2"
+                                             onClick={() =>
+                                                  sortData("stddev_value")
+                                             }>
+                                             {sortField === "stddev_value" &&
+                                                  sortOrder
+                                                  ? "⬆"
+                                                  : "⬇"}
+                                        </button>
+                                   </th>
                               </tr>
-                         ))}
-                    </tbody>
-               </table>
+                         </thead>
+                         <tbody>
+                              {currentRows.map((row) => (
+                                   <tr key={row.no} className="text-center">
+                                        <td className="py-2 px-4 border-t border-b text-start">
+                                             {row.no}
+                                        </td>
+                                        <td className="py-2 px-4 border-t border-b text-start">
+                                             {row.tanggal}
+                                        </td>
+                                        <td className="py-2 px-4 border-t border-b text-start">
+                                             {row.min_value}
+                                        </td>
+                                        <td className="py-2 px-4 border-t border-b text-start">
+                                             {row.max_value}
+                                        </td>
+                                        <td className="py-2 px-4 border-t border-b text-start">
+                                             {row.avg_value}
+                                        </td>
+                                        <td className="py-2 px-4 border-t border-b text-start">
+                                             {row.stddev_value}
+                                        </td>
+                                   </tr>
+                              ))}
+                         </tbody>
+                    </table>
+               </div>
 
                {/* Pagination */}
-               <div className="flex justify-between mt-4">
-                    <div className="flex-row text-gray-500 font-thin">
+               <div className="flex flex-col sm:flex-row justify-between items-center mt-4 space-y-2 sm:space-y-0">
+                    <div className="text-gray-500 font-thin text-center sm:text-left mb-2 sm:mb-0">
                          <p>
                               Showing {indexOfFirstRow + 1} to{" "}
-                              {indexOfLastRow > sortedData.length
-                                   ? sortedData.length
-                                   : indexOfLastRow}{" "}
+                              {indexOfLastRow > sortedData.length ? sortedData.length : indexOfLastRow}{" "}
                               of {sortedData.length} entries
                          </p>
                     </div>
 
-                    <div className="flex justify-center items-center space-x-2">
+                    <div className="flex flex-col sm:flex-row items-center space-y-2 sm:space-y-0 sm:space-x-2">
                          <button
                               disabled={currentPage === 1}
                               onClick={() => handlePageChange(currentPage - 1)}
-                              className="px-4 py-2 bg-white flex items-center border border-black rounded-xl hover:bg-gray-900 hover:text-white">
-                              <img
-                                   src={preveusbtn}
-                                   alt="<<"
-                                   className="w-4 h-4 mr-2"
-                              />
+                              className={`px-4 py-2 bg-white flex items-center border border-black rounded-xl hover:bg-gray-900 hover:text-white ${currentPage === 1 ? "opacity-50 cursor-not-allowed" : ""
+                                   } m-1`}
+                         >
+                              <img src={preveusbtn} alt="<<" className="w-4 h-4 mr-2" />
                               <p>Previous</p>
                          </button>
 
@@ -198,13 +196,11 @@ const DataTableAnalytic = ({ data }) => {
                          <button
                               disabled={currentPage === totalPages}
                               onClick={() => handlePageChange(currentPage + 1)}
-                              className="px-4 py-2 bg-white flex items-center border border-black rounded-xl hover:bg-gray-900 hover:text-white">
+                              className={`px-4 py-2 bg-white flex items-center border border-black rounded-xl hover:bg-gray-900 hover:text-white ${currentPage === totalPages ? "opacity-50 cursor-not-allowed" : ""
+                                   } m-1`}
+                         >
                               <p>Next</p>
-                              <img
-                                   src={nextbtn}
-                                   alt=">>"
-                                   className="w-4 h-4 ml-2"
-                              />
+                              <img src={nextbtn} alt=">>" className="w-4 h-4 ml-2" />
                          </button>
                     </div>
                </div>

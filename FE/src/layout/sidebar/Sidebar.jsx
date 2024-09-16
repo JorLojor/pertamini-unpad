@@ -6,14 +6,14 @@ import DashboardActive from "../../assets/dashboardActive.svg";
 import Dashboard from "../../assets/dashboard.svg";
 import AnalyticActive from "../../assets/analyticActive.svg";
 import Analytic from "../../assets/analytic.svg";
-import KalibrasiActive from "../../assets/kalibrasiActive.svg";
-import Kalibrasi from "../../assets/kalibrasi.svg";
 import LogoutActive from "../../assets/LogoutActive.svg";
 import Logout from "../../assets/Logout.svg";
 import Modal from "../../components/modal/Modal";
 import Logo from "../../assets/Panjang-Putih.svg";
 import logoTutup from "../../assets/SMS-Putih.svg";
 import { IoMdSettings } from "react-icons/io";
+import { isMobile } from 'react-device-detect';
+
 
 const Sidebar = ({
      buka,
@@ -72,8 +72,8 @@ const Sidebar = ({
 
      return (
           <motion.div
-               animate={{ width: buka ? "21.5rem" : "6.25rem" }}
-               transition={{ duration: 0.5 }}
+          animate={{ width: buka ? isMobile ? '15rem' : '21.5rem' : isMobile ? `4rem` : '7rem' }}
+          transition={{ duration: 0.5 }}
                className={`sidebar bg-gray-800 h-full flex flex-col fixed top-0 left-0`}
                onClick={!buka ? toggleSidebar : null}>
                <div

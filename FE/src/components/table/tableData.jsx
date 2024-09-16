@@ -115,16 +115,16 @@ const TableData = () => {
 
      return (
           <div className="bg-white p-6 rounded-lg">
-               <div className="flex justify-between items-center">
-                    <p className="text-start text-2xl font-semibold text-gray-800 mb-4">
+               <div className="flex flex-col md:flex-row md:justify-between items-center mb-4">
+                    <p className="text-start text-2xl font-semibold text-gray-800 mb-4 md:mb-0">
                          Table Data
                     </p>
-                    <div className="bg-white rounded-lg p-4 mb-5 flex items-center">
+                    <div className="bg-white rounded-lg p-4 flex flex-col md:flex-row items-center">
                          <p>Sorting by date</p>
-                         <div className="flex items-center">
+                         <div className="flex flex-col md:flex-row items-center mt-2 md:mt-0">
                               <input
                                    type="date"
-                                   className="border-2 border-gray-300 rounded-lg p-1 ml-2"
+                                   className="border-2 border-gray-300 rounded-lg p-1 md:ml-2 mt-2 md:mt-0"
                                    value={startDate}
                                    onChange={(e) =>
                                         setStartDate(e.target.value)
@@ -132,12 +132,12 @@ const TableData = () => {
                               />
                               <input
                                    type="date"
-                                   className="border-2 border-gray-300 rounded-lg p-1 ml-2"
+                                   className="border-2 border-gray-300 rounded-lg p-1 md:ml-2 mt-2 md:mt-0"
                                    value={endDate}
                                    onChange={(e) => setEndDate(e.target.value)}
                               />
                               <button
-                                   className="bg-blue-500 text-white rounded-lg p-2 ml-2"
+                                   className="bg-blue-500 text-white rounded-lg p-2 md:ml-2 mt-2 md:mt-0"
                                    onClick={handleConfirmSorting}>
                                    Konfirmasi Sorting
                               </button>
@@ -149,165 +149,169 @@ const TableData = () => {
                     <p>Loading data...</p>
                ) : (
                     <>
-                         <table className="min-w-full bg-white">
-                              <thead>
-                                   <tr>
-                                        <th className="py-2 px-4 border-t border-b text-start">
-                                             Date
-                                             <button
-                                                  className="ms-2"
-                                                  onClick={() =>
-                                                       sortData("timestamp")
-                                                  }>
-                                                  {sortField === "timestamp" &&
-                                                  sortOrder
-                                                       ? "⬆"
-                                                       : "⬇"}
-                                             </button>
-                                        </th>
-                                        <th className="py-2 px-4 border-t border-b">
-                                             Temperature
-                                             <button
-                                                  className="ms-2"
-                                                  onClick={() =>
-                                                       sortData("temperature")
-                                                  }>
-                                                  {sortField ===
-                                                       "temperature" &&
-                                                  sortOrder
-                                                       ? "⬆"
-                                                       : "⬇"}
-                                             </button>
-                                        </th>
-                                        <th className="py-2 px-4 border-t border-b">
-                                             Pressure
-                                             <button
-                                                  className="ms-2"
-                                                  onClick={() =>
-                                                       sortData("pressure")
-                                                  }>
-                                                  {sortField === "pressure" &&
-                                                  sortOrder
-                                                       ? "⬆"
-                                                       : "⬇"}
-                                             </button>
-                                        </th>
-                                        <th className="py-2 px-4 border-t border-b">
-                                             Flow
-                                             <button
-                                                  className="ms-2"
-                                                  onClick={() =>
-                                                       sortData("flow")
-                                                  }>
-                                                  {sortField === "flow" &&
-                                                  sortOrder
-                                                       ? "⬆"
-                                                       : "⬇"}
-                                             </button>
-                                        </th>
-                                        <th className="py-2 px-4 border-t border-b">
-                                             Dryness
-                                             <button
-                                                  className="ms-2"
-                                                  onClick={() =>
-                                                       sortData("dryness")
-                                                  }>
-                                                  {sortField === "dryness" &&
-                                                  sortOrder
-                                                       ? "⬆"
-                                                       : "⬇"}
-                                             </button>
-                                        </th>
-                                        <th className="py-2 px-4 border-t border-b">
-                                             Power Prediction
-                                             <button
-                                                  className="ms-2"
-                                                  onClick={() =>
-                                                       sortData(
-                                                            "power_prediction"
-                                                       )
-                                                  }>
-                                                  {sortField ===
-                                                       "power_prediction" &&
-                                                  sortOrder
-                                                       ? "⬆"
-                                                       : "⬇"}
-                                             </button>
-                                        </th>
-                                   </tr>
-                              </thead>
-                              <tbody>
-                                   {currentRows.map((row, index) => (
-                                        <tr key={index} className="text-center">
-                                             <td className="py-2 px-4 border-t border-b text-start">
-                                                  {new Date(
-                                                       row.timestamp
-                                                  ).toLocaleDateString()}
-                                             </td>
-                                             <td className="py-2 px-4 border-t border-b">
-                                                  {row.temperature}
-                                             </td>
-                                             <td className="py-2 px-4 border-t border-b">
-                                                  {row.pressure}
-                                             </td>
-                                             <td className="py-2 px-4 border-t border-b">
-                                                  {row.flow}
-                                             </td>
-                                             <td className="py-2 px-4 border-t border-b">
-                                                  {row.dryness}
-                                             </td>
-                                             <td className="py-2 px-4 border-t border-b">
-                                                  {row.power_prediction}
-                                             </td>
+                         <div className="overflow-x-auto">
+                              <table className="min-w-full bg-white">
+                                   <thead>
+                                        <tr>
+                                             <th className="py-2 px-4 border-t border-b text-start">
+                                                  Date
+                                                  <button
+                                                       className="ms-2"
+                                                       onClick={() =>
+                                                            sortData(
+                                                                 "timestamp"
+                                                            )
+                                                       }>
+                                                       {sortField ===
+                                                            "timestamp" &&
+                                                       sortOrder
+                                                            ? "⬆"
+                                                            : "⬇"}
+                                                  </button>
+                                             </th>
+                                             <th className="py-2 px-4 border-t border-b">
+                                                  Temperature
+                                                  <button
+                                                       className="ms-2"
+                                                       onClick={() =>
+                                                            sortData(
+                                                                 "temperature"
+                                                            )
+                                                       }>
+                                                       {sortField ===
+                                                            "temperature" &&
+                                                       sortOrder
+                                                            ? "⬆"
+                                                            : "⬇"}
+                                                  </button>
+                                             </th>
+                                             <th className="py-2 px-4 border-t border-b">
+                                                  Pressure
+                                                  <button
+                                                       className="ms-2"
+                                                       onClick={() =>
+                                                            sortData("pressure")
+                                                       }>
+                                                       {sortField ===
+                                                            "pressure" &&
+                                                       sortOrder
+                                                            ? "⬆"
+                                                            : "⬇"}
+                                                  </button>
+                                             </th>
+                                             <th className="py-2 px-4 border-t border-b">
+                                                  Flow
+                                                  <button
+                                                       className="ms-2"
+                                                       onClick={() =>
+                                                            sortData("flow")
+                                                       }>
+                                                       {sortField === "flow" &&
+                                                       sortOrder
+                                                            ? "⬆"
+                                                            : "⬇"}
+                                                  </button>
+                                             </th>
+                                             <th className="py-2 px-4 border-t border-b">
+                                                  Dryness
+                                                  <button
+                                                       className="ms-2"
+                                                       onClick={() =>
+                                                            sortData("dryness")
+                                                       }>
+                                                       {sortField ===
+                                                            "dryness" &&
+                                                       sortOrder
+                                                            ? "⬆"
+                                                            : "⬇"}
+                                                  </button>
+                                             </th>
+                                             <th className="py-2 px-4 border-t border-b">
+                                                  Power Prediction
+                                                  <button
+                                                       className="ms-2"
+                                                       onClick={() =>
+                                                            sortData(
+                                                                 "power_prediction"
+                                                            )
+                                                       }>
+                                                       {sortField ===
+                                                            "power_prediction" &&
+                                                       sortOrder
+                                                            ? "⬆"
+                                                            : "⬇"}
+                                                  </button>
+                                             </th>
                                         </tr>
-                                   ))}
-                              </tbody>
-                         </table>
+                                   </thead>
+                                   <tbody>
+                                        {currentRows.map((row, index) => (
+                                             <tr
+                                                  key={index}
+                                                  className="text-center">
+                                                  <td className="py-2 px-4 border-t border-b text-start">
+                                                       {new Date(
+                                                            row.timestamp
+                                                       ).toLocaleDateString()}
+                                                  </td>
+                                                  <td className="py-2 px-4 border-t border-b">
+                                                       {row.temperature}
+                                                  </td>
+                                                  <td className="py-2 px-4 border-t border-b">
+                                                       {row.pressure}
+                                                  </td>
+                                                  <td className="py-2 px-4 border-t border-b">
+                                                       {row.flow}
+                                                  </td>
+                                                  <td className="py-2 px-4 border-t border-b">
+                                                       {row.dryness}
+                                                  </td>
+                                                  <td className="py-2 px-4 border-t border-b">
+                                                       {row.power_prediction}
+                                                  </td>
+                                             </tr>
+                                        ))}
+                                   </tbody>
+                              </table>
+                         </div>
 
                          {/* Pagination */}
-                         <div className="flex justify-between mt-4">
-                              <div className="flex-row text-gray-500 font-thin">
-                                   <p>
-                                        Showing {indexOfFirstRow + 1} to{" "}
-                                        {indexOfLastRow > data.length
-                                             ? data.length
-                                             : indexOfLastRow}{" "}
-                                        of {data.length} entries
-                                   </p>
-                              </div>
+                         <div className="flex flex-col md:flex-row justify-between items-center mt-4 space-y-4 md:space-y-0">
+    <div className="text-gray-500 font-thin text-center md:text-left">
+        <p>
+            Showing {indexOfFirstRow + 1} to{" "}
+            {indexOfLastRow > data.length ? data.length : indexOfLastRow} of{" "}
+            {data.length} entries
+        </p>
+    </div>
 
-                              <div className="flex justify-center items-center space-x-2">
-                                   <button
-                                        disabled={currentPage === 1}
-                                        onClick={() =>
-                                             handlePageChange(currentPage - 1)
-                                        }
-                                        className="px-4 py-2 bg-white flex items-center border border-black rounded-xl hover:bg-gray-900 hover:text-white">
-                                        <img
-                                             src={preveusbtn}
-                                             alt="<<"
-                                             className="w-4 h-4 mr-2"
-                                        />
-                                        <p>Previous</p>
-                                   </button>
+    <div className="flex flex-col md:flex-row items-center space-y-2 md:space-y-0 md:space-x-2">
+        <button
+            disabled={currentPage === 1}
+            onClick={() => handlePageChange(currentPage - 1)}
+            className={`px-4 py-2 bg-white flex items-center border border-black rounded-xl hover:bg-gray-900 hover:text-white ${
+                currentPage === 1 ? "opacity-50 cursor-not-allowed" : ""
+            }`}
+        >
+            <img src={preveusbtn} alt="<<" className="w-4 h-4 mr-2" />
+            <p>Previous</p>
+        </button>
 
-                                   {renderPagination()}
+        {renderPagination()}
 
-                                   <button
-                                        disabled={currentPage === totalPages}
-                                        onClick={() =>
-                                             handlePageChange(currentPage + 1)
-                                        }
-                                        className="px-4 py-2 bg-white flex items-center border border-black rounded-xl hover:bg-gray-900 hover:text-white">
-                                        <p>Next</p>
-                                        <img
-                                             src={nextbtn}
-                                             alt=">>"
-                                             className="w-4 h-4 ml-2"
-                                        />
-                                   </button>
-                              </div>
-                         </div>
+        <button
+            disabled={currentPage === totalPages}
+            onClick={() => handlePageChange(currentPage + 1)}
+            className={`px-4 py-2 bg-white flex items-center border border-black rounded-xl hover:bg-gray-900 hover:text-white ${
+                currentPage === totalPages ? "opacity-50 cursor-not-allowed" : ""
+            }`}
+        >
+            <p>Next</p>
+            <img src={nextbtn} alt=">>" className="w-4 h-4 ml-2" />
+        </button>
+    </div>
+</div>
+
                     </>
                )}
           </div>

@@ -112,7 +112,7 @@ const Dashboard = () => {
 
      return (
           <>
-               <div className="flex flex-wrap justify-around pt-24 w-full ">
+               <div className="flex flex-wrap justify-center pt-24 max-w-[1440px] mx-auto ">
                     <CardDashboard
                          titleCard="Dryness"
                          dataCard={dataCard.dryness_steam || "-"}
@@ -130,7 +130,7 @@ const Dashboard = () => {
                          onClick={() => handleClick(4, "daya", "Daya")}
                     />
                </div>
-               <div className="flex flex-wrap justify-around w-full ">
+               <div className="flex flex-wrap justify-center max-w-[1440px] mx-auto ">
                     <CardDashboard
                          titleCard="Suhu"
                          dataCard={dataCard.suhu || "-"}
@@ -157,32 +157,30 @@ const Dashboard = () => {
                     />
                </div>
                <div className="pt-10 flex-col">
-                    <div className="bg-white rounded-lg p-4 mb-5 flex items-center justify-between">
-                         <p>Grafik</p>
-                         <div className="flex items-center">
-                              <p>Sorting by date</p>
-                              <input
-                                   type="date"
-                                   className="border-2 border-gray-300 rounded-lg p-1 ml-2"
-                                   value={startDate}
-                                   onChange={(e) =>
-                                        setStartDate(e.target.value)
-                                   }
-                              />
-                              <input
-                                   type="date"
-                                   className="border-2 border-gray-300 rounded-lg p-1 ml-2"
-                                   value={
-                                        endDate ||
-                                        new Date().toISOString().split("T")[0]
-                                   }
-                                   onChange={(e) => setEndDate(e.target.value)}
-                              />
-                              <button
-                                   className="bg-blue-500 text-white rounded-lg p-2 ml-2"
-                                   onClick={handleConfirmSorting}>
-                                   Konfirmasi Sorting
-                              </button>
+                    <div className="bg-white rounded-lg p-4 mb-5 flex flex-col md:flex-row md:items-center md:justify-between">
+                         <p className="mb-2 md:mb-0">Grafik</p>
+                         <div className="flex flex-col md:flex-row md:items-center">
+                              <p className="mb-2 md:mb-0">Sorting by date</p>
+                              <div className="flex flex-col md:flex-row">
+                                   <input
+                                        type="date"
+                                        className="border-2 border-gray-300 rounded-lg p-1 mb-2 md:mb-0 md:ml-2"
+                                        value={startDate}
+                                        onChange={(e) => setStartDate(e.target.value)}
+                                   />
+                                   <input
+                                        type="date"
+                                        className="border-2 border-gray-300 rounded-lg p-1 mb-2 md:mb-0 md:ml-2"
+                                        value={endDate || new Date().toISOString().split("T")[0]}
+                                        onChange={(e) => setEndDate(e.target.value)}
+                                   />
+                                   <button
+                                        className="bg-blue-500 text-white rounded-lg p-2 md:ml-2"
+                                        onClick={handleConfirmSorting}
+                                   >
+                                        Konfirmasi Sorting
+                                   </button>
+                              </div>
                          </div>
                     </div>
 
@@ -208,6 +206,7 @@ const Dashboard = () => {
                          </>
                     )}
                </div>
+
                <div className="pt-10 flex-col">
                     <TableData />
                </div>

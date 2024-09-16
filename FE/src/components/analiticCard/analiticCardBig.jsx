@@ -16,19 +16,16 @@ const AnaliticCardBig = ({
      titleCard,
      dataCard,
      trendData,
-     idx,
      onClick,
      dataStatus,
 }) => {
-     const colorSymbolDesicion = (trendData) => {
+     const colorSymbolDecision = (trendData) => {
           return trendData < 99.5 || trendData > 100.0
                ? ["text-red-500", ArrowDown, trendData]
                : ["text-green-500", ArrowUp, trendData];
      };
 
-     console.log(dataStatus);
-
-     const titleDesicion = () => {
+     const titleDecision = () => {
           const titles = {
                Dryness: [DrynessIcon, DrynessIconWhite],
                Suhu: [SuhuIcon, SuhuIconWhite],
@@ -39,7 +36,7 @@ const AnaliticCardBig = ({
           return titles[titleCard] || [FlowIcon, FlowIconWhite];
      };
 
-     const symbolDesicion = () => {
+     const symbolDecision = () => {
           const symbols = {
                Dryness: "%",
                Suhu: "°C",
@@ -58,41 +55,35 @@ const AnaliticCardBig = ({
 
      return (
           <div
-               onClick={() => onClick(idx)}
-               className={`w-72 h-80 col-span-1 shadow-md rounded-lg cursor-pointer bg-white text-green-950`}>
-               <div className="flex flex-row justify-between items-center p-4 w-full">
-                    <p className="text-2xl font-bold">{titleCard}</p>
+               onClick={() => onClick()}
+               className="w-full md:w-[525px] p-4 h-auto bg-white rounded-lg shadow-lg">
+               <div className="flex justify-between items-center mb-4">
+                    <p className="text-xl font-semibold">{titleCard}</p>
+                    <img
+                         src={titleDecision()[0]}
+                         alt="Icon"
+                         className="w-8 h-8"
+                    />
+               </div>
+               <div className="flex items-center mb-4">
+                    <p className="text-5xl font-bold mr-4">
+                         {formatData(dataCard) || "N/A"}{" "}
+                         <small className="text-2xl">{symbolDecision()}</small>
+                    </p>
                     <p
-                         className={`text-xl font-bold flex items-center ${
-                              colorSymbolDesicion(trendData)[0]
-                         }`}>
-                         {colorSymbolDesicion(trendData)[2]}
+                         className={`flex items-center ${colorSymbolDecision(trendData)[0]
+                              } text-2xl`}>
+                         {colorSymbolDecision(trendData)[2]}%
                          <img
-                              src={colorSymbolDesicion(trendData)[1]}
+                              src={colorSymbolDecision(trendData)[1]}
                               alt="Trend Icon"
-                              className="w-6 h-6 ml-2"
+                              className="w-5 h-5 ml-2"
                          />
                     </p>
                </div>
-               <div className="flex flex-row justify-between items-center p-4 w-full">
-                    <p className="text-5xl font-bold">
-                         {formatData(dataCard) || "N/A"}{" "}
-                         <small className="text-3xl">{symbolDesicion()}</small>
-                    </p>
-                    <img
-                         src={titleDesicion()[0]}
-                         alt="Icon"
-                         className="w-9 h-9 ml-2"
-                    />
-               </div>
-               <div className="flex flex-row justify-between items-center p-4 w-full">
+               <div className="flex justify-between items-center">
                     <p>Status Sensor</p>
-                    <p
-                         className={
-                              dataStatus === 1
-                                   ? "text-green-500"
-                                   : "text-red-500"
-                         }>
+                    <p className={dataStatus === 1 ? "text-green-500" : "text-red-500"}>
                          {dataStatus === 1 ? "ON" : "OFF"}
                     </p>
                </div>
@@ -105,7 +96,6 @@ AnaliticCardBig.propTypes = {
      dataCard: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
           .isRequired,
      trendData: PropTypes.string.isRequired,
-     idx: PropTypes.number.isRequired,
      onClick: PropTypes.func.isRequired,
      dataStatus: PropTypes.number.isRequired,
 };
