@@ -31,6 +31,8 @@ const Dashboard = () => {
                     return;
                }
 
+               console.log("Data", data);
+
                const formattedData = data.map((item) => ({
                     x: new Date(item.timestamp).toLocaleDateString(),
                     y: item.value,
@@ -166,18 +168,26 @@ const Dashboard = () => {
                                         type="date"
                                         className="border-2 border-gray-300 rounded-lg p-1 mb-2 md:mb-0 md:ml-2"
                                         value={startDate}
-                                        onChange={(e) => setStartDate(e.target.value)}
+                                        onChange={(e) =>
+                                             setStartDate(e.target.value)
+                                        }
                                    />
                                    <input
                                         type="date"
                                         className="border-2 border-gray-300 rounded-lg p-1 mb-2 md:mb-0 md:ml-2"
-                                        value={endDate || new Date().toISOString().split("T")[0]}
-                                        onChange={(e) => setEndDate(e.target.value)}
+                                        value={
+                                             endDate ||
+                                             new Date()
+                                                  .toISOString()
+                                                  .split("T")[0]
+                                        }
+                                        onChange={(e) =>
+                                             setEndDate(e.target.value)
+                                        }
                                    />
                                    <button
                                         className="bg-blue-500 text-white rounded-lg p-2 md:ml-2"
-                                        onClick={handleConfirmSorting}
-                                   >
+                                        onClick={handleConfirmSorting}>
                                         Konfirmasi Sorting
                                    </button>
                               </div>
