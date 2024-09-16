@@ -7,8 +7,8 @@ const LineChart = ({ chartData, title }) => {
      const [dataminMax, setDataminMax] = useState({ min: 0, max: 0 });
 
      const dataMinMaxDesicion = (title) => {
-          const dataLocal = localStorage.sensorLimits;
-          const data = JSON.parse(dataLocal);
+          // const dataLocal = localStorage.sensorLimits;
+          // const data = JSON.parse(dataLocal);
           console.log(title);
           if (title === "Suhu") {
                setDataminMax({

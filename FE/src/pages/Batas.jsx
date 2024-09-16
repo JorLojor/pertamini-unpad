@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
-import Suhu from "../assets/SuhuIcon.svg";
+import Temperature from "../assets/TemperatureIcon.svg";
 import Flow from "../assets/FlowIcon.svg";
-import Tekanan from "../assets/TekananIcon.svg";
+import Pressure from "../assets/PressureIcon.svg";
 import drynessIcon from "../assets/DrynessIcon.svg";
 import Modal from "../components/modal/Modal";
-import DayaIcon from "../assets/DayaIcon.svg";
+import PowerIcon from "../assets/PowerIcon.svg";
 import SensorLimitCard from "../components/sensorLimitCard/sensorLimitCard";
 
 const Batas = () => {
@@ -32,13 +32,13 @@ const Batas = () => {
                //    threeMonthsAgo.setMonth(threeMonthsAgo.getMonth() - 3);
                //    const startDate = threeMonthsAgo.toISOString().split("T")[0];
 
-               const sensors = ["dryness", "suhu", "tekanan", "flow", "daya"];
+               const sensors = ["dryness", "Temperature", "Pressure", "flow", "Power"];
                const sensorMapping = {
                     dryness: "dryness_steam",
-                    suhu: "temperature",
-                    tekanan: "pressure",
+                    Temperature: "temperature",
+                    Pressure: "pressure",
                     flow: "flow",
-                    daya: "power_prediction",
+                    Power: "power_prediction",
                };
 
                let limits = {};
@@ -141,8 +141,8 @@ const Batas = () => {
      return (
           <div className="pt-24">
                <SensorLimitCard
-                    name="Suhu"
-                    icon={Suhu}
+                    name="Temperature"
+                    icon={Temperature}
                     limit={limitSensor.temperature}
                     placeholder={sensorDataLimits.temperature}
                     onChange={(type, value) =>
@@ -159,8 +159,8 @@ const Batas = () => {
                     }
                />
                <SensorLimitCard
-                    name="Tekanan"
-                    icon={Tekanan}
+                    name="Pressure"
+                    icon={Pressure}
                     limit={limitSensor.pressure}
                     placeholder={sensorDataLimits.pressure}
                     onChange={(type, value) =>
@@ -176,7 +176,7 @@ const Batas = () => {
                />
                <SensorLimitCard
                     name="Power Prediction"
-                    icon={DayaIcon}
+                    icon={PowerIcon}
                     limit={limitSensor.power_prediction}
                     placeholder={sensorDataLimits.power_prediction}
                     onChange={(type, value) =>

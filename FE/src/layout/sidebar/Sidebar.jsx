@@ -165,10 +165,10 @@ const Sidebar = ({
                               className="z-0 overflow-hidden">
                               {[
                                    "Dryness",
-                                   "Suhu",
-                                   "Tekanan",
+                                   "Temperature",
+                                   "Pressure",
                                    "Flow",
-                                   "Daya",
+                                   "Power",
                               ].map((menu) => (
                                    <div
                                         key={menu}

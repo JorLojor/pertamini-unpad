@@ -28,7 +28,7 @@ const Modal = ({ type, close, data }) => {
     const handleKalibrasi = async () => {
         setLoading(true);
         setFailed(false); // Reset failed state
-        const dataSend = {sensorType : data.name === 'suhu' ? 'suhu' : data.name, minValue : data.value.min, maxValue : data.value.max}; 
+        const dataSend = {sensorType : data.name === 'temperature' ? 'temperature' : data.name, minValue : data.value.min, maxValue : data.value.max}; 
         
         try {
             const response = await axios.post('https://backend-agustrisa.as1.pitunnel.net/api/setCalibration', dataSend);
@@ -126,7 +126,7 @@ const Modal = ({ type, close, data }) => {
                         animate={{ scale: 1 }}
                         transition={{ duration: 0.5 }}
                     />
-                    <h6 className="text-lg font-semibold">Sensor Suhu dikalibrasi ke {data?.value?.min} - {data?.value?.max}</h6>
+                    <h6 className="text-lg font-semibold">Sensor Temperature dikalibrasi ke {data?.value?.min} - {data?.value?.max}</h6>
                     <div className="mt-4 flex justify-center space-x-4">
                         <button className="btn w-96 h-14 border-2 bg-white text-[#002E1A] px-4 py-2 rounded" onClick={close}>Tutup</button>
                         <button className="btn w-96 h-14 bg-[#262937] text-white px-4 py-2 rounded" onClick={()=>navigate('/')}>Kembali ke Dashboard</button>

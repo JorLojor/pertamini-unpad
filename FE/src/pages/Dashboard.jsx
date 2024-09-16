@@ -21,17 +21,17 @@ const Dashboard = () => {
                     startDate: startDate || "",
                     endDate: endDate || "",
                });
-               const url = `https://backend-agustrisa.as1.pitunnel.net/api/dataGrafik/${type}?${params.toString()}`;
-               console.log(url);
-               const response = await fetch(url);
+               const response = await fetch(
+                    `https://backend-agustrisa.as1.pitunnel.net/api/dataGrafik?type=${type}&${params.toString()}`
+               );
+
                const data = await response.json();
                if (data.length === 0) {
                     setChartData(["kosong"]);
                     setLoading(false);
                     return;
                }
-
-               console.log("Data", data);
+               console.log(data);
 
                const formattedData = data.map((item) => ({
                     x: new Date(item.timestamp).toLocaleDateString(),
@@ -46,27 +46,12 @@ const Dashboard = () => {
           }
      };
 
-     const updateRandomData = () => {
-          const drynessValue = generateRandomValue();
-          const suhuValue = generateRandomValue();
-          const tekananValue = generateRandomValue();
-          const flowValue = generateRandomValue();
-          const dayaValue = generateRandomValue();
-
-          setDataCard({
-               dryness_steam: drynessValue,
-               suhu: suhuValue,
-               tekanan: tekananValue,
-               flow: flowValue,
-               energi: dayaValue,
-          });
-     };
-
      const GetdataRealTime = async () => {
           try {
                const response = await fetch(
                     `https://backend-agustrisa.as1.pitunnel.net/api/dataRealtime`
                );
+
                const data = await response.json();
                if (data.length === 0) {
                     return;
@@ -74,10 +59,10 @@ const Dashboard = () => {
 
                setDataCard({
                     dryness_steam: data.dryness.data,
-                    suhu: data.temperature.data,
-                    tekanan: data.pressure.data,
+                    temperature: data.temperature.data,
+                    pressure: data.pressure.data,
                     flow: data.flow.data,
-                    energi: data.power_prediction.data,
+                    energi: data.power.data,
                });
           } catch (error) {
                console.error("Error fetching chart data:", error);
@@ -85,7 +70,6 @@ const Dashboard = () => {
      };
 
      useEffect(() => {
-          updateRandomData();
           GetdataRealTime();
           const intervalId = setInterval(GetdataRealTime, 2000);
           const storedLimits = localStorage.getItem("sensorLimits");
@@ -118,41 +102,38 @@ const Dashboard = () => {
                     <CardDashboard
                          titleCard="Dryness"
                          dataCard={dataCard.dryness_steam || "-"}
-                         trendData={generateRandomValue()}
                          idx={0}
                          activeIdx={activeIdx}
                          onClick={() => handleClick(0, "dryness", "Dryness")}
                     />
                     <CardDashboard
-                         titleCard="Daya"
+                         titleCard="Power"
                          dataCard={dataCard.energi || "-"}
-                         trendData={generateRandomValue()}
                          idx={4}
                          activeIdx={activeIdx}
-                         onClick={() => handleClick(4, "daya", "Daya")}
+                         onClick={() => handleClick(4, "power", "Power")}
                     />
                </div>
                <div className="flex flex-wrap justify-center max-w-[1440px] mx-auto ">
                     <CardDashboard
-                         titleCard="Suhu"
-                         dataCard={dataCard.suhu || "-"}
-                         trendData={generateRandomValue()}
+                         titleCard="Temperature"
+                         dataCard={dataCard.temperature || "-"}
                          idx={1}
                          activeIdx={activeIdx}
-                         onClick={() => handleClick(1, "suhu", "Suhu")}
+                         onClick={() =>
+                              handleClick(1, "temperature", "Temperature")
+                         }
                     />
                     <CardDashboard
-                         titleCard="Tekanan"
-                         dataCard={dataCard.tekanan || "-"}
-                         trendData={generateRandomValue()}
+                         titleCard="Pressure"
+                         dataCard={dataCard.pressure || "-"}
                          idx={2}
                          activeIdx={activeIdx}
-                         onClick={() => handleClick(2, "tekanan", "Tekanan")}
+                         onClick={() => handleClick(2, "pressure", "Pressure")}
                     />
                     <CardDashboard
                          titleCard="Flow"
                          dataCard={dataCard.flow || "-"}
-                         trendData={generateRandomValue()}
                          idx={3}
                          activeIdx={activeIdx}
                          onClick={() => handleClick(3, "flow", "Flow")}

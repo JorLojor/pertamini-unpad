@@ -44,10 +44,10 @@ const Analytic = ({ sensor }) => {
                const data = await res.json();
                setDataRealtime(data[sensor.toLowerCase()]);
                if (sensor === "Dryness") setDatayangbakaldioper(data.dryness);
-               if (sensor === "Suhu") setDatayangbakaldioper(data.temperature);
-               if (sensor === "Tekanan") setDatayangbakaldioper(data.pressure);
+               if (sensor === "Temperature") setDatayangbakaldioper(data.temperature);
+               if (sensor === "Pressure") setDatayangbakaldioper(data.pressure);
                if (sensor === "Flow") setDatayangbakaldioper(data.flow);
-               if (sensor === "Daya")
+               if (sensor === "Power")
                     setDatayangbakaldioper(data.power_prediction);
           } catch (error) {
                console.error("Error fetching real-time data:", error);
@@ -60,6 +60,8 @@ const Analytic = ({ sensor }) => {
                     `https://backend-agustrisa.as1.pitunnel.net/api/statisticsGraph/${sensor.toLowerCase()}?period=${period}`
                );
                const data = await resNarasi.json();
+               console.log(data);
+               
                setTrendData((Math.random() * (100.5 - 99.0) + 99.0).toFixed(2));
                return data;
           } catch (error) {
@@ -69,20 +71,19 @@ const Analytic = ({ sensor }) => {
 
      const fetchCardData = async () => {
           const responseDaily = await fetch(
-               `https://backend-agustrisa.as1.pitunnel.net/api/statistics/?period=daily`
+               `https://backend-agustrisa.as1.pitunnel.net/api/statistics?period=daily`
           );
           const dataDaily = await responseDaily.json();
           const responseMonthly = await fetch(
-               `https://backend-agustrisa.as1.pitunnel.net/api/statistics/?period=monthly`
+               `https://backend-agustrisa.as1.pitunnel.net/api/statistics?period=monthly`
           );
           const dataMonthly = await responseMonthly.json();
           const responseYearly = await fetch(
-               `https://backend-agustrisa.as1.pitunnel.net/api/statistics/?period=yearly`
+               `https://backend-agustrisa.as1.pitunnel.net/api/statistics?period=yearly`
           );
           const dataYearly = await responseYearly.json();
-
           const dataNow = await fetch(
-               `https://backend-agustrisa.as1.pitunnel.net/api/statistics/?period=now`
+               `https://backend-agustrisa.as1.pitunnel.net/api/statistics?period=now`
           );
           const dataNowResponse = await dataNow.json();
 
@@ -109,7 +110,7 @@ const Analytic = ({ sensor }) => {
      const handleCardClick = async (data) => {
           try {
                const res = await fetch(
-                    `https://backend-agustrisa.as1.pitunnel.net/api/statisticsGraph/${data.sensor.toLowerCase()}?period=${
+                    `https://backend-agustrisa.as1.pitunnel.net/api/statisticsGraph?type=${data.sensor.toLowerCase()}&period=${
                          selectedPeriod ?? "daily"
                     }`
                );
@@ -198,7 +199,7 @@ const Analytic = ({ sensor }) => {
      return (
           <>
                <div className="flex-wrap md:flex-nowrap md:flex md:justify-center items-center mt-32 max-w-[1350px] mx-auto">
-                    <AnaliticCardBig
+                    {/* <AnaliticCardBig
                          titleCard={sensor}
                          dataCard={
                               datayangbakaldioper.data || "... loading data"
@@ -206,7 +207,7 @@ const Analytic = ({ sensor }) => {
                          trendData={trendData}
                          idx={0}
                          dataStatus={datayangbakaldioper.status ?? 0}
-                    />
+                    /> */}
 
                     <AnaliticCardSmall
                          titleCard={sensor}
