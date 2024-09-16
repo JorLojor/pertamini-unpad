@@ -54,10 +54,10 @@ const CardDashboard = ({
                return "°C";
           }
           if (titleCard === "Tekanan") {
-               return "BarG";
+               return "barg";
           }
           if (titleCard === "Flow") {
-               return "Ton/h";
+               return "ton/h";
           }
           if (titleCard === "Daya") {
                return "Mh";
@@ -87,14 +87,14 @@ const CardDashboard = ({
      return (
           <div
                onClick={() => onClick(idx)}
-               className={`mt-3 w-[325px] col-span-1 shadow-md rounded-lg cursor-pointer transition-colors duration-300 
+               className={`mt-3 ${titleCard === 'Dryness' || titleCard === 'Daya' ?  'w-[450px] h-[200px]' : 'w-[325px]' } col-span-1 shadow-md rounded-lg cursor-pointer transition-colors duration-300 
             ${
                  activeIdx === idx
                       ? "bg-blue-950 text-white"
                       : "bg-white text-green-950"
             }`}>
                <div className="flex flex-row justify-between items-center p-4 w-full">
-                    <p className="text-2xl font-bold text-[22px]">
+                    <p className={` font-bold ${titleCard === 'Dryness' || titleCard === 'Daya' ? 'text-4xl' : 'text-[22px]'}`}>
                          {titleCard}
                     </p>
                     <p
@@ -105,18 +105,18 @@ const CardDashboard = ({
                          <img
                               src={colorSymbolDesicion(trendData)[1]}
                               alt="Trend Icon"
-                              className="w-6 h-6x ml-2"
+                              className={` ${titleCard === 'Dryness' || titleCard === 'Daya' ? 'w-10 h-10' : 'w-6 h-6'} ml-2`}
                          />
                     </p>
                </div>
-               <div className="flex flex-row justify-between items-center p-4 w-full">
-                    <p
-                         className={`flex-row font-bold ${
+               <div className={`flex flex-row justify-between items-center p-4 w-full ${titleCard === 'Dryness' || titleCard === 'Daya' ? 'mt-8' : 'mt-0'}`}>
+                    <div
+                         className={`flex items-end font-bold ${
                               aturUkuran(dataCard).fontSize
-                         } text-lg`}>
-                         {aturUkuran(dataCard).value}
-                         <small className="text-3xl">{symbolDesicion()}</small>
-                    </p>
+                         }`}>
+                         <p className={`${titleCard === 'Dryness' || titleCard === 'Daya' ? 'text-5xl' : 'text-3xl'}`}>{aturUkuran(dataCard).value}</p>
+                         <small className="text-base">{symbolDesicion()}</small>
+                    </div>
                     <img
                          src={
                               activeIdx === idx

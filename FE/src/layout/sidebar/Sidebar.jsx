@@ -13,17 +13,21 @@ import Logout from "../../assets/Logout.svg";
 import Modal from "../../components/modal/Modal";
 import Logo from "../../assets/Panjang-Putih.svg";
 import logoTutup from "../../assets/SMS-Putih.svg";
+import { IoMdSettings } from "react-icons/io";
 
 const Sidebar = ({
      buka,
      toggleSidebar,
      setCurrentPage,
      setSelectedAnalytic,
+     setSelectedSetting,
      currentPage,
      selectedAnalytic,
+     selectedSetting
 }) => {
      const [logoutModal, setLogoutModal] = useState(false);
      const [analyticOpen, setAnalyticOpen] = useState(false);
+     const [settingOpen, setSettingOpen] = useState(false);
 
      const handleCloseModal = () => {
           setLogoutModal(false);
@@ -42,10 +46,27 @@ const Sidebar = ({
           setSelectedAnalytic(menu);
           toggleSidebar();
      };
-
+     
      const toggleAnalyticDropdown = () => {
           if (buka) {
                setAnalyticOpen(!analyticOpen);
+          }
+     };
+
+     const handleClickMenuSetting = (menu) => {
+          if (menu === "Kalibrasi") {
+              setCurrentPage("Kalibrasi");
+          } else if (menu === "Batas") {
+              setCurrentPage("Batas");
+          }
+          setSelectedSetting(menu);
+          toggleSidebar();
+      };
+      
+
+     const toggleSettingDropdown = () => {
+          if (buka) {
+               setSettingOpen(!settingOpen);
           }
      };
 
@@ -174,6 +195,75 @@ const Sidebar = ({
                </AnimatePresence>
 
                <div
+                    className={`button-sidebar flex flex-row space-x-4 items-center p-4 mt-4 w-[80%] ${
+                         buka ? "ml-6" : "mx-auto"
+                    } hover:bg-gray-700 active:bg-gray-600 cursor-pointer ${
+                         currentPage === "Setting"
+                              ? "bg-gray-700 text-white"
+                              : "text-[#BFBFBF]"
+                    }`}
+                    onClick={toggleSettingDropdown}>
+                    <IoMdSettings />
+                    {/* <img
+                         className={`${buka ? "mx-0" : "mx-auto"}`}
+                         src={
+                              currentPage === "Setting"
+                                   ? <IoMdSettings />
+                                   : <IoMdSettings />
+                         }
+                         alt="Setting Icon"
+                    /> */}
+                    {buka && (
+                         <>
+                              <motion.p
+                                   initial={{ x: -20, opacity: 0 }}
+                                   animate={{ x: 0, opacity: 1 }}
+                                   transition={{ duration: 0.5 }}
+                                   className="flex items-center">
+                                   <p className="mr-4">Setting</p>
+                                   {settingOpen ? (
+                                        <FaChevronDown className="ml-auto" />
+                                   ) : (
+                                        <FaChevronUp className="ml-auto" />
+                                   )}
+                              </motion.p>
+                         </>
+                    )}
+               </div>
+
+               <AnimatePresence>
+    {buka && settingOpen && (
+        <motion.div
+            initial={{ height: 0 }}
+            animate={{ height: "auto" }}
+            exit={{ height: 0 }}
+            transition={{ duration: 0.5 }}
+            className="z-0 overflow-hidden">
+            {[
+                "Kalibrasi",
+                "Batas",
+            ].map((menu) => (
+                <div
+                    key={menu}
+                    className={`sub-menu ml-12 p-2 w-[70%] flex items-center justify-start hover:bg-gray-700 active:bg-gray-600 cursor-pointer ${
+                        selectedSetting === menu
+                            ? "bg-gray-700 text-white"
+                            : "text-[#BFBFBF]"
+                    }`}
+                    onClick={() =>
+                        handleClickMenuSetting(menu)
+                    }>
+                    <FaChevronRight className="mr-2" />
+                    <motion.p className="text-left">
+                        {menu}
+                    </motion.p>
+                </div>
+            ))}
+        </motion.div>
+    )}
+</AnimatePresence>
+
+               {/* <div
                     className={`z-10 button-sidebar flex flex-row space-x-4 items-center p-4 mt-4 w-[80%] ${
                          buka ? "ml-6" : "mx-auto"
                     } hover:bg-gray-700 active:bg-gray-600 cursor-pointer ${
@@ -200,7 +290,7 @@ const Sidebar = ({
                               Kalibrasi
                          </motion.p>
                     )}
-               </div>
+               </div> */}
 
                <div
                     className={`z-10 button-sidebar flex flex-row space-x-4 items-center p-4 mt-4 w-[80%] ${
@@ -241,8 +331,10 @@ Sidebar.propTypes = {
      toggleSidebar: propTypes.func.isRequired,
      setCurrentPage: propTypes.func.isRequired,
      setSelectedAnalytic: propTypes.func.isRequired,
+     setSelectedSetting: propTypes.func.isRequired,
      currentPage: propTypes.string.isRequired,
      selectedAnalytic: propTypes.string.isRequired,
+     selectedSetting: propTypes.string.isRequired,
 };
 
 export default Sidebar;

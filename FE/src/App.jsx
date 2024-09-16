@@ -7,11 +7,13 @@ import Sidebar from "./layout/sidebar/Sidebar";
 import Dashboard from "./pages/Dashboard";
 import Analytic from "./pages/analytic";
 import Kalibrasi from "./pages/kalibrasi";
+import Batas from "./pages/Batas";
 
 function App() {
      const [buka, setBuka] = useState(false);
      const [currentPage, setCurrentPage] = useState("Dashboard");
      const [selectedAnalytic, setSelectedAnalytic] = useState("");
+     const [selectedSetting, setSelectedSetting] = useState("");
      const user = useSelector((state) => state.user.user);
      const navigate = useNavigate();
 
@@ -27,17 +29,19 @@ function App() {
 
      const renderPage = () => {
           switch (currentPage) {
-               case "Dashboard":
-                    return <Dashboard />;
-               case "Analytic":
-                    return <Analytic sensor={selectedAnalytic} />; // Pass the selected analytic sensor here
-               case "Kalibrasi":
-                    return <Kalibrasi />;
-               default:
-                    return <Dashboard />;
+              case "Dashboard":
+                  return <Dashboard />;
+              case "Analytic":
+                  return <Analytic sensor={selectedAnalytic} />;
+              case "Kalibrasi":
+                  return <Kalibrasi />;
+              case "Batas":
+                  return <Batas />; // Add this line to render the Batas page
+              default:
+                  return <Dashboard />;
           }
-     };
-
+      };
+      
      return (
           <>
                <Header
@@ -52,9 +56,10 @@ function App() {
                          buka={buka}
                          toggleSidebar={toggleSidebar}
                          setCurrentPage={setCurrentPage}
-                         setSelectedAnalytic={setSelectedAnalytic} // Pass setSelectedAnalytic
+                         setSelectedAnalytic={setSelectedAnalytic} 
+                         setSelectedSetting={setSelectedSetting} 
                          currentPage={currentPage}
-                         selectedAnalytic={selectedAnalytic} // Pass selectedAnalytic
+                         selectedSetting={selectedSetting} 
                     />
                </div>
                <div className="main-content ml-[6.25rem] w-auto px-8 bg-[#F4F6F6] min-h-[100vh]">

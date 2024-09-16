@@ -84,7 +84,7 @@ const Dashboard = () => {
      useEffect(() => {
           updateRandomData();
           GetdataRealTime();
-          const intervalId = setInterval(GetdataRealTime, 2000); 
+          const intervalId = setInterval(GetdataRealTime, 2000);
 
           return () => clearInterval(intervalId);
      }, []);
@@ -98,7 +98,7 @@ const Dashboard = () => {
           setActiveIdx((prevIdx) => (prevIdx === idx ? null : idx));
           setSelectedType(type);
           setSelectedTitle(title);
-          fetchChartData(type); 
+          fetchChartData(type);
      };
 
      const handleConfirmSorting = () => {
@@ -116,6 +116,16 @@ const Dashboard = () => {
                          activeIdx={activeIdx}
                          onClick={() => handleClick(0, "dryness", "Dryness")}
                     />
+                    <CardDashboard
+                         titleCard="Daya"
+                         dataCard={dataCard.energi || "-"}
+                         trendData={generateRandomValue()}
+                         idx={4}
+                         activeIdx={activeIdx}
+                         onClick={() => handleClick(4, "daya", "Daya")}
+                    />
+               </div>
+               <div className="flex flex-wrap justify-around w-full ">
                     <CardDashboard
                          titleCard="Suhu"
                          dataCard={dataCard.suhu || "-"}
@@ -140,14 +150,7 @@ const Dashboard = () => {
                          activeIdx={activeIdx}
                          onClick={() => handleClick(3, "flow", "Flow")}
                     />
-                    <CardDashboard
-                         titleCard="Daya"
-                         dataCard={dataCard.energi || "-"}
-                         trendData={generateRandomValue()}
-                         idx={4}
-                         activeIdx={activeIdx}
-                         onClick={() => handleClick(4, "daya", "Daya")}
-                    />
+
                </div>
                <div className="pt-10 flex-col">
                     <div className="bg-white rounded-lg p-4 mb-5 flex items-center justify-between">
