@@ -14,18 +14,17 @@ const Dashboard = () => {
      const [selectedTitle, setSelectedTitle] = useState("Chart Data");
      const [sensorLimits, setSensorLimits] = useState({});
 
-
      const fetchChartData = async (type) => {
           try {
                setLoading(true);
                const params = new URLSearchParams({
                     startDate: startDate || "",
                     endDate: endDate || "",
-               });               
+               });
                const response = await fetch(
                     `https://backend-agustrisa.as1.pitunnel.net/api/dataGrafik?type=${type}&${params.toString()}`
                );
-               
+
                const data = await response.json();
                if (data.length === 0) {
                     setChartData(["kosong"]);
@@ -33,12 +32,12 @@ const Dashboard = () => {
                     return;
                }
                console.log(data);
-               
+
                const formattedData = data.map((item) => ({
                     x: new Date(item.timestamp).toLocaleDateString(),
                     y: item.value,
                }));
-               
+
                setChartData(formattedData);
                setLoading(false);
           } catch (error) {
@@ -65,7 +64,6 @@ const Dashboard = () => {
                     flow: data.flow.data,
                     energi: data.power.data,
                });
-               
           } catch (error) {
                console.error("Error fetching chart data:", error);
           }
@@ -122,7 +120,9 @@ const Dashboard = () => {
                          dataCard={dataCard.temperature || "-"}
                          idx={1}
                          activeIdx={activeIdx}
-                         onClick={() => handleClick(1, "temperature", "Temperature")}
+                         onClick={() =>
+                              handleClick(1, "temperature", "Temperature")
+                         }
                     />
                     <CardDashboard
                          titleCard="Pressure"
@@ -149,18 +149,26 @@ const Dashboard = () => {
                                         type="date"
                                         className="border-2 border-gray-300 rounded-lg p-1 mb-2 md:mb-0 md:ml-2"
                                         value={startDate}
-                                        onChange={(e) => setStartDate(e.target.value)}
+                                        onChange={(e) =>
+                                             setStartDate(e.target.value)
+                                        }
                                    />
                                    <input
                                         type="date"
                                         className="border-2 border-gray-300 rounded-lg p-1 mb-2 md:mb-0 md:ml-2"
-                                        value={endDate || new Date().toISOString().split("T")[0]}
-                                        onChange={(e) => setEndDate(e.target.value)}
+                                        value={
+                                             endDate ||
+                                             new Date()
+                                                  .toISOString()
+                                                  .split("T")[0]
+                                        }
+                                        onChange={(e) =>
+                                             setEndDate(e.target.value)
+                                        }
                                    />
                                    <button
                                         className="bg-blue-500 text-white rounded-lg p-2 md:ml-2"
-                                        onClick={handleConfirmSorting}
-                                   >
+                                        onClick={handleConfirmSorting}>
                                         Konfirmasi Sorting
                                    </button>
                               </div>
