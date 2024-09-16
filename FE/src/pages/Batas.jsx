@@ -10,57 +10,82 @@ import SensorLimitCard from "../components/sensorLimitCard/sensorLimitCard";
 const Batas = () => {
      const [modalOpen, setModalOpen] = useState(false);
      const [limitSensor, setLimitSensor] = useState({
-          dryness_steam: { min: 0, max: 0 },
+          dryness: { min: 0, max: 0 },
           temperature: { min: 0, max: 0 },
           pressure: { min: 0, max: 0 },
           flow: { min: 0, max: 0 },
-          power_prediction: { min: 0, max: 0 },
+          power: { min: 0, max: 0 },
      });
      const [sensorDataLimits, setSensorDataLimits] = useState({
-          dryness_steam: { min: null, max: null },
+          dryness: { min: null, max: null },
           temperature: { min: null, max: null },
           pressure: { min: null, max: null },
           flow: { min: null, max: null },
-          power_prediction: { min: null, max: null },
+          power: { min: null, max: null },
      });
 
      const fetchSensorLimits = async () => {
           try {
-               // ngeset tanggal 3 bulan yang lalu
-               //    const currentDate = new Date().toISOString().split("T")[0];
-               //    const threeMonthsAgo = new Date();
-               //    threeMonthsAgo.setMonth(threeMonthsAgo.getMonth() - 3);
-               //    const startDate = threeMonthsAgo.toISOString().split("T")[0];
+               const setupStartDate = new Date();
+               setupStartDate.setDate(setupStartDate.getDate() - 1);
+               const setupEndDate = new Date();
 
-               const sensors = ["dryness", "Temperature", "Pressure", "flow", "Power"];
-               const sensorMapping = {
-                    dryness: "dryness_steam",
-                    Temperature: "temperature",
-                    Pressure: "pressure",
-                    flow: "flow",
-                    Power: "power_prediction",
-               };
+               const formattedStartDate = `${setupStartDate.getFullYear()}-${String(
+                    setupStartDate.getMonth() + 1
+               ).padStart(2, "0")}-${String(setupStartDate.getDate()).padStart(
+                    2,
+                    "0"
+               )}`;
+               const formattedEndDate = `${setupEndDate.getFullYear()}-${String(
+                    setupEndDate.getMonth() + 1
+               ).padStart(2, "0")}-${String(setupEndDate.getDate()).padStart(
+                    2,
+                    "0"
+               )}`;
+
+               const sensors = [
+                    "dryness",
+                    "temperature",
+                    "pressure",
+                    "flow",
+                    "power",
+               ];
 
                let limits = {};
 
                for (const sensor of sensors) {
-                    const response = await fetch(
-                         //  `https://backend-agustrisa.as1.pitunnel.net/api/dataGrafik/${sensor}?startDate=${startDate}&endDate=${currentDate}`
-                         `https://backend-agustrisa.as1.pitunnel.net/api/dataGrafik/${sensor}?startDate=&endDate=`
-                    );
+                    console.log(sensor);
+
+                    const params = new URLSearchParams({
+                         startDate: formattedStartDate,
+                         endDate: formattedEndDate,
+                    });
+                    const url = `https://backend-agustrisa.as1.pitunnel.net/api/dataGrafik?type=${sensor}&${params.toString()}`;
+                    console.log("url Batas   : ", url);
+                    const response = await fetch(url);
                     const data = await response.json();
 
-                    const minValue = Math.min(
-                         ...data.map((item) => item.value)
-                    );
-                    const maxValue = Math.max(
-                         ...data.map((item) => item.value)
-                    );
+                    if (data.length > 0) {
+                         const minValue = Math.min(
+                              ...data.map((item) => item.value)
+                         );
+                         const maxValue = Math.max(
+                              ...data.map((item) => item.value)
+                         );
+                         console.log(
+                              `Min: ${minValue}, Max: ${maxValue} for sensor: ${sensor}`
+                         );
 
-                    limits[sensorMapping[sensor]] = {
-                         min: minValue,
-                         max: maxValue,
-                    };
+                         limits[sensor] = {
+                              min: minValue,
+                              max: maxValue,
+                         };
+                    } else {
+                         limits[sensor] = {
+                              min: 0,
+                              max: 0,
+                         };
+                    }
                }
 
                setSensorDataLimits(limits);
@@ -78,7 +103,7 @@ const Batas = () => {
                ...prevLimits,
                [sensor]: {
                     ...prevLimits[sensor],
-                    [type]: value,
+                    [type]: parseFloat(value) || 0,
                },
           }));
      };
@@ -91,7 +116,7 @@ const Batas = () => {
                     const sensorLimits = limitSensor[sensor];
 
                     const payload = {
-                         data: sensor,
+                         type: sensor,
                          batasAtas: parseFloat(sensorLimits.max),
                          batasBawah: parseFloat(sensorLimits.min),
                     };
@@ -99,7 +124,7 @@ const Batas = () => {
                     limitsToStore[sensor] = payload;
 
                     const response = await fetch(
-                         "https://backend-agustrisa.as1.pitunnel.net/api/setLimit",
+                         "https://backend-agustrisa.as1.pitunnel.net/api/setlimit",
                          {
                               method: "POST",
                               headers: {
@@ -152,10 +177,10 @@ const Batas = () => {
                <SensorLimitCard
                     name="Dryness"
                     icon={drynessIcon}
-                    limit={limitSensor.dryness_steam}
-                    placeholder={sensorDataLimits.dryness_steam}
+                    limit={limitSensor.dryness}
+                    placeholder={sensorDataLimits.dryness}
                     onChange={(type, value) =>
-                         updateLimit("dryness_steam", type, value)
+                         updateLimit("dryness", type, value)
                     }
                />
                <SensorLimitCard
@@ -177,10 +202,10 @@ const Batas = () => {
                <SensorLimitCard
                     name="Power Prediction"
                     icon={PowerIcon}
-                    limit={limitSensor.power_prediction}
-                    placeholder={sensorDataLimits.power_prediction}
+                    limit={limitSensor.power}
+                    placeholder={sensorDataLimits.power}
                     onChange={(type, value) =>
-                         updateLimit("power_prediction", type, value)
+                         updateLimit("power", type, value)
                     }
                />
 

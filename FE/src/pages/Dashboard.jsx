@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import CardDashboard from "../components/cardDashboard/CardDashboard";
-import LineChart from "../components/lineCart/LineCart";
+import LineChart from "../components/lineCart/lineCart";
 import TableData from "../components/table/TableData";
 
 const Dashboard = () => {
@@ -8,8 +8,17 @@ const Dashboard = () => {
      const [activeIdx, setActiveIdx] = useState(null);
      const [chartData, setChartData] = useState([]);
      const [loading, setLoading] = useState(false);
-     const [startDate, setStartDate] = useState("");
-     const [endDate, setEndDate] = useState("");
+
+     const [startDate, setStartDate] = useState(() => {
+          const yesterday = new Date();
+          yesterday.setDate(yesterday.getDate() - 1);
+          return yesterday.toISOString().split("T")[0];
+     });
+
+     const [endDate, setEndDate] = useState(() => {
+          return new Date().toISOString().split("T")[0];
+     });
+
      const [selectedType, setSelectedType] = useState("dryness");
      const [selectedTitle, setSelectedTitle] = useState("Chart Data");
      const [sensorLimits, setSensorLimits] = useState({});
@@ -17,13 +26,24 @@ const Dashboard = () => {
      const fetchChartData = async (type) => {
           try {
                setLoading(true);
+               const setupStartDate = new Date();
+               setupStartDate.setDate(setupStartDate.getDate() - 1);
+               const setupEndDate = new Date();
+
+               const formattedStartDate = `${setupStartDate.getFullYear()}-${
+                    setupStartDate.getMonth() + 1
+               }-${setupStartDate.getDate()}`;
+               const formattedEndDate = `${setupEndDate.getFullYear()}-${
+                    setupEndDate.getMonth() + 1
+               }-${setupEndDate.getDate()}`;
+
                const params = new URLSearchParams({
-                    startDate: startDate || "",
-                    endDate: endDate || "",
+                    startDate: startDate || formattedStartDate,
+                    endDate: endDate || formattedEndDate,
                });
-               const response = await fetch(
-                    `https://backend-agustrisa.as1.pitunnel.net/api/dataGrafik?type=${type}&${params.toString()}`
-               );
+               const url = `https://backend-agustrisa.as1.pitunnel.net/api/dataGrafik?type=${type}&${params.toString()}`;
+               console.log("url Dashboard: ", url);
+               const response = await fetch(url);
 
                const data = await response.json();
                if (data.length === 0) {
@@ -31,10 +51,9 @@ const Dashboard = () => {
                     setLoading(false);
                     return;
                }
-               console.log(data);
 
                const formattedData = data.map((item) => ({
-                    x: new Date(item.timestamp).toLocaleDateString(),
+                    x: new Date(item.timestamp).toISOString(),
                     y: item.value,
                }));
 
@@ -77,13 +96,10 @@ const Dashboard = () => {
                setSensorLimits(JSON.parse(storedLimits));
           }
 
+          fetchChartData(selectedType);
+
           return () => clearInterval(intervalId);
      }, []);
-
-     const generateRandomValue = () => {
-          const value = (Math.random() * (100.5 - 99.0) + 99.0).toFixed(2);
-          return value;
-     };
 
      const handleClick = (idx, type, title) => {
           setActiveIdx((prevIdx) => (prevIdx === idx ? null : idx));
@@ -156,12 +172,7 @@ const Dashboard = () => {
                                    <input
                                         type="date"
                                         className="border-2 border-gray-300 rounded-lg p-1 mb-2 md:mb-0 md:ml-2"
-                                        value={
-                                             endDate ||
-                                             new Date()
-                                                  .toISOString()
-                                                  .split("T")[0]
-                                        }
+                                        value={endDate}
                                         onChange={(e) =>
                                              setEndDate(e.target.value)
                                         }

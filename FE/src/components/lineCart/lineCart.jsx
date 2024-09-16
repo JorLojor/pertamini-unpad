@@ -7,37 +7,49 @@ const LineChart = ({ chartData, title }) => {
      const [dataminMax, setDataminMax] = useState({ min: 0, max: 0 });
 
      const dataMinMaxDesicion = (title) => {
-          // const dataLocal = localStorage.sensorLimits;
-          // const data = JSON.parse(dataLocal);
-          console.log(title);
-          if (title === "Suhu") {
-               setDataminMax({
-                    min: data.temperature.batasBawah,
-                    max: data.temperature.batasAtas,
-               });
-          } else if (title === "Flow") {
-               setDataminMax({
-                    min: data.flow.batasBawah,
-                    max: data.flow.batasAtas,
-               });
-          } else if (title === "Tekanan") {
-               setDataminMax({
-                    min: data.pressure.batasBawah,
-                    max: data.pressure.batasAtas,
-               });
-          } else if (title === "Daya") {
-               setDataminMax({
-                    min: data.power_prediction.batasBawah,
-                    max: data.power_prediction.batasAtas,
-               });
-          } else if (title === "Dryness") {
-               setDataminMax({
-                    min: data.dryness_steam.batasBawah,
-                    max: data.dryness_steam.batasAtas,
-               });
-          }
+          try {
+               const dataLocal = localStorage.sensorLimits;
 
-          console.log("Data Min Max", dataminMax);
+               if (!dataLocal) {
+                    console.warn("No sensor limits found in localStorage.");
+                    setDataminMax({ min: 0, max: 0 });
+                    return;
+               }
+
+               const data = JSON.parse(dataLocal);
+
+               if (title === "Temperature") {
+                    setDataminMax({
+                         min: data.temperature.batasBawah,
+                         max: data.temperature.batasAtas,
+                    });
+               } else if (title === "Flow") {
+                    setDataminMax({
+                         min: data.flow.batasBawah,
+                         max: data.flow.batasAtas,
+                    });
+               } else if (title === "Pressure") {
+                    setDataminMax({
+                         min: data.pressure.batasBawah,
+                         max: data.pressure.batasAtas,
+                    });
+               } else if (title === "Power") {
+                    setDataminMax({
+                         min: data.power.batasBawah,
+                         max: data.power.batasAtas,
+                    });
+               } else if (title === "Dryness") {
+                    setDataminMax({
+                         min: data.dryness.batasBawah,
+                         max: data.dryness.batasAtas,
+                    });
+               } else {
+                    setDataminMax({ min: 0, max: 0 });
+               }
+          } catch (error) {
+               console.error("Error parsing localStorage data:", error);
+               setDataminMax({ min: 0, max: 0 });
+          }
      };
 
      useEffect(() => {
@@ -65,8 +77,8 @@ const LineChart = ({ chartData, title }) => {
           const slope = (n * sumXY - sumX * sumY) / (n * sumX2 - sumX * sumX);
           const intercept = (sumY - slope * sumX) / n;
 
-          const regressionLine = data.map((_, i) => ({
-               x: data[i].x,
+          const regressionLine = data.map((point, i) => ({
+               x: point.x,
                y: slope * i + intercept,
           }));
 
@@ -116,18 +128,33 @@ const LineChart = ({ chartData, title }) => {
                },
           },
           yaxis: {
-               min: dataminMax.min ? dataminMax.min - 1 : undefined,
-               max: dataminMax.max ? dataminMax.max + 1 : undefined,
+               categories: chartData.map((data) => {
+                    data.y;
+               }),
           },
           xaxis: {
-               type: "category",
-               categories: chartData.map((data) => data.x),
+               type: "datetime",
+               categories: chartData.map((data) => new Date(data.x).getTime()),
+               tickAmount: chartData.length / 2,
+               labels: {
+                    formatter: function (value, timestamp) {
+                         return new Date(timestamp).toLocaleString();
+                    },
+               },
           },
           tooltip: {
                enabled: true,
-               y: {
-                    format: "HH:mm:ss",
+               x: {
+                    format: "dd/MM/yyyy HH:mm",
                },
+               y: {
+                    formatter: function (val) {
+                         return val.toFixed(2);
+                    },
+               },
+          },
+          legend: {
+               show: false,
           },
           annotations: {
                yaxis: [
@@ -140,7 +167,6 @@ const LineChart = ({ chartData, title }) => {
                                      strokeWidth: 4,
                                      label: {
                                           borderColor: "#00E396",
-
                                           style: {
                                                color: "#fff",
                                                background: "#00E396",
@@ -201,8 +227,8 @@ const LineChart = ({ chartData, title }) => {
                               ? [
                                      {
                                           name: "Regression Line",
-                                          data: regressionLineData.map(
-                                               (data) => data.y
+                                          data: regressionLineData.map((data) =>
+                                               parseFloat(data.y).toFixed(4)
                                           ),
                                           color: "#FF0000",
                                           stroke: {
