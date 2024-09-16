@@ -185,10 +185,16 @@ const Dashboard = () => {
                     {loading ? (
                          <p>Loading...</p>
                     ) : (
-                         <LineChart
-                              chartData={chartData}
-                              title={selectedTitle}
-                         />
+                         <>
+                              <div
+                                   className="mt-5 p-4 bg-white rounded-lg shadow-lg"
+                                   style={{}}>
+                                   <LineChart
+                                        chartData={chartData}
+                                        title={selectedTitle}
+                                   />
+                              </div>
+                         </>
                     )}
                </div>
                <div className="pt-10 flex-col">
