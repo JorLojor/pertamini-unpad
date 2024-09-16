@@ -9,7 +9,7 @@ const LineChart = ({ chartData, title }) => {
      const dataMinMaxDesicion = (title) => {
           // const dataLocal = localStorage.sensorLimits;
           // const data = JSON.parse(dataLocal);
-          // console.log(title);
+          console.log(title);
           if (title === "Suhu") {
                setDataminMax({
                     min: data.temperature.batasBawah,
@@ -37,7 +37,7 @@ const LineChart = ({ chartData, title }) => {
                });
           }
 
-          // console.log("Data Min Max", dataminMax);
+          console.log("Data Min Max", dataminMax);
      };
 
      useEffect(() => {

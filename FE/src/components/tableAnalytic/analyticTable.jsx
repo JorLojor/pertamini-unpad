@@ -75,6 +75,9 @@ const DataTableAnalytic = ({ data }) => {
           );
      };
 
+     console.log(currentRows);
+     
+
      return (
           <div className="bg-white rounded-lg p-6 mt-5">
                <h2 className="text-2xl mb-4 font-semibold text-gray-800">

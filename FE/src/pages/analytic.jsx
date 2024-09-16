@@ -60,6 +60,8 @@ const Analytic = ({ sensor }) => {
                     `https://backend-agustrisa.as1.pitunnel.net/api/statisticsGraph/${sensor.toLowerCase()}?period=${period}`
                );
                const data = await resNarasi.json();
+               console.log(data);
+               
                setTrendData((Math.random() * (100.5 - 99.0) + 99.0).toFixed(2));
                return data;
           } catch (error) {
@@ -108,7 +110,7 @@ const Analytic = ({ sensor }) => {
      const handleCardClick = async (data) => {
           try {
                const res = await fetch(
-                    `https://backend-agustrisa.as1.pitunnel.net/api/statisticsGraph/${data.sensor.toLowerCase()}?period=${
+                    `https://backend-agustrisa.as1.pitunnel.net/api/statisticsGraph?type=${data.sensor.toLowerCase()}&period=${
                          selectedPeriod ?? "daily"
                     }`
                );
