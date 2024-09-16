@@ -17,11 +17,9 @@ import axios from "axios";
 const CardDashboard = ({ titleCard, dataCard, idx, activeIdx, onClick }) => {
      const [trendData, setTrendData] = useState({});
 
-     console.log(titleCard.toLowerCase());
-     
      const fetchTrendData = async () => {
           try {
-               const response = await axios.get(`https://backend-agustrisa.as1.pitunnel.net/api/trend/${titleCard.toLowerCase()}?period=now`);
+               const response = await axios.get(`https://backend-agustrisa.as1.pitunnel.net/api/trend?type=${titleCard.toLowerCase()}&period=now`);
                if (response.status == 200) {
                     setTrendData(response.data)
                }
@@ -29,24 +27,6 @@ const CardDashboard = ({ titleCard, dataCard, idx, activeIdx, onClick }) => {
                console.log(error);
           }
      }
-
-     const titleDesicion = () => {
-          if (titleCard === "Dryness") {
-               return [DrynessIcon, DrynessIconWhite];
-          }
-          if (titleCard === "Temperature") {
-               return [TemperatureIcon, TemperatureIconWhite];
-          }
-          if (titleCard === "Pressure") {
-               return [PressureIcon, PressureIconWhite];
-          }
-          if (titleCard === "Flow") {
-               return [FlowIcon, FlowIconWhite];
-          }
-          if (titleCard === "Power") {
-               return [PowerIcon, PowerIconWhite];
-          }
-     };
 
      const symbolDesicion = () => {
           if (titleCard === "Dryness") {
@@ -98,14 +78,17 @@ const CardDashboard = ({ titleCard, dataCard, idx, activeIdx, onClick }) => {
                }`}>
                <div className="flex justify-center items-center text-xl">
                     <p className="mr-1">Dev =
-                         <span className={`${trendData?.trendStatus === 'naik' ? 'text-green-600' : trendData?.trendStatus === 'stabil' ? 'text-green-600' : trendData?.trendStatus === 'turun' ? 'text-red-600' : 'text-green-600'}`}>{trendData?.trendStatus === 'naik' ? '+' : trendData?.trendStatus === 'stabil' ? '+' : trendData?.trendStatus === 'turun' ? '-' : '+'}{trendData?.gradien}</span>
+                         <span className={`${trendData?.trendStatus === 'naik' ? 'text-green-600' : trendData?.trendStatus === 'stabil' ? 'text-green-600' : trendData?.trendStatus === 'turun' ? 'text-red-600' : 'text-green-600'}`}>
+                              {trendData?.trendStatus === 'naik' ? '+' : trendData?.trendStatus === 'stabil' ? '' : trendData?.trendStatus === 'turun' ? '' : ''}
+                              {trendData?.gradient ? Number(trendData.gradient).toFixed(3) : ''}
+                         </span>
                     </p>
                     <p className={`text-base md:text-xl font-bold flex justify-center items-center }`}> </p>
-                    {trendData?.trendStatus === 'naik' ? <img src={ArrowUp} alt="gradien" /> : trendData?.trendStatus === 'turun' ? <img src={ArrowDown} alt="gradien" /> : <img src={ArrowUp} alt="gradien" />}
+                    {trendData?.trendStatus === 'naik' ? <img src={ArrowUp} alt="gradient" /> : trendData?.trendStatus === 'turun' ? <img src={ArrowDown} alt="gradient" /> : <img src={ArrowUp} alt="gradient" />}
                </div>
                <div className={`flex justify-center items-end font-bold ${aturUkuran(dataCard).fontSize}`}>
-                    <p className={`${titleCard === 'Dryness' || titleCard === 'Power' ? 'text-2xl md:text-[64px]' : 'text-2xl md:text-[55px]'}`}>{aturUkuran(dataCard).value}</p>
-                    <small className="text-base">{symbolDesicion()}</small>
+                    <p className={`${titleCard === 'Dryness' || titleCard === 'Power' ? 'text-2xl md:text-[64px]' : 'text-2xl md:text-[40px]'}`}>{aturUkuran(dataCard).value}</p>
+                    <small className={`${titleCard === 'Dryness' || titleCard === 'Power' ? 'text-base md:text-3xl relative md:top-3' : 'text-base md:text-2xl relative md:top-1' }`}>{symbolDesicion()}</small>
                </div>
                <p className={` font-bold ${titleCard === 'Dryness' || titleCard === 'Power' ? 'text-lg md:text-[28px]' : 'text-lg md:text-[28px]'}`}>
                     {titleCard}

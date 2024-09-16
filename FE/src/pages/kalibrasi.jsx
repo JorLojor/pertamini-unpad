@@ -15,7 +15,7 @@ const Kalibrasi = () => {
   const fetchData = async () => {
     try {
       const response = await axios.get('https://backend-agustrisa.as1.pitunnel.net/api/dataCalibration');
-      setTemperature({min:response.data[3].min_value, max:response.data[3].max_value});
+      setTemperature({min:response.data[0].min_value, max:response.data[0].max_value});
       setFlow({min:response.data[2].min_value, max:response.data[2].max_value});
       setPressure({min:response.data[1].min_value, max:response.data[1].max_value});
     } catch (error) {

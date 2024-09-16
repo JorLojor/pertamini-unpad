@@ -20,22 +20,24 @@ const Dashboard = () => {
                const params = new URLSearchParams({
                     startDate: startDate || "",
                     endDate: endDate || "",
-               });
+               });               
                const response = await fetch(
-                    `https://backend-agustrisa.as1.pitunnel.net/api/dataGrafik/${type}?${params.toString()}`
+                    `https://backend-agustrisa.as1.pitunnel.net/api/dataGrafik?type=${type}&${params.toString()}`
                );
+               
                const data = await response.json();
                if (data.length === 0) {
                     setChartData(["kosong"]);
                     setLoading(false);
                     return;
                }
-
+               console.log(data);
+               
                const formattedData = data.map((item) => ({
                     x: new Date(item.timestamp).toLocaleDateString(),
                     y: item.value,
                }));
-
+               
                setChartData(formattedData);
                setLoading(false);
           } catch (error) {
@@ -49,6 +51,7 @@ const Dashboard = () => {
                const response = await fetch(
                     `https://backend-agustrisa.as1.pitunnel.net/api/dataRealtime`
                );
+
                const data = await response.json();
                if (data.length === 0) {
                     return;
@@ -59,8 +62,9 @@ const Dashboard = () => {
                     temperature: data.temperature.data,
                     pressure: data.pressure.data,
                     flow: data.flow.data,
-                    energi: data.power_prediction.data,
+                    energi: data.power.data,
                });
+               
           } catch (error) {
                console.error("Error fetching chart data:", error);
           }
