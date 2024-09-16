@@ -77,7 +77,7 @@ const DataTableAnalytic = ({ data }) => {
      };
 
      return (
-          <div className="bg-white rounded-lg p-6 mt-5">
+          <div className="bg-white rounded-lg p-6 mt-5 overflow-y-auto">
                <h2 className="text-2xl mb-4 font-semibold text-gray-800">
                     Data Table
                </h2>
@@ -169,45 +169,46 @@ const DataTableAnalytic = ({ data }) => {
                </table>
 
                {/* Pagination */}
-               <div className="flex justify-between mt-4">
-                    <div className="flex-row text-gray-500 font-thin">
-                         <p>
-                              Showing {indexOfFirstRow + 1} to{" "}
-                              {indexOfLastRow > sortedData.length
-                                   ? sortedData.length
-                                   : indexOfLastRow}{" "}
-                              of {sortedData.length} entries
-                         </p>
-                    </div>
+               <div className="flex flex-col sm:flex-row justify-between items-center mt-4">
+    <div className="text-gray-500 font-thin mb-2 sm:mb-0">
+        <p>
+            Showing {indexOfFirstRow + 1} to{" "}
+            {indexOfLastRow > sortedData.length
+                ? sortedData.length
+                : indexOfLastRow}{" "}
+            of {sortedData.length} entries
+        </p>
+    </div>
 
-                    <div className="flex justify-center items-center space-x-2">
-                         <button
-                              disabled={currentPage === 1}
-                              onClick={() => handlePageChange(currentPage - 1)}
-                              className="px-4 py-2 bg-white flex items-center border border-black rounded-xl hover:bg-gray-900 hover:text-white">
-                              <img
-                                   src={preveusbtn}
-                                   alt="<<"
-                                   className="w-4 h-4 mr-2"
-                              />
-                              <p>Previous</p>
-                         </button>
+    <div className="flex justify-center items-center space-x-2">
+        <button
+            disabled={currentPage === 1}
+            onClick={() => handlePageChange(currentPage - 1)}
+            className="px-4 py-2 bg-white flex items-center border border-black rounded-xl hover:bg-gray-900 hover:text-white m-1">
+            <img
+                src={preveusbtn}
+                alt="<<"
+                className="w-4 h-4 mr-2"
+            />
+            <p>Previous</p>
+        </button>
 
-                         {renderPagination()}
+        {renderPagination()}
 
-                         <button
-                              disabled={currentPage === totalPages}
-                              onClick={() => handlePageChange(currentPage + 1)}
-                              className="px-4 py-2 bg-white flex items-center border border-black rounded-xl hover:bg-gray-900 hover:text-white">
-                              <p>Next</p>
-                              <img
-                                   src={nextbtn}
-                                   alt=">>"
-                                   className="w-4 h-4 ml-2"
-                              />
-                         </button>
-                    </div>
-               </div>
+        <button
+            disabled={currentPage === totalPages}
+            onClick={() => handlePageChange(currentPage + 1)}
+            className="px-4 py-2 bg-white flex items-center border border-black rounded-xl hover:bg-gray-900 hover:text-white m-1">
+            <p>Next</p>
+            <img
+                src={nextbtn}
+                alt=">>"
+                className="w-4 h-4 ml-2"
+            />
+        </button>
+    </div>
+</div>
+
           </div>
      );
 };
