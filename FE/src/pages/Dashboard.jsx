@@ -56,8 +56,8 @@ const Dashboard = () => {
 
                setDataCard({
                     dryness_steam: data.dryness.data,
-                    suhu: data.temperature.data,
-                    tekanan: data.pressure.data,
+                    temperature: data.temperature.data,
+                    pressure: data.pressure.data,
                     flow: data.flow.data,
                     energi: data.power_prediction.data,
                });
@@ -100,27 +100,27 @@ const Dashboard = () => {
                          onClick={() => handleClick(0, "dryness", "Dryness")}
                     />
                     <CardDashboard
-                         titleCard="Daya"
+                         titleCard="Power"
                          dataCard={dataCard.energi || "-"}
                          idx={4}
                          activeIdx={activeIdx}
-                         onClick={() => handleClick(4, "daya", "Daya")}
+                         onClick={() => handleClick(4, "power", "Power")}
                     />
                </div>
                <div className="flex flex-wrap justify-center max-w-[1440px] mx-auto ">
                     <CardDashboard
-                         titleCard="Suhu"
-                         dataCard={dataCard.suhu || "-"}
+                         titleCard="Temperature"
+                         dataCard={dataCard.temperature || "-"}
                          idx={1}
                          activeIdx={activeIdx}
-                         onClick={() => handleClick(1, "suhu", "Suhu")}
+                         onClick={() => handleClick(1, "temperature", "Temperature")}
                     />
                     <CardDashboard
-                         titleCard="Tekanan"
-                         dataCard={dataCard.tekanan || "-"}
+                         titleCard="Pressure"
+                         dataCard={dataCard.pressure || "-"}
                          idx={2}
                          activeIdx={activeIdx}
-                         onClick={() => handleClick(2, "tekanan", "Tekanan")}
+                         onClick={() => handleClick(2, "pressure", "Pressure")}
                     />
                     <CardDashboard
                          titleCard="Flow"

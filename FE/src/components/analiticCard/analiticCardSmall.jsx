@@ -27,15 +27,17 @@ const AnaliticCardSmall = ({
     const symbolDesicion = (titleCard) => {
         const symbols = {
             Dryness: "%",
-            Suhu: "°C",
-            Tekanan: "barg",
+            Temperature: "°C",
+            Pressure: "barg",
             Flow: "ton/h",
-            Daya: "MW",
+            Power: "MW",
         };
         return symbols[titleCard] || "";
     };
 
     const handleCardClick = (index, data) => {
+     console.log(data);
+     
         setActiveIdx(index);
         onClick(data);
     };
