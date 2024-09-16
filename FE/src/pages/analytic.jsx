@@ -33,7 +33,8 @@ const Analytic = ({ sensor }) => {
 
      const [selectedData, setSelectedData] = useState(null);
      const [selectedTitle, setSelectedTitle] = useState("Chart Data");
-     const [selectedPeriod, setSelectedPeriod] = useState("daily");
+     const [selectedPeriodForCards, setSelectedPeriodForCards] = useState("harian");
+     const [selectedPeriodForApi, setSelectedPeriodForApi] = useState("daily");
      const [tableData, setTableData] = useState([]);
 
      const getDataRealTime = async () => {
@@ -60,8 +61,6 @@ const Analytic = ({ sensor }) => {
                     `https://backend-agustrisa.as1.pitunnel.net/api/statisticsGraph/${sensor.toLowerCase()}?period=${period}`
                );
                const data = await resNarasi.json();
-               console.log(data);
-               
                setTrendData((Math.random() * (100.5 - 99.0) + 99.0).toFixed(2));
                return data;
           } catch (error) {
@@ -110,8 +109,7 @@ const Analytic = ({ sensor }) => {
      const handleCardClick = async (data) => {
           try {
                const res = await fetch(
-                    `https://backend-agustrisa.as1.pitunnel.net/api/statisticsGraph?type=${data.sensor.toLowerCase()}&period=${
-                         selectedPeriod ?? "daily"
+                    `https://backend-agustrisa.as1.pitunnel.net/api/statisticsGraph?type=${data.sensor.toLowerCase()}&period=${selectedPeriodForApi ?? "daily"
                     }`
                );
                const dataResponse = await res.json();
@@ -171,8 +169,12 @@ const Analytic = ({ sensor }) => {
           }
      };
 
-     const handlePeriodChange = async (e) => {
-          setSelectedPeriod(e.target.value);
+     const handleCardPeriodChange = (e) => {
+          setSelectedPeriodForCards(e.target.value);
+     };
+
+     const handleApiPeriodChange = async (e) => {
+          setSelectedPeriodForApi(e.target.value);
           const data = await fetchData(sensor, e.target.value);
           setSelectedData(
                data.map((item) => ({
@@ -194,12 +196,24 @@ const Analytic = ({ sensor }) => {
           if (selectedData) {
                handleCardClick({ sensor, rule: "max" });
           }
-     }, [selectedPeriod]);
+     }, [selectedPeriodForApi]);
 
      return (
           <>
-               <div className="flex-wrap md:flex-nowrap md:flex md:justify-center items-center mt-32 max-w-[1350px] mx-auto">
-                    {/* <AnaliticCardBig
+                         <div className="bg-white rounded-lg p-4 mb-5 flex items-center justify-between mt-32">
+                    <p className="text-2xl"> Select Period for Cards </p>
+                    <select
+                         className="border-2 border-black rounded-lg p-2"
+                         onChange={handleCardPeriodChange}
+                         value={selectedPeriodForCards}>
+                         <option value="harian">Harian</option>
+                         <option value="bulanan">Bulanan</option>
+                         <option value="tahunan">Tahunan</option>
+                    </select>
+               </div>
+
+               <div className="flex-wrap md:flex-nowrap md:flex md:justify-center items-center max-w-[1350px] mx-auto">
+                    <AnaliticCardBig
                          titleCard={sensor}
                          dataCard={
                               datayangbakaldioper.data || "... loading data"
@@ -207,7 +221,7 @@ const Analytic = ({ sensor }) => {
                          trendData={trendData}
                          idx={0}
                          dataStatus={datayangbakaldioper.status ?? 0}
-                    /> */}
+                    />
 
                     <AnaliticCardSmall
                          titleCard={sensor}
@@ -216,21 +230,24 @@ const Analytic = ({ sensor }) => {
                          monthly={minMaxAvgNow}
                          yearly={minMaxAvgNow}
                          onClick={handleCardClick}
+                         selectedPeriod={selectedPeriodForCards} // Pass the selected period for cards
                     />
                </div>
-               <div className="pt-10 flex-col">
-                    <div className="bg-white rounded-lg p-4 mb-5 flex items-center justify-between">
-                         <p className="text-2xl"> Sort By Period </p>
 
+               <div className="pt-10 flex-col">
+
+                    <div className="bg-white rounded-lg p-4 mb-5 flex items-center justify-between">
+                         <p className="text-2xl"> Sort By Period for API </p>
                          <select
                               className="border-2 border-black rounded-lg p-2"
-                              onChange={handlePeriodChange}
-                              value={selectedPeriod}>
+                              onChange={handleApiPeriodChange}
+                              value={selectedPeriodForApi}>
                               <option value="daily">Daily</option>
                               <option value="monthly">Monthly</option>
                               <option value="yearly">Yearly</option>
                          </select>
                     </div>
+
                     {selectedData && (
                          <LineChartAnalytic
                               chartData={selectedData || []}

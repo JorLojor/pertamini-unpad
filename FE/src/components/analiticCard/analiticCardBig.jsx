@@ -53,10 +53,10 @@ const AnaliticCardBig = ({
      };
 
      return (
-          <div className="">
+          <div className="h-full">
                <div
                     onClick={() => onClick()}
-                    className="w-[300px] p-4 h-auto bg-white rounded-lg shadow-md">
+                    className="w-[300px] p-4 h-[300px] bg-white rounded-lg shadow-md">
                     <div className="flex items-center justify-center mb-4">
                          <p>Dev = </p>
                          <p
