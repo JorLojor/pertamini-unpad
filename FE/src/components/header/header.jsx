@@ -2,13 +2,14 @@ import { SlMenu } from "react-icons/sl";
 import { IoClose } from "react-icons/io5";
 import propTypes from "prop-types";
 import { motion } from "framer-motion";
+import { isMobile } from "react-device-detect";
 
 const Header = ({ buka, toggleSidebar, title }) => {
      return (
           <header
                className={`bg-white fixed top-0 left-0 text-white p-4 flex justify-between items-center w-full border-b border-b-zinc-200 z-10`}>
                <motion.div
-                    animate={{ marginLeft: buka ? "17.5rem" : "2.25rem" }}
+                    animate={{ marginLeft: buka ? isMobile  ? "10rem":  "17.5rem"  :  isMobile ?  "0rem" : "2.25rem" }}
                     transition={{ duration: 0.5 }}>
                     <div className="flex items-center">
                          <motion.button

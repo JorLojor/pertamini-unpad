@@ -87,25 +87,25 @@ const CardDashboard = ({
      return (
           <div
                onClick={() => onClick(idx)}
-               className={`mt-3 ${titleCard === 'Dryness' || titleCard === 'Daya' ?  'w-[325px] md:w-[48%] h-[200px] mx-[1%]' : 'w-[325px] md:w-[31%] mx-[1%]' } col-span-1 shadow-md rounded-lg cursor-pointer transition-colors duration-300 
+               className={`mt-3 ${titleCard === 'Dryness' || titleCard === 'Daya' ?  'w-[325px] md:w-[48%] md:h-[200px] mx-[1%]' : 'w-[325px] md:w-[31%] mx-[1%]' } col-span-1 shadow-md rounded-lg cursor-pointer transition-colors duration-300 
             ${
                  activeIdx === idx
                       ? "bg-blue-950 text-white"
                       : "bg-white text-green-950"
             }`}>
                <div className="flex flex-row justify-between items-center p-4 w-full">
-                    <p className={` font-bold ${titleCard === 'Dryness' || titleCard === 'Daya' ? 'text-4xl' : 'text-[22px]'}`}>
+                    <p className={` font-bold ${titleCard === 'Dryness' || titleCard === 'Daya' ? 'text-lg md:text-4xl' : 'text-lg md:text-[22px]'}`}>
                          {titleCard}
                     </p>
                     <p
-                         className={`text-xl font-bold flex items-center ${
+                         className={`text-base md:text-xl font-bold flex items-center ${
                               colorSymbolDesicion(trendData)[0]
                          }`}>
                          {colorSymbolDesicion(trendData)[2]}
                          <img
                               src={colorSymbolDesicion(trendData)[1]}
                               alt="Trend Icon"
-                              className={` ${titleCard === 'Dryness' || titleCard === 'Daya' ? 'w-10 h-10' : 'w-6 h-6'} ml-2`}
+                              className={` ${titleCard === 'Dryness' || titleCard === 'Daya' ? 'w-6 h-6 md:w-10 md:h-10' : ' w-6 h-6'} ml-2`}
                          />
                     </p>
                </div>
@@ -114,7 +114,7 @@ const CardDashboard = ({
                          className={`flex items-end font-bold ${
                               aturUkuran(dataCard).fontSize
                          }`}>
-                         <p className={`${titleCard === 'Dryness' || titleCard === 'Daya' ? 'text-5xl' : 'text-3xl'}`}>{aturUkuran(dataCard).value}</p>
+                         <p className={`${titleCard === 'Dryness' || titleCard === 'Daya' ? 'text-2xl md:text-5xl' : 'text-2xl md:text-3xl'}`}>{aturUkuran(dataCard).value}</p>
                          <small className="text-base">{symbolDesicion()}</small>
                     </div>
                     <img
