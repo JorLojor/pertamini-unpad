@@ -12,6 +12,7 @@ const Dashboard = () => {
      const [endDate, setEndDate] = useState("");
      const [selectedType, setSelectedType] = useState("dryness");
      const [selectedTitle, setSelectedTitle] = useState("Chart Data");
+     const [sensorLimits, setSensorLimits] = useState({});
 
 
      const fetchChartData = async (type) => {
@@ -73,6 +74,10 @@ const Dashboard = () => {
      useEffect(() => {
           GetdataRealTime();
           const intervalId = setInterval(GetdataRealTime, 2000);
+          const storedLimits = localStorage.getItem("sensorLimits");
+          if (storedLimits) {
+               setSensorLimits(JSON.parse(storedLimits));
+          }
 
           return () => clearInterval(intervalId);
      }, []);
@@ -133,7 +138,6 @@ const Dashboard = () => {
                          activeIdx={activeIdx}
                          onClick={() => handleClick(3, "flow", "Flow")}
                     />
-
                </div>
                <div className="pt-10 flex-col">
                     <div className="bg-white rounded-lg p-4 mb-5 flex flex-col md:flex-row md:items-center md:justify-between">
@@ -167,8 +171,20 @@ const Dashboard = () => {
                          <p>Loading...</p>
                     ) : (
                          <>
-                              <div className="mt-5 p-4 bg-white rounded-lg shadow-lg">
-                                   <LineChart chartData={chartData} title={selectedTitle} />
+                              <div className="pt-10 flex-col">
+                                   <div
+                                        className="mt-5 p-4 bg-white rounded-lg shadow-lg"
+                                        style={{}}>
+                                        <LineChart
+                                             chartData={chartData}
+                                             title={selectedTitle}
+                                             limits={
+                                                  sensorLimits[
+                                                       selectedType
+                                                  ] || { min: 0, max: 0 }
+                                             }
+                                        />
+                                   </div>
                               </div>
                          </>
                     )}
