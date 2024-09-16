@@ -26,7 +26,7 @@ const Modal = ({ type, close, data }) => {
 
     const handleKalibrasi =async() => {
         setLoading(true);
-        const dataSend = {sensorType : data.name, minValue : data.value.min, maxValue : data.value.max}; 
+        const dataSend = {sensorType : data.name === 'suhu' ? 'temperature' : data.name, minValue : data.value.min, maxValue : data.value.max}; 
         console.log(dataSend);
         
         try{

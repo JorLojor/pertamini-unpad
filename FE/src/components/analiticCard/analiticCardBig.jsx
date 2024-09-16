@@ -56,7 +56,7 @@ const AnaliticCardBig = ({
      return (
           <div
                onClick={() => onClick()}
-               className="w-[325px] p-4 h-auto bg-white rounded-lg shadow-lg m-2">
+               className="w-full md:w-[525px] p-4 h-auto bg-white rounded-lg shadow-lg">
                <div className="flex justify-between items-center mb-4">
                     <p className="text-xl font-semibold">{titleCard}</p>
                     <img
