@@ -47,7 +47,7 @@ function App() {
                <Header
                     buka={buka}
                     toggleSidebar={toggleSidebar}
-                    title={currentPage}
+                    title={currentPage === "Analytic" ? `${currentPage} ${selectedAnalytic}` : currentPage}
                />
                <div
                     className="fixed h-full z-10"

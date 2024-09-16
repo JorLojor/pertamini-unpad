@@ -60,7 +60,7 @@ const CardDashboard = ({
                return "ton/h";
           }
           if (titleCard === "Daya") {
-               return "Mh";
+               return "MW";
           }
      };
 

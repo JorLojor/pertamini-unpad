@@ -107,7 +107,7 @@ const Dashboard = () => {
 
      return (
           <>
-               <div className="flex flex-wrap justify-around pt-24 w-full ">
+               <div className="flex flex-wrap justify-center space-x-2 pt-24 w-full ">
                     <CardDashboard
                          titleCard="Dryness"
                          dataCard={dataCard.dryness_steam || "-"}
@@ -125,7 +125,7 @@ const Dashboard = () => {
                          onClick={() => handleClick(4, "daya", "Daya")}
                     />
                </div>
-               <div className="flex flex-wrap justify-around w-full ">
+               <div className="flex flex-wrap justify-center space-x-2 w-full ">
                     <CardDashboard
                          titleCard="Suhu"
                          dataCard={dataCard.suhu || "-"}
