@@ -84,7 +84,7 @@ const Dashboard = () => {
      useEffect(() => {
           updateRandomData();
           GetdataRealTime();
-          const intervalId = setInterval(GetdataRealTime, 2000); 
+          const intervalId = setInterval(GetdataRealTime, 2000);
 
           return () => clearInterval(intervalId);
      }, []);
@@ -98,7 +98,7 @@ const Dashboard = () => {
           setActiveIdx((prevIdx) => (prevIdx === idx ? null : idx));
           setSelectedType(type);
           setSelectedTitle(title);
-          fetchChartData(type); 
+          fetchChartData(type);
      };
 
      const handleConfirmSorting = () => {
@@ -182,10 +182,16 @@ const Dashboard = () => {
                     {loading ? (
                          <p>Loading...</p>
                     ) : (
-                         <LineChart
-                              chartData={chartData}
-                              title={selectedTitle}
-                         />
+                         <>
+                              <div
+                                   className="mt-5 p-4 bg-white rounded-lg shadow-lg"
+                                   style={{}}>
+                                   <LineChart
+                                        chartData={chartData}
+                                        title={selectedTitle}
+                                   />
+                              </div>
+                         </>
                     )}
                </div>
                <div className="pt-10 flex-col">
