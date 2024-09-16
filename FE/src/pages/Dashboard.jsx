@@ -13,6 +13,7 @@ const Dashboard = () => {
      const [selectedType, setSelectedType] = useState("dryness");
      const [selectedTitle, setSelectedTitle] = useState("Chart Data");
 
+
      const fetchChartData = async (type) => {
           try {
                setLoading(true);
@@ -43,22 +44,6 @@ const Dashboard = () => {
           }
      };
 
-     const updateRandomData = () => {
-          const drynessValue = generateRandomValue();
-          const suhuValue = generateRandomValue();
-          const tekananValue = generateRandomValue();
-          const flowValue = generateRandomValue();
-          const dayaValue = generateRandomValue();
-
-          setDataCard({
-               dryness_steam: drynessValue,
-               suhu: suhuValue,
-               tekanan: tekananValue,
-               flow: flowValue,
-               energi: dayaValue,
-          });
-     };
-
      const GetdataRealTime = async () => {
           try {
                const response = await fetch(
@@ -82,7 +67,6 @@ const Dashboard = () => {
      };
 
      useEffect(() => {
-          updateRandomData();
           GetdataRealTime();
           const intervalId = setInterval(GetdataRealTime, 2000);
 
@@ -111,7 +95,6 @@ const Dashboard = () => {
                     <CardDashboard
                          titleCard="Dryness"
                          dataCard={dataCard.dryness_steam || "-"}
-                         trendData={generateRandomValue()}
                          idx={0}
                          activeIdx={activeIdx}
                          onClick={() => handleClick(0, "dryness", "Dryness")}
@@ -119,7 +102,6 @@ const Dashboard = () => {
                     <CardDashboard
                          titleCard="Daya"
                          dataCard={dataCard.energi || "-"}
-                         trendData={generateRandomValue()}
                          idx={4}
                          activeIdx={activeIdx}
                          onClick={() => handleClick(4, "daya", "Daya")}
@@ -129,7 +111,6 @@ const Dashboard = () => {
                     <CardDashboard
                          titleCard="Suhu"
                          dataCard={dataCard.suhu || "-"}
-                         trendData={generateRandomValue()}
                          idx={1}
                          activeIdx={activeIdx}
                          onClick={() => handleClick(1, "suhu", "Suhu")}
@@ -137,7 +118,6 @@ const Dashboard = () => {
                     <CardDashboard
                          titleCard="Tekanan"
                          dataCard={dataCard.tekanan || "-"}
-                         trendData={generateRandomValue()}
                          idx={2}
                          activeIdx={activeIdx}
                          onClick={() => handleClick(2, "tekanan", "Tekanan")}
@@ -145,7 +125,6 @@ const Dashboard = () => {
                     <CardDashboard
                          titleCard="Flow"
                          dataCard={dataCard.flow || "-"}
-                         trendData={generateRandomValue()}
                          idx={3}
                          activeIdx={activeIdx}
                          onClick={() => handleClick(3, "flow", "Flow")}
