@@ -216,10 +216,10 @@ const Analytic = ({ sensor }) => {
                     <AnaliticCardBig
                          titleCard={sensor}
                          dataCard={
-                              datayangbakaldioper.data || "... loading data"
+                              datayangbakaldioper?.data || "... loading data"
                          }
                          idx={0}
-                         dataStatus={datayangbakaldioper.status ?? 0}
+                         dataStatus={datayangbakaldioper?.status ?? 0}
                     />
 
                     <AnaliticCardSmall
