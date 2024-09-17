@@ -147,7 +147,7 @@ const Modal = ({ type, close, data }) => {
                     <h6 className="text-lg font-semibold text-center">{message}</h6>
                     <div className="mt-4 flex justify-center space-x-4">
                         <button className="btn w-96 h-14 border-2 bg-white text-[#002E1A] px-4 py-2 rounded" onClick={close}>Tutup</button>
-                        <button className="btn w-96 h-14 bg-[#262937] text-white px-4 py-2 rounded" onClick={() => navigate('/')}>Kembali ke Dashboard</button>
+                        <button className="btn w-96 h-14 bg-[#262937] text-white px-4 py-2 rounded" onClick={() => window.location.reload()}>Kembali ke Dashboard</button>
                     </div>
                 </div>
             </>
