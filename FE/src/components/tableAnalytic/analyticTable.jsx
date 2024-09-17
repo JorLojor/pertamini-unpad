@@ -73,10 +73,7 @@ const DataTableAnalytic = ({ data }) => {
                     ))}
                </div>
           );
-     };
-
-     console.log(currentRows);
-     
+     };     
 
      return (
           <div className="bg-white rounded-lg p-6 mt-5">

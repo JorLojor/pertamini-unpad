@@ -1,83 +1,59 @@
 import PropTypes from "prop-types";
 
-// eslint-disable-next-line no-unused-vars
-const SensorLimitCard = ({ name, icon, limit, placeholder, onChange }) => {
-     return (
-          <div className="card bg-white rounded-2xl px-0 py-3 my-6">
-               <div className="card-header flex justify-between items-center border-b-2 border-b-[#F4F6F6] w-full px-8 pb-4">
-                    <h2 className="text-[22px] font-bold">
-                         Set Limit Sensor {name}
-                    </h2>
-                    <img src={icon} alt={`${name} Icon`} />
-               </div>
-               <div className="card-body flex flex-wrap justify-around items-center px-8 py-4 pt-6">
-                    <label htmlFor="" className="flex-row">
-                         <p className="text-[10px] w-full sm:w-auto text-center sm:text-left">
-                              Limit minimum{" "}
-                              {placeholder && placeholder.min !== null
-                                   ? `Min: ${placeholder.min}`
-                                   : "Loading..."}
-                         </p>
-                    </label>
-                    <input
-                         className="border-[#E5E5E5] border-2 text-center text-[48px] font-medium w-full sm:w-[30%] h-[90px] mb-4 sm:mb-0"
-                         type="number"
-                         // value={limit.min}
-                         placeholder={
-                              placeholder && placeholder.min !== null
-                                   ? `Min: ${placeholder.min}`
-                                   : "Loading..."
-                         }
-                         onChange={(e) => {
-                              const value = e.target.value;
-                              onChange(
-                                   "min",
-                                   value === "" ? "" : parseFloat(value)
-                              );
-                         }}
-                    />
+const SensorLimitCard = ({ name, icon, data, onChange, onSave }) => {
+    return (
+        <div className="card bg-white rounded-2xl px-0 py-3 my-6">
+            <div className="card-header flex justify-between items-center border-b-2 border-b-[#F4F6F6] w-full px-8 pb-4">
+                <h2 className="text-[22px] font-bold">
+                    Set Limit Sensor {name}
+                </h2>
+                <img src={icon} alt={`${name} Icon`} />
+            </div>
+            <div className="card-body flex flex-wrap justify-around items-center px-8 py-4 pt-6">
+                <input
+                    className="border-[#E5E5E5] border-2 text-center text-[48px] font-medium w-full md:w-[30%] h-[90px] mb-4 sm:mb-0"
+                    type="number"
+                    value={data.min !== null ? data.min : ""}
+                    placeholder="Min value"
+                    onChange={(e) => {
+                        const value = e.target.value;
+                        onChange("min", value === "" ? "" : parseFloat(value));
+                    }}
+                />
 
-                    <p className="text-[48px] w-full sm:w-auto text-center sm:text-left">
-                         -
-                    </p>
+                <p className="text-[48px] w-full md:w-auto text-center">
+                    -
+                </p>
 
-                    <label htmlFor="" className="flex-row">
-                         <p className="text-[10px] w-full sm:w-auto text-center sm:text-left">
-                              Limit maximum{" "}
-                              {placeholder && placeholder.max !== null
-                                   ? `Max: ${placeholder.max}`
-                                   : "Loading..."}
-                         </p>
-                    </label>
-
-                    <input
-                         className="border-[#E5E5E5] border-2 text-center text-[48px] font-medium w-full sm:w-[30%] h-[90px] mb-4 sm:mb-0"
-                         type="number"
-                         // value={limit.max}
-                         placeholder={
-                              placeholder && placeholder.max !== null
-                                   ? `Max: ${placeholder.max}`
-                                   : "Loading..."
-                         }
-                         onChange={(e) => {
-                              const value = e.target.value;
-                              onChange(
-                                   "max",
-                                   value === "" ? "" : parseFloat(value)
-                              );
-                         }}
-                    />
-               </div>
-          </div>
-     );
+                <input
+                    className="border-[#E5E5E5] border-2 text-center text-[48px] font-medium w-full md:w-[30%] h-[90px] mb-4 sm:mb-0"
+                    type="number"
+                    value={data.max !== null ? data.max : ""}
+                    placeholder="Max value"
+                    onChange={(e) => {
+                        const value = e.target.value;
+                        onChange("max", value === "" ? "" : parseFloat(value));
+                    }}
+                />
+                <button
+                    className="bg-[#616161] hover:bg-[#383B4C] text-white border-2 rounded-lg text-center text-2xl font-medium w-full md:w-[30%] h-[90px] mb-4 sm:mb-0"
+                    onClick={onSave}>
+                    Save
+                </button>
+            </div>
+        </div>
+    );
 };
 
 SensorLimitCard.propTypes = {
-     name: PropTypes.string.isRequired,
-     icon: PropTypes.string.isRequired,
-     limit: PropTypes.object.isRequired,
-     placeholder: PropTypes.object.isRequired,
-     onChange: PropTypes.func.isRequired,
+    name: PropTypes.string.isRequired,
+    icon: PropTypes.string.isRequired,
+    data: PropTypes.shape({
+        min: PropTypes.number,
+        max: PropTypes.number,
+    }).isRequired,
+    onChange: PropTypes.func.isRequired,
+    onSave: PropTypes.func.isRequired,
 };
 
 export default SensorLimitCard;

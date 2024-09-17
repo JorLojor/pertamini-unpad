@@ -48,8 +48,8 @@ const Analytic = ({ sensor }) => {
                if (sensor === "Temperature") setDatayangbakaldioper(data.temperature);
                if (sensor === "Pressure") setDatayangbakaldioper(data.pressure);
                if (sensor === "Flow") setDatayangbakaldioper(data.flow);
-               if (sensor === "Power")
-                    setDatayangbakaldioper(data.power_prediction);
+               if (sensor === "Power") setDatayangbakaldioper(data.power);
+               
           } catch (error) {
                console.error("Error fetching real-time data:", error);
           }
@@ -58,7 +58,7 @@ const Analytic = ({ sensor }) => {
      const fetchData = async (sensor, period) => {
           try {
                const resNarasi = await fetch(
-                    `https://backend-agustrisa.as1.pitunnel.net/api/statisticsGraph/${sensor.toLowerCase()}?period=${period}`
+                    `https://backend-agustrisa.as1.pitunnel.net/api/statisticsGraph?type=${sensor.toLowerCase()}&period=${period}`
                );
                const data = await resNarasi.json();
                setTrendData((Math.random() * (100.5 - 99.0) + 99.0).toFixed(2));
@@ -197,10 +197,10 @@ const Analytic = ({ sensor }) => {
                handleCardClick({ sensor, rule: "max" });
           }
      }, [selectedPeriodForApi]);
-
+     
      return (
           <>
-                         <div className="bg-white rounded-lg p-4 mb-5 flex items-center justify-between mt-32">
+               <div className="bg-white rounded-lg p-4 mb-5 flex items-center justify-between mt-32">
                     <p className="text-2xl"> Select Period for Cards </p>
                     <select
                          className="border-2 border-black rounded-lg p-2"
@@ -212,13 +212,12 @@ const Analytic = ({ sensor }) => {
                     </select>
                </div>
 
-               <div className="flex-wrap md:flex-nowrap md:flex md:justify-center items-center max-w-[1350px] mx-auto">
+               <div className="flex-wrap md:flex-nowrap md:flex md:justify-center items-center max-w-[1350px] md:mx-auto ">
                     <AnaliticCardBig
                          titleCard={sensor}
                          dataCard={
                               datayangbakaldioper.data || "... loading data"
                          }
-                         trendData={trendData}
                          idx={0}
                          dataStatus={datayangbakaldioper.status ?? 0}
                     />

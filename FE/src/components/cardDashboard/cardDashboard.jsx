@@ -83,7 +83,6 @@ const CardDashboard = ({ titleCard, dataCard, idx, activeIdx, onClick }) => {
                               {trendData?.gradient ? Number(trendData.gradient).toFixed(3) : ''}
                          </span>
                     </p>
-                    <p className={`text-base md:text-xl font-bold flex justify-center items-center }`}> </p>
                     {trendData?.trendStatus === 'naik' ? <img src={ArrowUp} alt="gradient" /> : trendData?.trendStatus === 'turun' ? <img src={ArrowDown} alt="gradient" /> : <img src={ArrowUp} alt="gradient" />}
                </div>
                <div className={`flex justify-center items-end font-bold ${aturUkuran(dataCard).fontSize}`}>
