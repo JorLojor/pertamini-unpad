@@ -77,7 +77,7 @@ const CardDashboard = ({ titleCard, dataCard, idx, activeIdx, onClick }) => {
                     : "bg-white text-green-950"
                }`}>
                <div className="flex justify-center items-center text-xl">
-                    <p className="mr-1">Dev =
+                    <p className="mr-1">Grad =
                          <span className={`${trendData?.trendStatus === 'naik' ? 'text-green-600' : trendData?.trendStatus === 'stabil' ? 'text-green-600' : trendData?.trendStatus === 'turun' ? 'text-red-600' : 'text-green-600'}`}>
                               {trendData?.trendStatus === 'naik' ? '+' : trendData?.trendStatus === 'stabil' ? '' : trendData?.trendStatus === 'turun' ? '' : ''}
                               {trendData?.gradient ? Number(trendData.gradient).toFixed(3) : ''}

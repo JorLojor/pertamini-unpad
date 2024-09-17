@@ -51,7 +51,7 @@ const AnaliticCardBig = ({
         onClick={() => onClick()}
         className="w-[300px] p-4 h-[300px] bg-white rounded-lg shadow-md mb-4">
         <div className="flex items-center justify-center mb-4 mt-8 text-xl">
-            <p className="mr-1">Dev =
+            <p className="mr-1">Grad =
                 <span className={`${trendData?.trendStatus === 'naik' ? 'text-green-600' : trendData?.trendStatus === 'stabil' ? 'text-green-600' : trendData?.trendStatus === 'turun' ? 'text-red-600' : 'text-green-600'}`}>
                     {trendData?.trendStatus === 'naik' ? '+' : trendData?.trendStatus === 'stabil' ? '' : trendData?.trendStatus === 'turun' ? '' : ''}
                     {trendData?.gradient ? Number(trendData.gradient).toFixed(3) : ''}
